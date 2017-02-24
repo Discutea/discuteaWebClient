@@ -7,7 +7,8 @@ module.exports = User;
 function User(attr, prefixLookup) {
 	_.defaults(this, attr, {
 		modes: [],
-		nick: ""
+		nick: "",
+        gecos: ""
 	});
 
 	// irc-framework sets character mode, but lounge works with symbols

@@ -7,6 +7,7 @@ var User = require("../../models/user");
 module.exports = function(irc, network) {
 	var client = this;
 	irc.on("join", function(data) {
+        
 		var chan = network.getChannel(data.channel);
 		if (typeof chan === "undefined") {
 			chan = new Chan({
@@ -19,11 +20,17 @@ module.exports = function(irc, network) {
 				chan: chan
 			});
 		}
-		chan.users.push(new User({nick: data.nick}));
+
+        if (irc.user.nick === data.nick) {
+            irc.who(data.channel, data.channel);
+        }
+        
+        chan.users.push(new User(data));
 		chan.sortUsers(irc);
 		client.emit("users", {
 			chan: chan.id
 		});
+
 		var msg = new Msg({
 			time: data.time,
 			from: data.nick,

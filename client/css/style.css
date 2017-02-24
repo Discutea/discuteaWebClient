@@ -919,6 +919,50 @@ button {
 	opacity: .6;
 }
 
+#chat.colored-nicks .user.gender-male {
+    color: Blue;
+}
+#chat.colored-nicks .user.gender-female {
+    color: Fuchsia;
+}
+#chat.colored-nicks .user.gender-couple {
+    color: SandyBrown;
+}
+
+#chat.colored-nicks .user.gender-undefined {
+    color: LightSlateGray;
+}
+/**/
+#chat.colored-nicks .user.owner {
+	font-weight: bold;
+    color: DarkBlue;
+}
+
+#chat.colored-nicks .user.admin {
+	font-weight: bold;
+    color: DarkOrange;
+}
+
+#chat.colored-nicks .user.op {
+	font-weight: bold;
+    color: Red;
+}
+
+#chat.colored-nicks .user.half-op {
+	font-weight: bold;
+    color: Green;
+}
+
+#chat.colored-nicks .user.voice {
+	font-weight: bold;
+    color:SaddleBrown;
+}
+
+#chat.colored-nicks .user.normal:before {
+	font-weight: bold;
+}
+/**/
+
 #chat .text {
 	padding-left: 10px;
 	padding-right: 6px;
@@ -1111,35 +1155,6 @@ button {
 	display: block;
 	line-height: 1.6;
 	padding: 0 16px;
-}
-
-#chat .user-mode.owner {
-	font-weight: bold;
-    color: Aqua;
-}
-
-#chat .user-mode.admin:before {
-	font-weight: bold;
-    color: DarkOrange;
-}
-
-#chat .user-mode.op:before {
-	font-weight: bold;
-    color: Red;
-}
-
-#chat .user-mode.half-op:before {
-	font-weight: bold;
-    color: Green;
-}
-
-#chat .user-mode.voice:before {
-	font-weight: bold;
-    color:SaddleBrown;
-}
-
-#chat .user-mode.normal:before {
-	font-weight: bold;
 }
 
 #loading {

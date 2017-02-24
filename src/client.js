@@ -32,6 +32,7 @@ var events = [
 	"topic",
 	"welcome",
 	"list",
+    "who",
 	"whois"
 ];
 var inputs = [
