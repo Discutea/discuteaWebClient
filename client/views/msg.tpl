@@ -4,7 +4,7 @@
 	</span>
 	<span class="from">
 		{{#if from}}
-		<span role="button" class="user" data-name="{{from}}">{{mode}}{{from}}</span>
+		<span role="button" class="user {{modes mode}} {{colorGecos gecos}}" data-name="{{from}}"> {{mode}}{{from}}</span>
 		{{/if}}
 	</span>
 	{{#equal type "toggle"}}

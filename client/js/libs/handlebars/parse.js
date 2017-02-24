@@ -120,6 +120,10 @@ function colors(line) {
 			});
 		});
 	});
+    
+	if (styleCheck_Re.test(result)) {
+		return result.replace(styleCheck_Re, '');
+	}
 
 	return result;
 }

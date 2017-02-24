@@ -84,6 +84,7 @@ module.exports = function(irc, network) {
 			type: data.type,
 			time: data.time,
 			mode: chan.getMode(data.nick),
+            gecos: chan.getGecos(data.nick),
 			from: data.nick,
 			text: data.message,
 			self: self,

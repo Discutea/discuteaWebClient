@@ -7,6 +7,5 @@
 <div class="names">
 	{{#each users}}
 		<span role="button" class="user {{modes mode}} {{colorGecos gecos}}" data-name="{{name}}">{{mode}}{{name}}</span>
-        {{ log name }} {{ log gecos }}
 	{{/each}}
 </div>

@@ -92,6 +92,15 @@ Chan.prototype.getMode = function(name) {
 	return "";
 };
 
+Chan.prototype.getGecos = function(name) {
+	var user = _.find(this.users, {name: name});
+	if (user) {
+		return user.gecos;
+	}
+
+	return "";
+};
+
 Chan.prototype.toJSON = function() {
 	var clone = _.clone(this);
 	clone.messages = clone.messages.slice(-100);
