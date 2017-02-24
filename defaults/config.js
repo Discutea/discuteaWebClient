@@ -187,7 +187,7 @@ module.exports = {
 		// @type     string
 		// @default  "chat.freenode.net"
 		//
-		host: "chat.freenode.net",
+		host: "irc.discutea.fr",
 
 		//
 		// Port
@@ -244,7 +244,7 @@ module.exports = {
 		// @type     string
 		// @default  "#thelounge"
 		//
-		join: "#thelounge"
+		join: "#35+"
 	},
 
 	//

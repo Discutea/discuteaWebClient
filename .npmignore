@@ -4,17 +4,9 @@
 
 client/js/bundle.vendor.js.map
 client/views/
-coverage/
 scripts/
-test/
 .editorconfig
-.eslintignore
-.eslintrc.yml
 .gitattributes
 .gitignore
-.nycrc
 .npmignore
-.stylelintrc
-.travis.yml
-appveyor.yml
 webpack.config.js
