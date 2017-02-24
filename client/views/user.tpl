@@ -3,6 +3,7 @@
 	<input class="search" placeholder="{{users users.length}}" aria-label="Search among the user list">
 </div>
 {{/if}}
+
 <div class="names">
 	{{#diff "reset"}}{{/diff}}
 	{{#each users}}
@@ -12,7 +13,7 @@
 		{{/unless}}
 		<div class="user-mode {{modes mode}}">
 		{{/diff}}
-		<span role="button" class="user {{colorClass name}}" data-name="{{name}}">{{mode}}{{name}}</span>
+		<span role="button" class="user" data-name="{{name}}">{{mode}}{{name}}</span>
 	{{/each}}
 	</div>
 </div>
