@@ -248,7 +248,7 @@ Client.prototype.connect = function(args) {
 	}
 
 	network.irc = new ircFramework.Client({
-		version: pkg.name + " " + Helper.getVersion() + " -- " + pkg.homepage,
+		version: pkg.name,
 		host: network.host,
 		port: network.port,
 		nick: nick,

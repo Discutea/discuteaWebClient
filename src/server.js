@@ -9,7 +9,6 @@ var fs = require("fs");
 var io = require("socket.io");
 var dns = require("dns");
 var Helper = require("./helper");
-var ldap = require("ldapjs");
 var colors = require("colors/safe");
 
 var manager = null;
@@ -30,10 +29,6 @@ module.exports = function() {
 
 	var config = Helper.config;
 	var server = null;
-
-	if (config.public && (config.ldap || {}).enable) {
-		log.warn("Server is public and set to use LDAP. Set to private mode if trying to use LDAP authentication.");
-	}
 
 	if (!config.https.enable) {
 		server = require("http");
@@ -64,10 +59,6 @@ module.exports = function() {
 		require("./identd").start(config.identd.port);
 	}
 
-	if (!config.public && (config.ldap || {}).enable) {
-		authFunction = ldapAuth;
-	}
-
 	var sockets = io(server, {
 		serveClient: false,
 		transports: config.transports
@@ -86,7 +77,7 @@ module.exports = function() {
 	const protocol = config.https.enable ? "https" : "http";
 	const host = config.host || "*";
 
-	log.info(`The Lounge ${colors.green(Helper.getVersion())} is now running \
+	log.info(`The Lounge is now running \
 using node ${colors.green(process.versions.node)} on ${colors.green(process.platform)} (${process.arch})`);
 	log.info(`Configuration file: ${colors.green(Helper.CONFIG_PATH)}`);
 	log.info(`Available on ${colors.green(protocol + "://" + host + ":" + config.port + "/")} \
@@ -133,7 +124,6 @@ function index(req, res, next) {
 			pkg,
 			Helper.config
 		);
-		data.gitCommit = Helper.getGitCommit();
 
 		var template = _.template(file);
 		res.setHeader("Content-Security-Policy", "default-src *; connect-src 'self' ws: wss:; style-src * 'unsafe-inline'; script-src 'self'; child-src 'self'; object-src 'none'; form-action 'none'; referrer no-referrer;");
@@ -178,49 +168,6 @@ function init(socket, client) {
 				client.connect(data);
 			}
 		);
-		if (!Helper.config.public && !Helper.config.ldap.enable) {
-			socket.on(
-				"change-password",
-				function(data) {
-					var old = data.old_password;
-					var p1 = data.new_password;
-					var p2 = data.verify_password;
-					if (typeof p1 === "undefined" || p1 === "") {
-						socket.emit("change-password", {
-							error: "Please enter a new password"
-						});
-						return;
-					}
-					if (p1 !== p2) {
-						socket.emit("change-password", {
-							error: "Both new password fields must match"
-						});
-						return;
-					}
-					if (!Helper.password.compare(old || "", client.config.password)) {
-						socket.emit("change-password", {
-							error: "The current password field does not match your account password"
-						});
-						return;
-					}
-
-					var hash = Helper.password.hash(p1);
-
-					client.setPassword(hash, function(success) {
-						var obj = {};
-
-						if (success) {
-							obj.success = "Successfully updated your password, all your other sessions were logged out";
-							obj.token = client.config.token;
-						} else {
-							obj.error = "Failed to update your password";
-						}
-
-						socket.emit("change-password", obj);
-					});
-				}
-			);
-		}
 		socket.on(
 			"open",
 			function(data) {
@@ -285,30 +232,6 @@ function localAuth(client, user, password, callback) {
 	}
 
 	return callback(result);
-}
-
-function ldapAuth(client, user, password, callback) {
-	var userDN = user.replace(/([,\\/#+<>;"= ])/g, "\\$1");
-	var bindDN = Helper.config.ldap.primaryKey + "=" + userDN + "," + Helper.config.ldap.baseDN;
-
-	var ldapclient = ldap.createClient({
-		url: Helper.config.ldap.url
-	});
-
-	ldapclient.on("error", function(err) {
-		log.error("Unable to connect to LDAP server", err);
-		callback(!err);
-	});
-
-	ldapclient.bind(bindDN, password, function(err) {
-		if (!err && !client) {
-			if (!manager.addUser(user, null)) {
-				log.error("Unable to create new user", user);
-			}
-		}
-		ldapclient.unbind();
-		callback(!err);
-	});
 }
 
 function auth(data) {
