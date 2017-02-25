@@ -48,14 +48,6 @@ module.exports = {
 	reverseProxy: false,
 
 	//
-	// Set the default theme.
-	//
-	// @type     string
-	// @default  "themes/example.css"
-	//
-	theme: "themes/example.css",
-
-	//
 	// Prefetch URLs
 	//
 	// If enabled, The Lounge will try to load thumbnails and site descriptions from

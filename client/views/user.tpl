@@ -6,6 +6,6 @@
 
 <div class="names">
 	{{#each users}}
-		<span role="button" class="user {{modes mode}} {{colorGecos gecos}}" data-name="{{name}}">{{mode}}{{name}}</span>
-	{{/each}}
+		<span role="button" class="tooltipped tooltipped-n user {{modes mode}} {{colorGecos gecos}}" data-name="{{name}}" aria-label="{{ gecos }}">{{mode}}{{name}}</span>
+    {{/each}}
 </div>

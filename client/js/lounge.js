@@ -606,7 +606,6 @@ $(function() {
 		notifyAllMessages: false,
 		part: true,
 		quit: true,
-		theme: $("#theme").attr("href").replace(/^themes\/(.*).css$/, "$1"), // Extracts default theme name, set on the server configuration
 		thumbnails: true,
 		userStyles: userStyles.text(),
 	}, JSON.parse(window.localStorage.getItem("settings")));
@@ -624,9 +623,6 @@ $(function() {
 				settings.find("#user-specified-css-input").val(options[i]);
 			} else if (i === "highlights") {
 				settings.find("input[name=" + i + "]").val(options[i]);
-			} else if (i === "theme") {
-				$("#theme").attr("href", "themes/" + options[i] + ".css");
-				settings.find("select[name=" + i + "]").val(options[i]);
 			} else if (options[i]) {
 				settings.find("input[name=" + i + "]").prop("checked", true);
 			}
@@ -656,8 +652,6 @@ $(function() {
 				chat.toggleClass("hide-" + name, !self.prop("checked"));
 			} else if (name === "coloredNicks") {
 				chat.toggleClass("colored-nicks", self.prop("checked"));
-			} else if (name === "theme") {
-				$("#theme").attr("href", "themes/" + options[name] + ".css");
 			} else if (name === "userStyles") {
 				userStyles.html(options[name]);
 			} else if (name === "highlights") {
