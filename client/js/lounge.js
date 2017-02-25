@@ -592,7 +592,6 @@ $(function() {
 
 	socket.on("names", renderChannelUsers);
 
-	var userStyles = $("#user-specified-css");
 	var highlights = [];
 	var options = $.extend({
 		coloredNicks: true,
@@ -607,7 +606,6 @@ $(function() {
 		part: true,
 		quit: true,
 		thumbnails: true,
-		userStyles: userStyles.text(),
 	}, JSON.parse(window.localStorage.getItem("settings")));
 
 	var windows = $("#windows");
@@ -616,12 +614,7 @@ $(function() {
 		var settings = $("#settings");
 
 		for (var i in options) {
-			if (i === "userStyles") {
-				if (!/[?&]nocss/.test(window.location.search)) {
-					$(document.head).find("#user-specified-css").html(options[i]);
-				}
-				settings.find("#user-specified-css-input").val(options[i]);
-			} else if (i === "highlights") {
+			if (i === "highlights") {
 				settings.find("input[name=" + i + "]").val(options[i]);
 			} else if (options[i]) {
 				settings.find("input[name=" + i + "]").prop("checked", true);
@@ -652,8 +645,6 @@ $(function() {
 				chat.toggleClass("hide-" + name, !self.prop("checked"));
 			} else if (name === "coloredNicks") {
 				chat.toggleClass("colored-nicks", self.prop("checked"));
-			} else if (name === "userStyles") {
-				userStyles.html(options[name]);
 			} else if (name === "highlights") {
 				var highlightString = options[name];
 				highlights = highlightString.split(",").map(function(h) {
