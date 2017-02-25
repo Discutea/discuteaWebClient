@@ -267,12 +267,6 @@ $(function() {
 		var chan = chat.find(target);
 		var template = "msg";
 
-		if (!data.msg.highlight && !data.msg.self && (type === "message" || type === "notice") && highlights.some(function(h) {
-			return data.msg.text.toLocaleLowerCase().indexOf(h.toLocaleLowerCase()) > -1;
-		})) {
-			data.msg.highlight = true;
-		}
-
 		if ([
 			"invite",
 			"join",
@@ -592,7 +586,6 @@ $(function() {
 
 	socket.on("names", renderChannelUsers);
 
-	var highlights = [];
 	var options = $.extend({
 		coloredNicks: true,
 		desktopNotifications: false,
@@ -614,9 +607,7 @@ $(function() {
 		var settings = $("#settings");
 
 		for (var i in options) {
-			if (i === "highlights") {
-				settings.find("input[name=" + i + "]").val(options[i]);
-			} else if (options[i]) {
+			if (options[i]) {
 				settings.find("input[name=" + i + "]").prop("checked", true);
 			}
 		}
@@ -645,15 +636,6 @@ $(function() {
 				chat.toggleClass("hide-" + name, !self.prop("checked"));
 			} else if (name === "coloredNicks") {
 				chat.toggleClass("colored-nicks", self.prop("checked"));
-			} else if (name === "highlights") {
-				var highlightString = options[name];
-				highlights = highlightString.split(",").map(function(h) {
-					return h.trim();
-				}).filter(function(h) {
-					// Ensure we don't have empty string in the list of highlights
-					// otherwise, users get notifications for everything
-					return h !== "";
-				});
 			}
 		}).find("input")
 			.trigger("change");
