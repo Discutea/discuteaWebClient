@@ -42,28 +42,6 @@ Chan.prototype.pushMessage = function(client, msg, increasesUnread) {
 	}
 
 	client.emit("msg", obj);
-
-	// Never store messages in public mode as the session
-	// is completely destroyed when the page gets closed
-	if (Helper.config.public) {
-		return;
-	}
-
-	this.messages.push(msg);
-
-	if (Helper.config.maxHistory >= 0 && this.messages.length > Helper.config.maxHistory) {
-		this.messages.splice(0, this.messages.length - Helper.config.maxHistory);
-	}
-
-	if (!msg.self && !isOpen) {
-		if (!this.firstUnread) {
-			this.firstUnread = msg.id;
-		}
-
-		if (msg.highlight) {
-			this.highlight = true;
-		}
-	}
 };
 
 Chan.prototype.sortUsers = function(irc) {

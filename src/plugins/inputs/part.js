@@ -22,8 +22,6 @@ exports.input = function(network, chan, cmd, args) {
 	});
 
 	if (chan.type === Chan.Type.CHANNEL) {
-		this.save();
-
 		if (network.irc) {
 			network.irc.part(chan.name, args.join(" "));
 		}

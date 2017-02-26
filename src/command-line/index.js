@@ -33,11 +33,6 @@ fsextra.ensureDirSync(Helper.USERS_PATH);
 
 require("./start");
 require("./config");
-require("./list");
-require("./add");
-require("./remove");
-require("./reset");
-require("./edit");
 
 program.parse(argv.args);
 

@@ -1,6 +1,5 @@
 "use strict";
 
-var identd = require("../../identd");
 var Msg = require("../../models/msg");
 var Chan = require("../../models/chan");
 var Helper = require("../../helper");
@@ -62,12 +61,6 @@ module.exports = function(irc, network) {
 			text: "Disconnected from the network, and will not reconnect. Use /connect to reconnect again."
 		}), true);
 	});
-
-	if (identd.isEnabled()) {
-		irc.on("raw socket connected", function(socket) {
-			identd.hook(socket, client.name || network.username);
-		});
-	}
 
 	if (identHandler) {
 		let identSocketId;

@@ -17,7 +17,6 @@ module.exports = function(irc, network) {
 			});
 			lobby.pushMessage(client, msg, true);
 			self = true;
-			client.save();
 			client.emit("nick", {
 				network: network.id,
 				nick: data.new_nick

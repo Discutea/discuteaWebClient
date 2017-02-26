@@ -51,25 +51,13 @@ module.exports = function() {
 		}, app).listen(config.port, config.host);
 	}
 
-	if (config.identd.enable) {
-		if (manager.identHandler) {
-			log.warn("Using both identd and oidentd at the same time!");
-		}
-
-		require("./identd").start(config.identd.port);
-	}
-
 	var sockets = io(server, {
 		serveClient: false,
 		transports: config.transports
 	});
 
 	sockets.on("connect", function(socket) {
-		if (config.public) {
-			auth.call(socket);
-		} else {
-			init(socket);
-		}
+		auth.call(socket);
 	});
 
 	manager.sockets = sockets;
@@ -80,17 +68,8 @@ module.exports = function() {
 	log.info(`The Lounge is now running \
 using node ${colors.green(process.versions.node)} on ${colors.green(process.platform)} (${process.arch})`);
 	log.info(`Configuration file: ${colors.green(Helper.CONFIG_PATH)}`);
-	log.info(`Available on ${colors.green(protocol + "://" + host + ":" + config.port + "/")} \
-in ${config.public ? "public" : "private"} mode`);
+	log.info(`Available on ${colors.green(protocol + "://" + host + ":" + config.port + "/")} mode`);
 	log.info("Press Ctrl-C to stop\n");
-
-	if (!config.public) {
-		if ("autoload" in config) {
-			log.warn(`Autoloading users is now always enabled. Please remove the ${colors.yellow("autoload")} option from your configuration file.`);
-		}
-
-		manager.autoloadUsers();
-	}
 };
 
 function getClientIp(req) {
@@ -237,48 +216,15 @@ function localAuth(client, user, password, callback) {
 function auth(data) {
 	var socket = this;
 	var client;
-	if (Helper.config.public) {
-		client = new Client(manager);
-		manager.clients.push(client);
-		socket.on("disconnect", function() {
-			manager.clients = _.without(manager.clients, client);
-			client.quit();
-		});
-		if (Helper.config.webirc) {
-			reverseDnsLookup(socket, client);
-		} else {
-			init(socket, client);
-		}
+	client = new Client(manager);
+	manager.clients.push(client);
+	socket.on("disconnect", function() {
+		manager.clients = _.without(manager.clients, client);
+		client.quit();
+	});
+	if (Helper.config.webirc) {
+		reverseDnsLookup(socket, client);
 	} else {
-		client = manager.findClient(data.user, data.token);
-		var signedIn = data.token && client && data.token === client.config.token;
-		var token;
-
-		if (client && (data.remember || data.token)) {
-			token = client.config.token;
-		}
-
-		var authCallback = function(success) {
-			if (success) {
-				if (!client) {
-					// LDAP just created a user
-					manager.loadUser(data.user);
-					client = manager.findClient(data.user);
-				}
-				if (Helper.config.webirc !== null && !client.config.ip) {
-					reverseDnsLookup(socket, client);
-				} else {
-					init(socket, client, token);
-				}
-			} else {
-				socket.emit("auth", {success: success});
-			}
-		};
-
-		if (signedIn) {
-			authCallback(true);
-		} else {
-			authFunction(client, data.user, data.password, authCallback);
-		}
+		init(socket, client);
 	}
 }

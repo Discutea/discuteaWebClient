@@ -5,16 +5,11 @@ var colors = require("colors/safe");
 var fs = require("fs");
 var Client = require("./client");
 var Helper = require("./helper");
-var Oidentd = require("./oidentd");
 
 module.exports = ClientManager;
 
 function ClientManager() {
 	this.clients = [];
-
-	if (typeof Helper.config.oidentd === "string") {
-		this.identHandler = new Oidentd(Helper.config.oidentd);
-	}
 }
 
 ClientManager.prototype.findClient = function(name, token) {

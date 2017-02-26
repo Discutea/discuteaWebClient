@@ -279,7 +279,6 @@ Client.prototype.connect = function(args) {
 
 	network.irc.connect();
 
-	client.save();
 };
 
 Client.prototype.updateToken = function(callback) {
@@ -435,8 +434,6 @@ Client.prototype.sort = function(data) {
 		break;
 	}
 
-	self.save();
-
 	// Sync order to connected clients
 	const syncOrder = sorted.map(obj => obj.id);
 	self.emit("sync_sort", {order: syncOrder, type: type, target: data.target});
@@ -473,14 +470,12 @@ Client.prototype.quit = function() {
 
 Client.prototype.clientAttach = function(socketId) {
 	var client = this;
-	var save = false;
 
 	client.attachedClients[socketId] = client.lastActiveChannel;
 
 	// Update old networks to store ip and hostmask
 	client.networks.forEach(network => {
 		if (!network.ip) {
-			save = true;
 			network.ip = (client.config && client.config.ip) || client.ip;
 		}
 
@@ -488,28 +483,12 @@ Client.prototype.clientAttach = function(socketId) {
 			var hostmask = (client.config && client.config.hostname) || client.hostname;
 
 			if (hostmask) {
-				save = true;
 				network.hostmask = hostmask;
 			}
 		}
 	});
-
-	if (save) {
-		client.save();
-	}
 };
 
 Client.prototype.clientDetach = function(socketId) {
 	delete this.attachedClients[socketId];
 };
-
-Client.prototype.save = _.debounce(function SaveClient() {
-	if (Helper.config.public) {
-		return;
-	}
-
-	const client = this;
-	let json = {};
-	json.networks = this.networks.map(n => n.export());
-	client.manager.updateUser(client.name, json);
-}, 1000, {maxWait: 10000});

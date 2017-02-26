@@ -2,17 +2,6 @@
 
 module.exports = {
 	//
-	// Set the server mode.
-	// Public servers does not require authentication.
-	//
-	// Set to 'false' to enable users.
-	//
-	// @type     boolean
-	// @default  true
-	//
-	public: true,
-
-	//
 	// IP address or hostname for the web server to listen on.
 	// Setting this to undefined will listen on all interfaces.
 	//
@@ -171,7 +160,7 @@ module.exports = {
 		// @type     string
 		// @default  "Freenode"
 		//
-		name: "Freenode",
+		name: "Discutea",
 
 		//
 		// Host
@@ -281,40 +270,6 @@ module.exports = {
 		//
 		certificate: ""
 	},
-
-	//
-	// Run The Lounge with identd support.
-	//
-	// @type     object
-	// @default  {}
-	//
-	identd: {
-		//
-		// Run the identd daemon on server start.
-		//
-		// @type     boolean
-		// @default  false
-		//
-		enable: false,
-
-		//
-		// Port to listen for ident requests.
-		//
-		// @type     int
-		// @default  113
-		//
-		port: 113
-	},
-
-	//
-	// Enable oidentd support using the specified file
-	//
-	// Example: oidentd: "~/.oidentd.conf",
-	//
-	// @type     string
-	// @default  null
-	//
-	oidentd: null,
 
 	// Extra debugging
 	//

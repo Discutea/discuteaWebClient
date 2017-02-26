@@ -1,6 +1,5 @@
 "use strict";
 
-var ClientManager = new require("../clientManager");
 var program = require("commander");
 var colors = require("colors/safe");
 var server = require("../server");
@@ -11,23 +10,12 @@ program
 	.option("-H, --host <ip>", "host")
 	.option("-P, --port <port>", "port")
 	.option("-B, --bind <ip>", "bind")
-	.option("    --public", "mode")
-	.option("    --private", "mode")
 	.description("Start the server")
 	.action(function(options) {
-		var users = new ClientManager().getUsers();
-
-		var mode = Helper.config.public;
-		if (options.public) {
-			mode = true;
-		} else if (options.private) {
-			mode = false;
-		}
 
 		Helper.config.host = options.host || Helper.config.host;
 		Helper.config.port = options.port || Helper.config.port;
 		Helper.config.bind = options.bind || Helper.config.bind;
-		Helper.config.public = mode;
 
 		server();
 	});
