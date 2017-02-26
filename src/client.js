@@ -78,12 +78,6 @@ function Client(manager, name, config) {
 
 	var client = this;
 
-	if (client.name && !client.config.token) {
-		client.updateToken(function(token) {
-			client.manager.updateUser(client.name, {token: token});
-		});
-	}
-
 	var delay = 0;
 	(client.config.networks || []).forEach(n => {
 		setTimeout(function() {
@@ -91,10 +85,6 @@ function Client(manager, name, config) {
 		}, delay);
 		delay += 1000;
 	});
-
-	if (client.name) {
-		log.info(`User ${colors.bold(client.name)} loaded`);
-	}
 }
 
 Client.prototype.emit = function(event, data) {
@@ -279,37 +269,6 @@ Client.prototype.connect = function(args) {
 
 	network.irc.connect();
 
-};
-
-Client.prototype.updateToken = function(callback) {
-	var client = this;
-
-	crypto.randomBytes(48, function(err, buf) {
-		if (err) {
-			throw err;
-		}
-
-		callback(client.config.token = buf.toString("hex"));
-	});
-};
-
-Client.prototype.setPassword = function(hash, callback) {
-	var client = this;
-
-	client.updateToken(function(token) {
-		client.manager.updateUser(client.name, {
-			token: token,
-			password: hash
-		}, function(err) {
-			if (err) {
-				log.error("Failed to update password of", client.name, err);
-				return callback(false);
-			}
-
-			client.config.password = hash;
-			return callback(true);
-		});
-	});
 };
 
 Client.prototype.input = function(data) {

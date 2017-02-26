@@ -12,7 +12,6 @@ var Helper = require("./helper");
 var colors = require("colors/safe");
 
 var manager = null;
-var authFunction = localAuth;
 
 module.exports = function() {
 	manager = new ClientManager();
@@ -186,31 +185,6 @@ function reverseDnsLookup(socket, client) {
 
 		init(socket, client);
 	});
-}
-
-function localAuth(client, user, password, callback) {
-	if (!client || !password) {
-		return callback(false);
-	}
-
-	if (!client.config.password) {
-		log.error(`User ${colors.bold(user)} with no local password set tried to sign in. (Probably a LDAP user)`);
-		return callback(false);
-	}
-
-	var result = Helper.password.compare(password, client.config.password);
-
-	if (result && Helper.password.requiresUpdate(client.config.password)) {
-		var hash = Helper.password.hash(password);
-
-		client.setPassword(hash, function(success) {
-			if (success) {
-				log.info(`User ${colors.bold(client.name)} logged in and their hashed password has been updated to match new security requirements`);
-			}
-		});
-	}
-
-	return callback(result);
 }
 
 function auth(data) {
