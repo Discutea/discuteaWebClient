@@ -17,6 +17,7 @@ module.exports = function(irc, network) {
 	});
 
 	irc.on("channel list", function(channels) {
+        channels = channels.sort(sortChannels);
 		Array.prototype.push.apply(network.chanCache, channels);
 	});
 
@@ -36,9 +37,14 @@ module.exports = function(irc, network) {
 		network.chanCache = [];
 	});
 
+    function sortChannels(a,b) {
+        return  parseInt(b.num_users) - parseInt(a.num_users);
+    }
+
 	function updateListStatus(msg) {
 		var chan = network.getChannel("Channel List");
 		if (typeof chan === "undefined") {
+            
 			chan = new Chan({
 				type: Chan.Type.SPECIAL,
 				name: "Channel List"
