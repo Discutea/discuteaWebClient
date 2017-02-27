@@ -45,7 +45,7 @@ module.exports = {
 	// @type     boolean
 	// @default  false
 	//
-	prefetch: false,
+	prefetch: true,
 
 	//
 	// Prefetch URLs Image Preview size limit
@@ -225,7 +225,7 @@ module.exports = {
 		// @type     string
 		// @default  "#thelounge"
 		//
-		join: "#35+"
+		join: "#Accueil"
 	},
 
 	//

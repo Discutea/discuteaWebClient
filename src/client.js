@@ -398,6 +398,24 @@ Client.prototype.sort = function(data) {
 	self.emit("sync_sort", {order: syncOrder, type: type, target: data.target});
 };
 
+Client.prototype.noprivate = function(data) {
+	var network = this.networks[0];
+    if ( (network !== undefined) && (network.irc !== undefined) ) {
+        var irc = network.irc;
+        if (data.type === "registered") {
+            var mode = 'R';
+        } else {
+            var mode = 'd';
+        }
+        
+        if (data.ckecked) {
+            irc.raw('MODE ' + irc.user.nick + ' +' + mode);
+        } else {
+            irc.raw('MODE ' + irc.user.nick + ' -' + mode);
+        }
+    }   
+};
+
 Client.prototype.names = function(data) {
 	var client = this;
 	var target = client.find(data.target);

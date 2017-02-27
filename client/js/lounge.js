@@ -634,6 +634,16 @@ $(function() {
 				chat.toggleClass("hide-" + name, !self.prop("checked"));
 			} else if (name === "coloredNicks") {
 				chat.toggleClass("colored-nicks", self.prop("checked"));
+			} else if (name === "noprivateregistered") {
+				socket.emit("noprivate", {
+                    ckecked: this.checked,
+			        type: "registered"
+		        });
+			} else if (name === "noprivate") {
+				socket.emit("noprivate", {
+                    ckecked: this.checked,
+			        type: "all"
+		        });
 			}
 		}).find("input")
 			.trigger("change");
