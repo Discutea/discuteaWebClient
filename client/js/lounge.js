@@ -746,6 +746,13 @@ $(function() {
 			});
 		}
 
+			output += templates.contextmenu_divider();
+			output += templates.contextmenu_item({
+				class: "list",
+				text: "Channels List",
+				//data: ""
+			});
+           
 		contextMenuContainer.show();
 		contextMenu
 			.html(output)
@@ -950,14 +957,13 @@ $(function() {
 			text: "/whois " + name
 		});
 	});
-
+    
 	sidebar.on("click", ".chan, button", function() {
 		var self = $(this);
 		var target = self.data("target");
 		if (!target) {
 			return;
 		}
-
 		chat.data(
 			"id",
 			self.data("id")
@@ -1053,8 +1059,9 @@ $(function() {
 		});
 		return false;
 	});
-
+    
 	contextMenu.on("click", ".context-menu-item", function() {
+        
 		switch ($(this).data("action")) {
 		case "close":
 			$(".networks .chan[data-target='" + $(this).data("data") + "'] .close").click();
@@ -1064,6 +1071,12 @@ $(function() {
 			break;
 		case "user":
 			$(".channel.active .users .user[data-name='" + $(this).data("data") + "']").click();
+			break;
+		case "list":
+		    socket.emit("input", {
+			    target: 0,
+			    text: '/list'
+		    });
 			break;
 		}
 	});

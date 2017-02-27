@@ -164,6 +164,7 @@ function init(socket, client) {
 				client.names(data);
 			}
 		);
+        
 		socket.join(client.id);
 		socket.emit("init", {
 			active: client.lastActiveChannel,
