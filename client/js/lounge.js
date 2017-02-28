@@ -507,6 +507,23 @@ $(function() {
 	});
 
 	socket.on("network_changed", function(data) {
+        // get input noprivate after connection and emit for changed modes on irc.
+        $.each( $("#settings .noprivate"), function() {
+            var name = $(this).attr("name");
+            var checked = $(this).is(':checked');
+            if (name === "noprivateregistered") {
+				socket.emit("noprivate", {
+                    ckecked: checked,
+			        type: "registered"
+		        });
+			} else if (name === "noprivate") {
+				socket.emit("noprivate", {
+                    ckecked: checked,
+			        type: "all"
+		        });
+			}
+        });
+
 		sidebar.find("#network-" + data.network).data("options", data.serverOptions);
 	});
 

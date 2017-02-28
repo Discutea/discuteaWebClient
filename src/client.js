@@ -399,6 +399,7 @@ Client.prototype.sort = function(data) {
 };
 
 Client.prototype.noprivate = function(data) {
+    var client = this;
 	var network = this.networks[0];
     if ( (network !== undefined) && (network.irc !== undefined) ) {
         var irc = network.irc;
