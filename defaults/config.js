@@ -80,17 +80,6 @@ module.exports = {
 	lockNetwork: false,
 
 	//
-	// Hex IP
-	//
-	// If enabled, clients' username will be set to their IP encoded has hex.
-	// This is done to share the real user IP address with the server for host masking purposes.
-	//
-	// @type     boolean
-	// @default  false
-	//
-	useHexIp: false,
-
-	//
 	// WEBIRC support
 	//
 	// If enabled, The Lounge will pass the connecting user's host and IP to the
@@ -201,14 +190,6 @@ module.exports = {
 		// @default  "lounge-user"
 		//
 		nick: "lounge-user",
-
-		//
-		// Username
-		//
-		// @type     string
-		// @default  "lounge-user"
-		//
-		username: "lounge-user",
 
 		//
 		// Real Name

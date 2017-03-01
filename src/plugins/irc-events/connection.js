@@ -66,7 +66,7 @@ module.exports = function(irc, network) {
 		let identSocketId;
 
 		irc.on("raw socket connected", function(socket) {
-			identSocketId = identHandler.addSocket(socket, client.name || network.username);
+			identSocketId = identHandler.addSocket(socket, client.name);
 		});
 
 		irc.on("socket close", function() {

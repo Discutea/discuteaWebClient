@@ -15,7 +15,6 @@ function Network(attr) {
 		tls: false,
 		password: "",
 		commands: [],
-		username: "",
 		realname: "",
 		channels: [],
 		ip: null,
@@ -71,7 +70,6 @@ Network.prototype.export = function() {
 		"port",
 		"tls",
 		"password",
-		"username",
 		"realname",
 		"commands",
 		"ip",
@@ -92,6 +90,10 @@ Network.prototype.export = function() {
 };
 
 Network.prototype.getChannel = function(name) {
+    if (typeof name !== 'string') {
+        return;
+    }
+    
 	name = name.toLowerCase();
 
 	return _.find(this.channels, function(that) {

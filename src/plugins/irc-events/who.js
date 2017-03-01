@@ -15,6 +15,10 @@ module.exports = function(irc, network) {
 		            u.gecos = user.real_name;
 	            }
             });
+            
+		    client.emit("users", {
+			    chan: chan.id
+		    });
         }
 	});
 };

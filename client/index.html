@@ -72,41 +72,6 @@
 						</div>
 					</form>
 				</div>
-				<div id="sign-in" class="window">
-					<form class="container" method="post" action="">
-						<div class="row">
-							<div class="col-xs-12">
-								<h1 class="title">Sign in to The Lounge</h1>
-							</div>
-							<div class="col-xs-12">
-								<label>
-								Username
-								<input class="input" name="user">
-								</label>
-							</div>
-							<div class="col-xs-12">
-								<label>
-								Password
-								<input class="input" type="password" name="password">
-								</label>
-							</div>
-							<div class="col-xs-12">
-								<label class="remember">
-									<input type="checkbox" name="remember" id="sign-in-remember" checked>
-									Stay signed in
-								</label>
-							</div>
-							<div class="col-xs-12 error" style="display: none;">
-								Authentication failed.
-							</div>
-							<div class="col-xs-12">
-								<button type="submit" class="btn">
-									Sign in
-								</button>
-							</div>
-						</div>
-					</form>
-				</div>
 				<div id="connect" class="window">
 					<div class="header">
 						<button class="lt" aria-label="Toggle channel list"></button>
@@ -164,14 +129,6 @@
 							<div class="col-sm-9">
 								<input class="input nick" id="connect:nick" name="nick" value="<%= defaults.nick %>">
 							</div>
-							<% if (!useHexIp) { %>
-							<div class="col-sm-3">
-								<label for="connect:username">Username</label>
-							</div>
-							<div class="col-sm-9">
-								<input class="input username" id="connect:username" name="username" value="<%= defaults.username %>">
-							</div>
-							<% } %>
 							<div class="col-sm-3">
 								<label for="connect:realname">Real name</label>
 							</div>

@@ -507,6 +507,8 @@ $(function() {
 	});
 
 	socket.on("network_changed", function(data) {
+        sidebar.find("#network-" + data.network).data("options", data.serverOptions);
+        
         // get input noprivate after connection and emit for changed modes on irc.
         $.each( $("#settings .noprivate"), function() {
             var name = $(this).attr("name");
@@ -523,8 +525,6 @@ $(function() {
 		        });
 			}
         });
-
-		sidebar.find("#network-" + data.network).data("options", data.serverOptions);
 	});
 
 	socket.on("nick", function(data) {
@@ -1262,7 +1262,6 @@ $(function() {
 
 	forms.on("input", ".nick", function() {
 		var nick = $(this).val();
-		forms.find(".username").val(nick);
 	});
 
 	Mousetrap.bind([

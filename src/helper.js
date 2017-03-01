@@ -14,7 +14,6 @@ var Helper = {
 	getUserConfigPath: getUserConfigPath,
 	getUserLogsPath: getUserLogsPath,
 	setHome: setHome,
-	ip2hex: ip2hex,
 
 	password: {
 		hash: passwordHash,
@@ -56,23 +55,6 @@ function getUserConfigPath(name) {
 
 function getUserLogsPath(name, network) {
 	return path.join(this.HOME, "logs", name, network);
-}
-
-function ip2hex(address) {
-	// no ipv6 support
-	if (!net.isIPv4(address)) {
-		return "00000000";
-	}
-
-	return address.split(".").map(function(octet) {
-		var hex = parseInt(octet, 10).toString(16);
-
-		if (hex.length === 1) {
-			hex = "0" + hex;
-		}
-
-		return hex;
-	}).join("");
 }
 
 function expandHome(shortenedPath) {

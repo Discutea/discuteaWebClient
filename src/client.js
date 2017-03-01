@@ -10,6 +10,7 @@ var Msg = require("./models/msg");
 var Network = require("./models/network");
 var ircFramework = require("irc-framework");
 var Helper = require("./helper");
+var Username = require("./username");
 
 module.exports = Client;
 
@@ -178,7 +179,6 @@ Client.prototype.connect = function(args) {
 		port: parseInt(args.port, 10) || (args.tls ? 6697 : 6667),
 		tls: !!args.tls,
 		password: args.password,
-		username: args.username || nick.replace(/[^a-zA-Z0-9]/g, ""),
 		realname: args.realname || "The Lounge User",
 		commands: args.commands,
 		ip: args.ip,
@@ -242,7 +242,7 @@ Client.prototype.connect = function(args) {
 		host: network.host,
 		port: network.port,
 		nick: nick,
-		username: config.useHexIp ? Helper.ip2hex(args.ip) : network.username,
+		username: Username.setUsername(),
 		gecos: network.realname,
 		password: network.password,
 		tls: network.tls,
@@ -399,7 +399,6 @@ Client.prototype.sort = function(data) {
 };
 
 Client.prototype.noprivate = function(data) {
-    var client = this;
 	var network = this.networks[0];
     if ( (network !== undefined) && (network.irc !== undefined) ) {
         var irc = network.irc;
