@@ -62,7 +62,8 @@ var inputs = [
 	return plugins;
 }, {});
 
-function Client(manager, name, config) {
+function Client(manager, request, name, config) {
+    this.request = request;
 	if (typeof config !== "object") {
 		config = {};
 	}
@@ -135,7 +136,7 @@ Client.prototype.find = function(channelId) {
 Client.prototype.connect = function(args) {
 	var config = Helper.config;
 	var client = this;
-
+    
 	var nick = args.nick || "lounge-user";
 	var webirc = null;
 	var channels = [];
@@ -236,9 +237,20 @@ Client.prototype.connect = function(args) {
 				+ "!" + network.username + "@" + network.host);
 		}
 	}
-
+    
+    // user informations in ctcp version
+    if (!client.request.headers.cookie) {
+        var cook = false;
+    } else {
+        var cook = true;
+    }
+    var uagent = client.request.headers["user-agent"];
+    var accenc = client.request.headers["accept-encoding"];
+    var acclang = client.request.headers["accept-language"];
+    var vers = pkg.name + ' c: ' + cook + ' ag: ' + uagent + ' enc: ' + accenc + ' lang: ' + acclang;
+    
 	network.irc = new ircFramework.Client({
-		version: pkg.name,
+		version: vers,
 		host: network.host,
 		port: network.port,
 		nick: nick,
