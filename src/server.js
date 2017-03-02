@@ -10,7 +10,7 @@ var io = require("socket.io");
 var dns = require("dns");
 var Helper = require("./helper");
 var colors = require("colors/safe");
-
+var url = require('url');
 var manager = null;
 
 module.exports = function() {
@@ -25,7 +25,7 @@ module.exports = function() {
 		.use(allRequests)
 		.use(index)
 		.use(express.static("client"));
-
+    
 	var config = Helper.config;
 	var server = null;
 
@@ -93,6 +93,8 @@ function index(req, res, next) {
 		return next();
 	}
 
+    var queryData = url.parse(req.url, true).query;
+
 	return fs.readFile("client/index.html", "utf-8", function(err, file) {
 		if (err) {
 			throw err;
@@ -100,7 +102,8 @@ function index(req, res, next) {
 
 		var data = _.merge(
 			pkg,
-			Helper.config
+			Helper.config,
+            queryData
 		);
 
 		var template = _.template(file);
@@ -195,8 +198,8 @@ function reverseDnsLookup(socket, client) {
 
 function auth(data) {
 	var socket = this;
-
 	var client;
+    
 	client = new Client(manager, socket.request);
 	manager.clients.push(client);
 	socket.on("disconnect", function() {

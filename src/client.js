@@ -10,7 +10,6 @@ var Msg = require("./models/msg");
 var Network = require("./models/network");
 var ircFramework = require("irc-framework");
 var Helper = require("./helper");
-var Username = require("./username");
 
 module.exports = Client;
 
@@ -160,8 +159,8 @@ Client.prototype.connect = function(args) {
 		}
 	// `join` is kept for backwards compatibility when updating from versions <2.0
 	// also used by the "connect" window
-	} else if (args.join) {
-		channels = args.join
+	} else if (config.defaults.join) {
+		channels = config.defaults.join
 			.replace(/,/g, " ")
 			.split(/\s+/g)
 			.map(function(chan) {
@@ -175,10 +174,11 @@ Client.prototype.connect = function(args) {
 	args.hostname = args.hostname || (client.config && client.config.hostname) || client.hostname;
 
 	var network = new Network({
-		name: args.name || "",
-		host: args.host || "",
-		port: parseInt(args.port, 10) || (args.tls ? 6697 : 6667),
-		tls: !!args.tls,
+		name: config.defaults.name,
+		host: config.defaults.host,
+		port: config.defaults.port,
+		tls: config.defaults.tls,
+        username: args.username || nick.replace(/[^a-zA-Z0-9]/g, ""),
 		password: args.password,
 		realname: args.realname || "The Lounge User",
 		commands: args.commands,
@@ -186,35 +186,13 @@ Client.prototype.connect = function(args) {
 		hostname: args.hostname,
 		channels: channels,
 	});
+    
 	network.setNick(nick);
 
 	client.networks.push(network);
 	client.emit("network", {
 		networks: [network]
 	});
-
-	if (config.lockNetwork) {
-		// This check is needed to prevent invalid user configurations
-		if (args.host && args.host.length > 0 && args.host !== config.defaults.host) {
-			network.channels[0].pushMessage(client, new Msg({
-				type: Msg.Type.ERROR,
-				text: "Hostname you specified is not allowed."
-			}), true);
-			return;
-		}
-
-		network.host = config.defaults.host;
-		network.port = config.defaults.port;
-		network.tls = config.defaults.tls;
-	}
-
-	if (network.host.length === 0) {
-		network.channels[0].pushMessage(client, new Msg({
-			type: Msg.Type.ERROR,
-			text: "You must specify a hostname to connect."
-		}), true);
-		return;
-	}
 
 	if (config.webirc && network.host in config.webirc) {
 		if (!args.hostname) {
@@ -244,6 +222,7 @@ Client.prototype.connect = function(args) {
     } else {
         var cook = true;
     }
+    
     var uagent = client.request.headers["user-agent"];
     var accenc = client.request.headers["accept-encoding"];
     var acclang = client.request.headers["accept-language"];
@@ -254,7 +233,7 @@ Client.prototype.connect = function(args) {
 		host: network.host,
 		port: network.port,
 		nick: nick,
-		username: Username.setUsername(),
+		username: network.username,
 		gecos: network.realname,
 		password: network.password,
 		tls: network.tls,

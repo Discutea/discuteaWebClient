@@ -1265,30 +1265,6 @@ $(function() {
 	});
 
 	Mousetrap.bind([
-		"command+up",
-		"command+down",
-		"ctrl+up",
-		"ctrl+down"
-	], function(e, keys) {
-		var channels = sidebar.find(".chan");
-		var index = channels.index(channels.filter(".active"));
-		var direction = keys.split("+").pop();
-		switch (direction) {
-		case "up":
-			// Loop
-			var upTarget = (channels.length + (index - 1 + channels.length)) % channels.length;
-			channels.eq(upTarget).click();
-			break;
-
-		case "down":
-			// Loop
-			var downTarget = (channels.length + (index + 1 + channels.length)) % channels.length;
-			channels.eq(downTarget).click();
-			break;
-		}
-	});
-
-	Mousetrap.bind([
 		"command+k",
 		"ctrl+shift+l"
 	], function(e) {
