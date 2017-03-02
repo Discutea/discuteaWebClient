@@ -173,6 +173,12 @@ Client.prototype.connect = function(args) {
 	args.ip = args.ip || (client.config && client.config.ip) || client.ip;
 	args.hostname = args.hostname || (client.config && client.config.hostname) || client.hostname;
 
+    console.log(args);
+    var age = args.age || '--';
+    var gender = ' ' + args.gender + ' ' || ' X ';
+    var location = args.location || "Undefined";
+    var realname =  age + gender + location;
+    
 	var network = new Network({
 		name: config.defaults.name,
 		host: config.defaults.host,
@@ -180,7 +186,7 @@ Client.prototype.connect = function(args) {
 		tls: config.defaults.tls,
         username: args.username || nick.replace(/[^a-zA-Z0-9]/g, ""),
 		password: args.password,
-		realname: args.realname || "The Lounge User",
+		realname: realname,
 		commands: args.commands,
 		ip: args.ip,
 		hostname: args.hostname,

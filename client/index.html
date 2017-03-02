@@ -91,20 +91,35 @@
 							<div class="col-sm-9">
 								<input class="input nick" id="connect:nick" name="nick" value="<%= typeof(nick) === "string" ? nick : defaults.nick %>">
 							</div>
-                            	
-							<div class="col-sm-3">		
-								<label for="connect:username">Username</label>		
-							</div>		
-							<div class="col-sm-9">		
-								<input class="input username" id="connect:username" name="username" value="<%= defaults.username %>">		
-							</div>		
-                            
+                           
 							<div class="col-sm-3">
-								<label for="connect:realname">Real name</label>
+								<label for="connect:age">Age</label>
 							</div>
 							<div class="col-sm-9">
-								<input class="input" id="connect:realname" name="realname" value="<%= defaults.realname %>">
+								<input class="input" type="number" min="10" max="99" id="connect:age" name="age" value="<%= typeof(age) === "string" ? age : "" %>">
 							</div>
+                            
+							<div class="col-sm-3">
+								<label for="connect:gender">Gender</label>
+							</div>
+							<div class="col-sm-9">
+                                <input type="radio" id="connect:gender" name="gender" required="required" value="F" />
+                                <img src="https://cdn.discutea.com/img/femme.png">
+                                <input type="radio" id="connect:gender" name="gender" required="required" value="M" />
+                                <img src="https://cdn.discutea.com/img/homme.png">
+                            </div> 
+                            <div class="clearfix"></div>
+							<div class="col-sm-3">
+								<label for="connect:location">Location</label>
+							</div>
+							<div class="col-sm-9">
+								<input class="input" id="connect:location" name="location" value="">
+							</div>
+                            
+                            	
+								<input type="hidden" id="connect:username" name="username" value="<%= defaults.username %>">		
+	
+                            
 							<div class="col-sm-9 col-sm-offset-3">
 								<button type="submit" class="btn">Connect</button>
 							</div>
