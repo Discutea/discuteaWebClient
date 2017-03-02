@@ -119,8 +119,6 @@ function init(socket, client) {
 		socket.emit("auth", {success: true});
 		socket.on("auth", auth);
 	} else {
-		socket.emit("authorized");
-
 		client.ip = getClientIp(socket.request);
 
 		socket.on("disconnect", function() {

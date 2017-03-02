@@ -120,77 +120,6 @@ $(function() {
 		$("#loading-page-message").text("Finalizing connection…");
 	});
 
-	socket.on("authorized", function() {
-		$("#loading-page-message").text("Authorized, loading messages…");
-	});
-
-	socket.on("auth", function(data) {
-		var login = $("#sign-in");
-		var token;
-
-		login.find(".btn").prop("disabled", false);
-
-		if (!data.success) {
-			window.localStorage.removeItem("token");
-
-			var error = login.find(".error");
-			error.show().closest("form").one("submit", function() {
-				error.hide();
-			});
-		} else {
-			token = window.localStorage.getItem("token");
-			if (token) {
-				$("#loading-page-message").text("Authorizing…");
-				socket.emit("auth", {token: token});
-			}
-		}
-
-		var input = login.find("input[name='user']");
-		if (input.val() === "") {
-			input.val(window.localStorage.getItem("user") || "");
-		}
-		if (token) {
-			return;
-		}
-		sidebar.find(".sign-in")
-			.click()
-			.end()
-			.find(".networks")
-			.html("")
-			.next()
-			.show();
-	});
-
-	socket.on("change-password", function(data) {
-		var passwordForm = $("#change-password");
-		if (data.error || data.success) {
-			var message = data.success ? data.success : data.error;
-			var feedback = passwordForm.find(".feedback");
-
-			if (data.success) {
-				feedback.addClass("success").removeClass("error");
-			} else {
-				feedback.addClass("error").removeClass("success");
-			}
-
-			feedback.text(message).show();
-			feedback.closest("form").one("submit", function() {
-				feedback.hide();
-			});
-		}
-
-		if (data.token && window.localStorage.getItem("token") !== null) {
-			setLocalStorageItem("token", data.token);
-		}
-
-		passwordForm
-			.find("input")
-			.val("")
-			.end()
-			.find(".btn")
-			.prop("disabled", false);
-	});
-
 	socket.on("init", function(data) {
 		$("#loading-page-message").text("Rendering…");
 
@@ -200,15 +129,8 @@ $(function() {
 			renderNetworks(data);
 		}
 
-		if (data.token && $("#sign-in-remember").is(":checked")) {
-			setLocalStorageItem("token", data.token);
-		} else {
-			window.localStorage.removeItem("token");
-		}
-
 		$("body").removeClass("signed-out");
 		$("#loading").remove();
-		$("#sign-in").remove();
 
 		var id = data.active;
 		var target = sidebar.find("[data-id='" + id + "']").trigger("click");
@@ -1222,17 +1144,7 @@ $(function() {
 		}
 	});
 
-	var forms = $("#sign-in, #connect, #change-password");
-
-	windows.on("show", "#sign-in", function() {
-		$(this).find("input").each(function() {
-			var self = $(this);
-			if (self.val() === "") {
-				self.focus();
-				return false;
-			}
-		});
-	});
+	var forms = $("#connect");
 
 	forms.on("submit", "form", function(e) {
 		e.preventDefault();
@@ -1243,9 +1155,8 @@ $(function() {
 			.end();
 		if (form.closest(".window").attr("id") === "connect") {
 			event = "conn";
-		} else if (form.closest("div").attr("id") === "change-password") {
-			event = "change-password";
-		}
+		} 
+        
 		var values = {};
 		$.each(form.serializeArray(), function(i, obj) {
 			if (obj.value !== "") {

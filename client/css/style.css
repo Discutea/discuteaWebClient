@@ -182,7 +182,6 @@ button {
 #sidebar .chan.special:before,
 #chat .special .title:before { content: "\f03a"; /* http://fontawesome.io/icon/list/ */ }
 
-#footer .sign-in:before { content: "\f023"; /* http://fontawesome.io/icon/lock/ */ }
 #footer .connect:before { content: "\f067"; /* http://fontawesome.io/icon/plus/ */ }
 #footer .settings:before { content: "\f013"; /* http://fontawesome.io/icon/cog/ */ }
 #footer .sign-out:before { content: "\f011"; /* http://fontawesome.io/icon/power-off/ */ }
@@ -559,21 +558,12 @@ button {
 	padding: 0 12px;
 }
 
-.signed-out #footer .sign-in {
-	display: inline-block;
-}
-
 .signed-out #footer .connect,
 .signed-out #footer .sign-out {
 	display: none;
 }
 
-.public #footer .sign-in,
 .public #footer .sign-out {
-	display: none;
-}
-
-#footer .sign-in {
 	display: none;
 }
 
@@ -1166,31 +1156,6 @@ button {
 	margin-top: 10px;
 }
 
-#sign-in label {
-	display: block;
-	margin-top: 10px;
-}
-
-#sign-in .remember {
-	float: left;
-	font-size: 14px;
-	margin-top: 12px;
-}
-
-#sign-in .remember input {
-	float: left;
-	margin: 3px 10px 0 0;
-}
-
-#sign-in .btn {
-	margin-top: 25px;
-}
-
-#sign-in .error {
-	color: #e74c3c;
-	margin-top: 1em;
-}
-
 #connect label {
 	display: block;
 	margin-top: 11px;
@@ -1250,19 +1215,6 @@ button {
 	font-size: 14px;
 	padding-top: 2px;
 	line-height: 1.8;
-}
-
-#settings #change-password .error,
-#settings #change-password .success {
-	margin-bottom: 1em;
-}
-
-#settings #change-password .error {
-	color: #e74c3c;
-}
-
-#settings #change-password .success {
-	color: #2ecc40;
 }
 
 #settings .error {
