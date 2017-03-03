@@ -1,4 +1,5 @@
 module.exports = {
+
 	actions: {
 		action: require("./actions/action.tpl"),
 		channel_list: require("./actions/channel_list.tpl"),

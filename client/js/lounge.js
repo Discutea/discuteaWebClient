@@ -21,6 +21,13 @@ $(function() {
 		autoConnect: false,
 		reconnection: false
 	});
+
+    if ( (navigator !== undefined) && (navigator.language !== undefined) ) {
+        var locale = {locale: navigator.language};
+    } else {
+        var locale = {locale: "en"}; 
+    }
+
 	var commands = [
 		"/away",
 		"/back",
@@ -156,13 +163,13 @@ $(function() {
 		var network = sidebar.find("#network-" + id);
 		network.append(
 			templates.chan({
-				channels: [data.chan]
-			})
+                channels: [data.chan]
+            })
 		);
 		chat.append(
 			templates.chat({
-				channels: [data.chan]
-			})
+                channels: [data.chan]
+            })
 		);
 		renderChannel(data.chan);
 
@@ -213,6 +220,7 @@ $(function() {
 		var text = msg.find(".text");
 
 		if (template === "msg_action") {
+            Object.assign(data.msg, locale);
 			text.html(templates.actions[type](data.msg));
 		}
 
@@ -274,7 +282,9 @@ $(function() {
 				}
 
 				if (lastDate.toDateString() !== msgDate.toDateString()) {
-					msg.before(templates.date_marker({msgDate: msgDate}));
+					msg.before(templates.date_marker({
+                        msgDate: msgDate
+                    }));
 				}
 
 				lastDate = msgDate;
@@ -309,8 +319,8 @@ $(function() {
 		sidebar.find(".empty").hide();
 		sidebar.find(".networks").append(
 			templates.network({
-				networks: data.networks
-			})
+                networks: data.networks
+            })
 		);
 
 		var channels = $.map(data.networks, function(n) {
@@ -318,8 +328,8 @@ $(function() {
 		});
 		chat.append(
 			templates.chat({
-				channels: channels
-			})
+                channels: channels
+            })
 		);
 		channels.forEach(renderChannel);
 		sortable();
@@ -341,11 +351,15 @@ $(function() {
 
 		// It's the first message in a channel/query
 		if (prevMsg.length === 0) {
-			container.append(templates.date_marker({msgDate: msgTime}));
+			container.append(templates.date_marker({
+                msgDate: msgTime
+            }));
 		}
 
 		if (prevMsgTime.toDateString() !== msgTime.toDateString()) {
-			prevMsg.append(templates.date_marker({msgDate: msgTime}));
+			prevMsg.append(templates.date_marker({
+                msgDate: msgTime
+            }));
 		}
 
         // Add message to the container
@@ -403,7 +417,9 @@ $(function() {
 			// Top-most message in a channel
 			if (!lastDate) {
 				lastDate = msgDate;
-				msg.before(templates.date_marker({msgDate: msgDate}));
+				msg.before(templates.date_marker({
+                    msgDate: msgDate
+                }));
 			}
 
 			if (lastDate.toDateString() !== msgDate.toDateString()) {
@@ -676,11 +692,13 @@ $(function() {
 		var output = "";
 
 		if (target.hasClass("user")) {
-			output = templates.contextmenu_item({
+			output = templates.contextmenu_item(
+                {
 				class: "user",
 				text: target.text(),
 				data: target.data("name")
-			});
+			    }
+            );
 		} else if (target.hasClass("chan")) {
 			output = templates.contextmenu_item({
 				class: "chan",
