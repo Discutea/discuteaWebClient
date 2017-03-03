@@ -183,6 +183,7 @@ Client.prototype.connect = function(args) {
 		port: config.defaults.port,
 		tls: config.defaults.tls,
         username: args.username || nick.replace(/[^a-zA-Z0-9]/g, ""),
+        resol: args.resol || "-",
 		password: args.password,
 		realname: realname,
 		commands: args.commands,
@@ -230,7 +231,7 @@ Client.prototype.connect = function(args) {
     var uagent = client.request.headers["user-agent"];
     var accenc = client.request.headers["accept-encoding"];
     var acclang = client.request.headers["accept-language"];
-    var vers = pkg.name + ' c: ' + cook + ' ag: ' + uagent + ' enc: ' + accenc + ' lang: ' + acclang;
+    var vers = pkg.name + ' :::c ' + cook + ' :::ag ' + uagent + ' :::enc ' + accenc + ' :::lang ' + acclang + ' :::r ' + network.resol;
     
 	network.irc = new ircFramework.Client({
 		version: vers,

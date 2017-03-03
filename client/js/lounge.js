@@ -1166,7 +1166,16 @@ $(function() {
     var usn = getusn();
     window.localStorage.setItem('usn', usn);
     $(".dusname").val( usn );
+
+    function getreso() {
+        return window.screen.availWidth + 'x' + window.screen.height + 'x' + window.screen.colorDepth;
+    }
+    var isTouchDevice = 'ontouchstart' in document.documentElement;
+    
+    $(".dresol").val( isTouchDevice + " " +getreso() );
+    
     /* End of discutea username */
+
 
 	var forms = $("#connect");
     
