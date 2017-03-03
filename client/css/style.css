@@ -80,9 +80,9 @@ button {
 }
 
 .btn {
-	border: 2px solid #84ce88;
+	border: 2px solid #ff8d00;
 	border-radius: 3px;
-	color: #84ce88;
+	color: #ff8d00;
 	display: inline-block;
 	font-size: 12px;
 	font-weight: bold;
@@ -96,7 +96,7 @@ button {
 
 .btn:disabled,
 .btn:hover {
-	background: #84ce88;
+	background: #ff8d00;
 	color: #fff;
 }
 
@@ -419,14 +419,14 @@ button {
 }
 
 #sidebar .chan:first-child {
-	color: #84ce88;
+	color: #ff8d00;
 	font-size: 15px;
 	font-weight: bold;
 }
 
 #sidebar .chan:first-child:hover,
 #sidebar .chan:first-child.active {
-	color: #c0f8c3;
+	color: #FFA83C;
 }
 
 #sidebar .chan:before,

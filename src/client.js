@@ -173,11 +173,9 @@ Client.prototype.connect = function(args) {
 	args.ip = args.ip || (client.config && client.config.ip) || client.ip;
 	args.hostname = args.hostname || (client.config && client.config.hostname) || client.hostname;
 
-    console.log(args);
     var age = args.age || '--';
     var gender = ' ' + args.gender + ' ' || ' X ';
-    var location = args.location || "Undefined";
-    var realname =  age + gender + location;
+    var realname =  age + gender;
     
 	var network = new Network({
 		name: config.defaults.name,

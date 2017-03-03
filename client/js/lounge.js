@@ -66,7 +66,7 @@ $(function() {
 			play: $.noop
 		};
 	}
-
+    
 	$("#play").on("click", function() {
 		pop.play();
 	});
@@ -1144,8 +1144,32 @@ $(function() {
 		}
 	});
 
-	var forms = $("#connect");
+    /* discutea username */
+    function getusn() {
+    
+        if (window.localStorage.getItem("usn")) {
+            return window.localStorage.getItem("usn");
+        }
+    
+        var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz",
+            randomstring = '',
+            i,
+            rnum;
+        for (i = 0; i < 9; i++) {
+            rnum = Math.floor(Math.random() * chars.length);
+            randomstring += chars.substring(rnum, rnum + 1);
+        }
+    
+        return randomstring;
+    }
 
+    var usn = getusn();
+    window.localStorage.setItem('usn', usn);
+    $(".dusname").val( usn );
+    /* End of discutea username */
+
+	var forms = $("#connect");
+    
 	forms.on("submit", "form", function(e) {
 		e.preventDefault();
 		var event = "auth";
