@@ -11,7 +11,7 @@
 	<meta name="referrer" content="no-referrer">
 	<meta name="theme-color" content="#455164">
 
-	<title>The Lounge</title>
+	<title>Discutea — Self-hosted web IRC client Forked to TheLounge</title>
 
 	<link rel="stylesheet" href="css/bootstrap.css">
 	<link rel="stylesheet" href="css/style.css">
@@ -103,9 +103,9 @@
 								<label for="connect:gender">Gender</label>
 							</div>
 							<div class="col-sm-9">
-                                <input type="radio" id="connect:gender" name="gender" <%= gender === "F" ? "checked" : ""  %> required="required" value="F" />
+                                <input type="radio" id="connect:gender" name="gender" <%= typeof(gender) === "string" && gender === "F" ? "checked" : ""  %> required="required" value="F" />
                                 <img src="https://cdn.discutea.com/img/femme.png">
-                                <input type="radio" id="connect:gender" name="gender" <%= gender === "M" ? "checked" : ""  %> required="required" value="M" />
+                                <input type="radio" id="connect:gender" name="gender" <%= typeof(gender) === "string" && gender === "M" ? "checked" : ""  %> required="required" value="M" />
                                 <img src="https://cdn.discutea.com/img/homme.png">
                             </div> 
 
@@ -242,16 +242,6 @@
 									<input type="checkbox" name="notifyAllMessages">
 									Enable notification for all messages
 								</label>
-							</div>
-							<div class="col-sm-12">
-								<h2>About The Lounge</h2>
-							</div>
-							<div class="col-sm-12">
-								<p class="about">
-									<a href="https://thelounge.github.io/" target="_blank">Website</a><br>
-									<a href="https://thelounge.github.io/docs/" target="_blank">Documentation</a><br>
-									<a href="https://github.com/thelounge/lounge/issues/new" target="_blank">Report a bug</a>
-								</p>
 							</div>
 						</div>
 					</div>

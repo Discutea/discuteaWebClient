@@ -1,5 +1,5 @@
 {
-  "name": "thelounge",
+  "name": "discuteaWebClient",
   "description": "The self-hosted Web IRC client",
   "version": "2.2.1",
   "preferGlobal": true,
@@ -8,9 +8,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/thelounge/lounge.git"
+    "url": "https://github.com/Discutea/discuteaWebClient.git"
   },
-  "homepage": "https://thelounge.github.io/",
   "scripts": {
     "start": "node index",
     "start-dev": "npm-run-all --parallel watch start",
