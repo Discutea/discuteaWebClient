@@ -1,3 +1,3 @@
-Topic set by
+{{ trans 'action_topic_set_by' locale }}
 <span role="button" class="user {{modes mode}}" data-name="{{nick}}">{{mode}}{{nick}}</span>
-on {{localetime when}}
+{{ trans 'on' locale }} {{localetime when}}

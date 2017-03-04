@@ -1,9 +1,9 @@
 <span role="button" class="user" data-name="{{from}}">{{from}}</span>
-invited
+{{ trans 'action_invite_invited' locale }}
 {{#if invitedYou}}
-	you
+    {{ trans 'you' locale }}
 {{else}}
 	<span role="button" class="user" data-name="{{invited}}">{{invited}}</span>
 {{/if}}
-to
+{{ trans 'to' locale }}
 {{{parse channel}}}

@@ -1,8 +1,8 @@
 {{#if from}}
 	<span role="button" class="user {{modes mode}}" data-name="{{from}}">{{mode}}{{from}}</span>
-	has changed the topic to:
+    {{ trans 'action_topic' locale }}
 {{else}}
-	The topic is:
+    {{ trans 'action_topic_is' locale }}
 {{/if}}
 
 <span class="new-topic">{{{parse text}}}</span>
