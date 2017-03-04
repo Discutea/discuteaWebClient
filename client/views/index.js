@@ -20,7 +20,6 @@ module.exports = {
 	chat: require("./chat.tpl"),
 	contextmenu_divider: require("./contextmenu_divider.tpl"),
 	contextmenu_item: require("./contextmenu_item.tpl"),
-	date_marker: require("./date-marker.tpl"),
 	msg: require("./msg.tpl"),
 	msg_action: require("./msg_action.tpl"),
 	msg_unhandled: require("./msg_unhandled.tpl"),

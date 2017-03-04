@@ -269,28 +269,6 @@ $(function() {
 			channel.append(templates.unread_marker());
 		}
 
-		if (data.type !== "lobby") {
-			var lastDate;
-			$(chat.find("#chan-" + data.id + " .messages .msg[data-time]")).each(function() {
-				var msg = $(this);
-				var msgDate = new Date(msg.attr("data-time"));
-
-				// Top-most message in a channel
-				if (!lastDate) {
-					lastDate = msgDate;
-					msg.before(templates.date_marker({msgDate: msgDate}));
-				}
-
-				if (lastDate.toDateString() !== msgDate.toDateString()) {
-					msg.before(templates.date_marker({
-                        msgDate: msgDate
-                    }));
-				}
-
-				lastDate = msgDate;
-			});
-		}
-
 	}
 
 	function renderChannelUsers(data) {
@@ -343,25 +321,7 @@ $(function() {
 		var msg = buildChatMessage(data);
 		var target = "#chan-" + data.chan;
 		var container = chat.find(target + " .messages");
-
-        // Check if date changed
-		var prevMsg = $(container.find(".msg")).last();
-		var prevMsgTime = new Date(prevMsg.attr("data-time"));
-		var msgTime = new Date(msg.attr("data-time"));
-
-		// It's the first message in a channel/query
-		if (prevMsg.length === 0) {
-			container.append(templates.date_marker({
-                msgDate: msgTime
-            }));
-		}
-
-		if (prevMsgTime.toDateString() !== msgTime.toDateString()) {
-			prevMsg.append(templates.date_marker({
-                msgDate: msgTime
-            }));
-		}
-
+        
         // Add message to the container
 		container
 			.append(msg)
@@ -375,60 +335,6 @@ $(function() {
 				.find(".unread-marker")
 				.appendTo(container);
 		}
-	});
-
-	socket.on("more", function(data) {
-		var documentFragment = buildChannelMessages(data.chan, data.messages);
-		var chan = chat
-			.find("#chan-" + data.chan)
-			.find(".messages");
-
-		// Remove the date-change marker we put at the top, because it may
-		// not actually be a date change now
-		var children = $(chan).children();
-		if (children.eq(0).hasClass("date-marker")) { // Check top most child
-			children.eq(0).remove();
-		} else if (children.eq(0).hasClass("unread-marker") && children.eq(1).hasClass("date-marker")) {
-			// Otherwise the date-marker would get 'stuck' because of the new-message marker
-			children.eq(1).remove();
-		}
-
-		// get the scrollable wrapper around messages
-		var scrollable = chan.closest(".chat");
-		var heightOld = chan.height();
-		chan.prepend(documentFragment).end();
-
-		// restore scroll position
-		var position = chan.height() - heightOld;
-		scrollable.scrollTop(position);
-
-		if (data.messages.length !== 100) {
-			scrollable.find(".show-more").removeClass("show");
-		}
-
-		// Date change detect
-		// Have to use data instaid of the documentFragment because it's being weird
-		var lastDate;
-		$(data.messages).each(function() {
-			var msgData = this;
-			var msgDate = new Date(msgData.time);
-			var msg = $(chat.find("#chan-" + data.chan + " .messages #msg-" + msgData.id));
-
-			// Top-most message in a channel
-			if (!lastDate) {
-				lastDate = msgDate;
-				msg.before(templates.date_marker({
-                    msgDate: msgDate
-                }));
-			}
-
-			if (lastDate.toDateString() !== msgDate.toDateString()) {
-				msg.before(templates.date_marker({msgDate: msgDate}));
-			}
-
-			lastDate = msgDate;
-		});
-
 	});
 
 	socket.on("network", function(data) {
@@ -815,11 +721,6 @@ $(function() {
 		input.val("");
 		resetInputHeight(input.get(0));
 
-		if (text.indexOf("/clear") === 0) {
-			clear();
-			return;
-		}
-
 		socket.emit("input", {
 			target: chat.data("id"),
 			text: text
@@ -1134,15 +1035,6 @@ $(function() {
 		}
 	});
 
-	chat.on("click", ".show-more-button", function() {
-		var self = $(this);
-		var count = self.parent().next(".messages").children().length;
-		socket.emit("more", {
-			target: self.data("id"),
-			count: count
-		});
-	});
-
 	chat.on("click", ".toggle-button", function() {
 		var self = $(this);
 		var localChat = self.closest(".chat");
@@ -1227,43 +1119,10 @@ $(function() {
 	});
 
 	Mousetrap.bind([
-		"command+k",
-		"ctrl+shift+l"
-	], function(e) {
-		if (e.target === input[0]) {
-			clear();
-			e.preventDefault();
-		}
-	});
-
-	Mousetrap.bind([
 		"escape"
 	], function() {
 		contextMenuContainer.hide();
 	});
-
-	setInterval(function() {
-		chat.find(".chan:not(.active)").each(function() {
-			var chan = $(this);
-			if (chan.find(".messages .msg").slice(0, -100).remove().length) {
-				chan.find(".show-more").addClass("show");
-
-				// Remove date-seperators that would otherwise be "stuck" at the top
-				// of the channel
-				chan.find(".date-marker").each(function() {
-					if ($(this).next().hasClass("date-marker")) {
-						$(this).remove();
-					}
-				});
-			}
-		});
-	}, 1000 * 10);
-
-	function clear() {
-		chat.find(".active")
-			.find(".show-more").addClass("show").end()
-			.find(".messages .msg, .date-marker").remove();
-	}
 
 	function complete(word) {
 		var words = commands.slice();

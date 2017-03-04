@@ -133,12 +133,6 @@ function init(socket, client) {
 			}
 		);
 		socket.on(
-			"more",
-			function(data) {
-				client.more(data);
-			}
-		);
-		socket.on(
 			"conn",
 			function(data) {
 				// prevent people from overriding webirc settings
