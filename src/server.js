@@ -12,10 +12,11 @@ var Helper = require("./helper");
 var colors = require("colors/safe");
 var url = require('url');
 var manager = null;
+var acceptLanguage = require('accept-language');
 
 module.exports = function() {
 	manager = new ClientManager();
-
+    
 	if (!fs.existsSync("client/js/bundle.js")) {
 		log.error(`The client application was not built. Run ${colors.bold("NODE_ENV=production npm run build")} to resolve this.`);
 		process.exit();
@@ -64,11 +65,7 @@ module.exports = function() {
 	const protocol = config.https.enable ? "https" : "http";
 	const host = config.host || "*";
 
-	log.info(`The Lounge is now running \
-using node ${colors.green(process.versions.node)} on ${colors.green(process.platform)} (${process.arch})`);
-	log.info(`Configuration file: ${colors.green(Helper.CONFIG_PATH)}`);
-	log.info(`Available on ${colors.green(protocol + "://" + host + ":" + config.port + "/")} mode`);
-	log.info("Press Ctrl-C to stop\n");
+	log.info("The Client is now running");
 };
 
 function getClientIp(req) {
@@ -88,7 +85,34 @@ function allRequests(req, res, next) {
 	return next();
 }
 
+function getParsedAcceptLangs(hdr) {
+  var pairs = hdr.split(',');
+  var pair = pairs[0].split(';');
+  var result = pair[0].split('-')[0];
+  result = result.toLowerCase();
+ 
+  return result;
+}
+
 function index(req, res, next) {
+
+    if (!req.headers['accept-language']) {
+        var locale = 'en';
+    } else {
+        var locale = getParsedAcceptLangs(req.headers['accept-language']);
+        if (!locale) {
+            locale = 'en';
+        }
+    }
+    
+    if (fs.existsSync('client/translations/messages_' + locale + '.js')) {
+        var trans = require('../client/translations/messages_' + locale);
+    } else {
+        var trans = require('../client/translations/messages_en');
+    }
+
+    trans = {trans: trans.web};
+
 	if (req.url.split("?")[0] !== "/") {
 		return next();
 	}
@@ -103,7 +127,8 @@ function index(req, res, next) {
 		var data = _.merge(
 			pkg,
 			Helper.config,
-            queryData
+            queryData,
+            trans
 		);
 
 		var template = _.template(file);

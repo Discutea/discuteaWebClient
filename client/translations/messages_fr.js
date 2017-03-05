@@ -20,7 +20,28 @@ var trans = {
     action_whois_connected:      'est connecté à',
     action_whois_secure:         'utilise une connexion sécurisée',
     action_whois_away:           'est absent',
-    action_whois_idle:           'est inactif depuis le'
+    action_whois_idle:           'est inactif depuis le',
+    web: {
+        connectTo: 'Connexion à',
+        title: 'Client IRC auto-hébergé pour le web branche de Lounge',
+        notconnected: 'Vous n\'êtes pas encore connecté.',
+        loading: 'Le client IRC de Discutea se charge ...',
+        loadingapp: 'Chargement de l\'application ...',
+        jsenabled: 'Assurez-vous que JavaScript est activé.',
+        connectlost: 'Connexion perdue &mdash; Cliquez ici pour vous reconnecter',
+        connect: 'connexion',
+        form: {
+            nick: 'Pseudo',
+            age: 'Age',
+            gender: 'Sexe',
+        },
+        settings: {
+            settings: 'Préférences',
+            messages: 'Messages',
+            showjoins: 'Voir les entrées',
+            showmotd: 'Voir le <abbr title="Message du jour">MOTD</abbr>'
+        }
+    }
 };
 
 module.exports = trans;

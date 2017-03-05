@@ -11,7 +11,7 @@
 	<meta name="referrer" content="no-referrer">
 	<meta name="theme-color" content="#455164">
 
-	<title>Discutea — Self-hosted web IRC client Forked to TheLounge</title>
+	<title>Discutea — <%= trans.title %></title>
 
 	<link rel="stylesheet" href="css/bootstrap.css">
 	<link rel="stylesheet" href="css/style.css">
@@ -28,7 +28,7 @@
 		<aside id="sidebar">
 			<div class="networks"></div>
 			<div class="empty">
-				You're not connected to any networks yet.
+                <%= trans.notconnected %>
 			</div>
 		</aside>
 		<footer id="footer">
@@ -42,17 +42,17 @@
 					<div class="container">
 						<div class="row">
 							<div class="col-xs-12">
-								<h1 class="title">The Lounge is loading…</h1>
+								<h1 class="title"><%= trans.loading %></h1>
 							</div>
 							<div class="col-xs-12">
-								<p id="loading-page-message">Loading the app… <a href="http://enable-javascript.com/" target="_blank">Make sure to have JavaScript enabled.</a></p>
+								<p id="loading-page-message"><%= trans.loadingapp %> <a href="http://enable-javascript.com/" target="_blank"><%= trans.jsenabled %></a></p>
 							</div>
 						</div>
 					</div>
 				</div>
 				<div id="chat-container" class="window">
 					<div id="chat"></div>
-					<button id="connection-error" class="btn btn-reconnect">Client connection lost &mdash; Click here to reconnect</button>
+					<button id="connection-error" class="btn btn-reconnect"><%= trans.connectlost %></button>
 					<form id="form" method="post" action="">
 						<div class="input">
 							<span id="nick">
@@ -79,28 +79,25 @@
 						<div class="row">
 							<div class="col-sm-12">
 								<h1 class="title">
-                                    Connect to <%= defaults.name %>
+                                    <%= trans.connectTo %> <%= defaults.name %>
 								</h1>
 							</div>
-							<div class="col-sm-12">
-								<h2>User preferences</h2>
-							</div>
 							<div class="col-sm-3">
-								<label for="connect:nick">Nick</label>
+								<label for="connect:nick"><%= trans.form.nick %></label>
 							</div>	
 							<div class="col-sm-9">
 								<input class="input nick" id="connect:nick" name="nick" value="<%= typeof(nick) === "string" ? nick : defaults.nick %>">
 							</div>
                            
 							<div class="col-sm-3">
-								<label for="connect:age">Age</label>
+								<label for="connect:age"><%= trans.form.age %></label>
 							</div>
 							<div class="col-sm-9">
 								<input class="input" required="required" type="number" min="10" max="99" id="connect:age" name="age" value="<%= typeof(age) === "string" ? age : "" %>">
 							</div>
                             
 							<div class="col-sm-3">
-								<label for="connect:gender">Gender</label>
+								<label for="connect:gender"><%= trans.form.gender %></label>
 							</div>
 							<div class="col-sm-9">
                                 <input type="radio" id="connect:gender" name="gender" <%= typeof(gender) === "string" && gender === "F" ? "checked" : ""  %> required="required" value="F" />
@@ -113,7 +110,7 @@
 							<input type="hidden" class="dresol" id="connect:resol" name="resol" value="">		
 
 							<div class="col-sm-9 col-sm-offset-3">
-								<button type="submit" class="btn">Connect</button>
+								<button type="submit" class="btn"><%= trans.connect %></button>
 							</div>
 						</div>
 					</form>
@@ -125,21 +122,21 @@
 					<div class="container">
 						<div class="row">
 							<div class="col-sm-12">
-								<h1 class="title">Settings</h1>
+								<h1 class="title"><%= trans.settings.settings %></h1>
 							</div>
 							<div class="col-sm-12">
-								<h2>Messages</h2>
+								<h2><%= trans.settings.messages %></h2>
 							</div>
 							<div class="col-sm-6">
 								<label class="opt">
 									<input type="checkbox" name="join">
-									Show joins
+                                    <%= trans.settings.showjoins %>
 								</label>
 							</div>
 							<div class="col-sm-6">
 								<label class="opt">
 									<input type="checkbox" name="motd">
-									Show <abbr title="Message Of The Day">MOTD</abbr>
+									<%= trans.settings.showmotd %>
 								</label>
 							</div>
 							<div class="col-sm-6">

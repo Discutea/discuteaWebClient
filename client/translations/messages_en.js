@@ -20,7 +20,28 @@ var trans = {
     action_whois_connected:      'is connected to',
     action_whois_secure:         'is using a secure connection',
     action_whois_away:           'is away',
-    action_whois_idle:           'has been idle since'
+    action_whois_idle:           'has been idle since',
+    web: {
+        connectTo: 'Connect to',
+        title: 'Self-hosted web IRC client Forked to TheLounge',
+        notconnected: 'You\'re not connected yet.',
+        loading: 'Discutea IRC client is loading…',
+        loadingapp: 'Loading the app…',
+        jsenabled: 'Make sure to have JavaScript enabled.',
+        connectlost: 'Client connection lost &mdash; Click here to reconnect',
+        connect: 'connect',
+        form: {
+            nick: 'Nick',
+            age: 'Age',
+            gender: 'Gender',
+        },
+        settings: {
+            settings: 'Settings',
+            messages: 'Messages',
+            showjoins: 'Show joins',
+            showmotd: 'Show <abbr title="Message Of The Day">MOTD</abbr>'
+        }
+    }
 };
 
 module.exports = trans;
