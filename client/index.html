@@ -142,102 +142,102 @@
 							<div class="col-sm-6">
 								<label class="opt">
 									<input type="checkbox" name="part">
-									Show parts
+                                    <%= trans.settings.showparts %>
 								</label>
 							</div>
 							<div class="col-sm-6">
 								<label class="opt">
 									<input type="checkbox" name="nick">
-									Show nick changes
+                                    <%= trans.settings.shownick %>
 								</label>
 							</div>
 							<div class="col-sm-6">
 								<label class="opt">
 									<input type="checkbox" name="mode">
-									Show mode
+                                    <%= trans.settings.showmode %>
 								</label>
 							</div>
 							<div class="col-sm-6">
 								<label class="opt">
 									<input type="checkbox" name="quit">
-									Show quits
+									<%= trans.settings.showquits %>
 								</label>
 							</div>
                             
 							<div class="col-sm-12">
-								<h2>Anti private</h2>
+								<h2><%= trans.settings.antiprivate %></h2>
 							</div>
 							<div class="col-sm-12">
 								<label class="opt">
 									<input class="noprivate" type="checkbox" name="noprivate">
-									Ne plus recevoir de messages privés
+                                    <%= trans.settings.nomp %>
 								</label>
 							</div>
 							<div class="col-sm-12">
 								<label class="opt">
 									<input class="noprivate" type="checkbox" name="noprivateregistered">
-									Recevoir des messages que de membres inscrits
+                                    <%= trans.settings.registeredmp %>
 								</label>
 							</div>
 							<div class="col-sm-12">
-								<h2>Visual Aids</h2>
+								<h2><%= trans.settings.visualaids %></h2>
 							</div>
 							<div class="col-sm-12">
 								<label class="opt">
 									<input type="checkbox" name="coloredNicks">
-									Enable colored nicknames
+                                    <%= trans.settings.colornick %>
 								</label>
 							</div>
 							<% if (typeof prefetch === "undefined" || prefetch !== false) { %>
 							<div class="col-sm-12">
-								<h2>Links and URLs</h2>
+								<h2><%= trans.settings.linkandurl %></h2>
 							</div>
 							<div class="col-sm-6">
 								<label class="opt">
 									<input type="checkbox" name="thumbnails">
-									Auto-expand thumbnails
+                                    <%= trans.settings.thumbnails %>
 								</label>
 							</div>
 							<div class="col-sm-6">
 								<label class="opt">
 									<input type="checkbox" name="links">
-									Auto-expand links
+                                    <%= trans.settings.links %>
 								</label>
 							</div>
 							<% } %>
 							<div class="col-sm-12">
-								<h2>Notifications</h2>
+								<h2><%= trans.settings.notifs %></h2>
 							</div>
 							<div class="col-sm-12">
 								<label class="opt">
 								<input id="desktopNotifications" type="checkbox" name="desktopNotifications">
-								Enable desktop notifications<br>
+								<%= trans.settings.notifdesktop %><br>
 								<div class="error" id="warnUnsupportedDesktopNotifications">
-									<strong>Warning</strong>:
-									Desktop notifications are not supported by your browser.
+									<strong><%= trans.warning %><br></strong>:
+									<%= trans.settings.notsupported %>
 								</div>
 								<div class="error" id="warnBlockedDesktopNotifications">
-									<strong>Warning</strong>:
-									Desktop notifications are blocked by your browser.
+									<strong><%= trans.warning %></strong>:
+                                    <%= trans.settings.notsupported %>
 								</div>
 								</label>
 							</div>
 							<div class="col-sm-12">
 								<label class="opt">
 								<input type="checkbox" name="notification">
-								Enable notification sound
+                                <%= trans.settings.notisound %>
 								</label>
 							</div>
 							<div class="col-sm-12">
 								<div class="opt">
-									<button id="play">Play sound</button>
+									<button id="play"><%= trans.settings.playsound %></button>
 								</div>
 							</div>
 
 							<div class="col-sm-12">
 								<label class="opt">
 									<input type="checkbox" name="notifyAllMessages">
-									Enable notification for all messages
+                                    <%= trans.settings.notifisall %>
 								</label>
 							</div>
 						</div>
