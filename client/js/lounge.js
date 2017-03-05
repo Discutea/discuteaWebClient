@@ -447,16 +447,16 @@ $(function() {
 
 	var options = $.extend({
 		coloredNicks: true,
-		desktopNotifications: false,
-		join: true,
+		desktopNotifications: true,
+		join: false,
 		links: true,
 		mode: true,
-		motd: false,
+		motd: true,
 		nick: true,
 		notification: true,
 		notifyAllMessages: false,
-		part: true,
-		quit: true,
+		part: false,
+		quit: false,
 		thumbnails: true,
 	}, JSON.parse(window.localStorage.getItem("settings")));
 

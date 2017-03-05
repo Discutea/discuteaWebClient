@@ -1,4 +1,6 @@
 module.exports = function(key, locale) {
+    var accepteds = ["en", "fr"];
+    
     if ((typeof key !== 'string') || (typeof locale !== 'string')) {
         return;
     }
@@ -6,10 +8,10 @@ module.exports = function(key, locale) {
     if (locale.length > 2) {
         locale = locale.substring(0,1);
     }
-    
+
     locale = locale.toLowerCase();
 
-    if ( (locale !== 'en') || (locale !== 'fr') ) {
+    if (accepteds.indexOf(locale) === -1) {
         locale = 'en';
     }
 
