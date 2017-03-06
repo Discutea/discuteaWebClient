@@ -41,6 +41,7 @@ $(function() {
 		"/kick",
 		"/leave",
 		"/me",
+        "/list",
 		"/mode",
 		"/msg",
 		"/nick",
@@ -623,7 +624,7 @@ $(function() {
 			output += templates.contextmenu_item({
 				class: "list",
 				text: "Channels List",
-				//data: ""
+                data: target.data("target")
 			});
            
 		contextMenuContainer.show();
@@ -929,7 +930,6 @@ $(function() {
 	});
     
 	contextMenu.on("click", ".context-menu-item", function() {
-        
 		switch ($(this).data("action")) {
 		case "close":
 			$(".networks .chan[data-target='" + $(this).data("data") + "'] .close").click();
@@ -942,7 +942,7 @@ $(function() {
 			break;
 		case "list":
 		    socket.emit("input", {
-			    target: 0,
+			    target: chat.data("id"),
 			    text: '/list'
 		    });
 			break;

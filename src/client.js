@@ -206,6 +206,7 @@ Client.prototype.connect = function(args) {
 
 		if (args.ip) {
 			if (config.webirc[network.host] instanceof Function) {
+                
 				webirc = config.webirc[network.host](client, args);
 			} else {
 				webirc = {

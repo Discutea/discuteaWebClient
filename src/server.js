@@ -157,6 +157,7 @@ function init(socket, client) {
 				client.input(data);
 			}
 		);
+        
 		socket.on(
 			"conn",
 			function(data) {
