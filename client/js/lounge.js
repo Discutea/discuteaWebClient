@@ -185,6 +185,8 @@ $(function() {
 			})
 			.last()
 			.click();
+            
+        renderSidebarInfos(data);
 	});
 
 	function buildChatMessage(data) {
@@ -208,7 +210,7 @@ $(function() {
 			"topic",
 			"topic_set_by",
 			"action",
-			"whois",
+//			"whois",
 			"ctcp",
 			"channel_list",
 		].indexOf(type) !== -1) {
@@ -284,13 +286,27 @@ $(function() {
         
         Object.assign(data, nick);
         var users = chat.find("#chan-" + data.id).find(".sidebar");
-        users.html(templates.query_infos(data));
+        users.html(templates.query(data));
         users.show();
         
-		renderSidebarQuery(data);
+		
     }
     
-    function renderSidebarQuery(data) {
+    function renderSidebarInfos(data) {
+        var infos = chat
+                   .find("#chan-" + data.chan.id)
+                   .find(".sidebar")
+                   .find(".whois")
+                   ;
+                   
+        infos.html(templates.query_infos(data.data)); 
+        console.log(data);
+        
+        //renderSidebarAvatar(data);
+    };
+    
+    function renderSidebarAvatar(data) {
+        
         var img = chat.find("#chan-" + data.id).find(".sidebar img");
         $.getJSON( "https://discutea.fr/api/anope/avatars/"+data.name+"/by/irc/account", function( data ) {
             $.each( data, function( key, val ) {

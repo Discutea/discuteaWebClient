@@ -1,14 +1,15 @@
-{{ log messages }}
-
-<div class="row">
-  <div class="col-xs-12">
-    <div class="thumbnail">
-      <img class="center" src="{{ avatar }}" alt="{{ name }}">
-      <div class="caption">
-        <h3 class="center">{{ name }}</h3>
-        <p class="whois">...</p>
-        <p></p>
-      </div>
-    </div>
-  </div>
-</div>
+{{#if account}}
+  <p>Compte: {{account}}</p>
+{{/if}}
+{{#if channels}}
+  <p>Salons: {{{parse channels}}}</p>
+{{/if}}
+{{#if server}}
+  <p>Serveur: {{server}}</p>
+{{/if}}
+{{#if secure}}
+  <p>Connexion sécurisée</p>
+{{/if}}
+{{#if away}}
+  <p><i>({{away}})</i></p>
+{{/if}}
