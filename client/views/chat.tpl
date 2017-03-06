@@ -7,6 +7,11 @@
 				<button class="rt" aria-label="Toggle user list"></button>
 			</span>
 		{{/equal}}
+		{{#equal type "query"}}
+			<span class="rt-tooltip tooltipped tooltipped-w" aria-label="Toggle user list">
+				<button class="rt" aria-label="Toggle user list"></button>
+			</span>
+		{{/equal}}
 		<button class="menu" aria-label="Open the context menu"></button>
 		<span class="title">{{name}}</span>
 		<span title="{{topic}}" class="topic">{{{parse topic}}}</span>

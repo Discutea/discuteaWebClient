@@ -250,7 +250,12 @@ $(function() {
 
 	function renderChannel(data) {
 		renderChannelMessages(data);
-		renderChannelUsers(data);
+        if ( ((data.type) && (data.type === 'channel')) ) {
+            renderChannelUsers(data);
+        }
+        if ( ((data.type) && (data.type === 'query')) ) {
+            renderChannelQuery(data);
+        }
 	}
 
 	function renderChannelMessages(data) {
@@ -272,8 +277,34 @@ $(function() {
 
 	}
 
+    function renderChannelQuery(data) {
+        var nick = {
+            avatar: 'https://cdn.discutea.com/avatars/default-m.jpg'
+        };
+        
+        Object.assign(data, nick);
+        var users = chat.find("#chan-" + data.id).find(".sidebar");
+        users.html(templates.query_infos(data));
+        users.show();
+        
+		renderSidebarQuery(data);
+    }
+    
+    function renderSidebarQuery(data) {
+        var img = chat.find("#chan-" + data.id).find(".sidebar img");
+        $.getJSON( "https://discutea.fr/api/anope/avatars/"+data.name+"/by/irc/account", function( data ) {
+            $.each( data, function( key, val ) {
+              if (key == 'avatar')
+              {
+                img.attr('src', 'https://cdn.discutea.com' + val);
+              }
+            });
+        });
+    };
+    
 	function renderChannelUsers(data) {
 		var users = chat.find("#chan-" + data.id).find(".users");
+
 		var nicks = users.data("nicks") || [];
 		var i, oldSortOrder = {};
 
