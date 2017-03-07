@@ -3,9 +3,36 @@
 var Chan = require("../../models/chan");
 var Msg = require("../../models/msg");
 
-module.exports = function(irc, network) {
+module.exports = function(irc, network, msg) {
 	var client = this;
 	irc.on("whois", function(data) {
+        var obj = {
+            sex: undefined,
+            age: undefined,
+            loc: undefined
+        }
+
+
+        if (typeof data.real_name === 'string') {
+            var real = data.real_name.split(' ');
+            if (real.length >= 2) {
+                if (parseInt(real[0]) !== 'NaN') {
+                    obj.age = parseInt(real[0]);
+                }
+                
+                var sex = real[1].toUpperCase();
+                if ( ["F", "W"].indexOf(sex) >= 0 ) {
+                    obj.sex = 'female';
+                } else if ( ["M", "H"].indexOf(sex) >= 0 ) {
+                    obj.sex = 'male';
+                }
+            }
+            
+            obj.loc = real.slice(2, real.length).join(' ');
+        }
+            
+        Object.assign(data, obj);
+          
 		var chan = network.getChannel(data.nick);
 		if (typeof chan === "undefined") {
 			chan = new Chan({
@@ -19,24 +46,13 @@ module.exports = function(irc, network) {
 				chan: chan,
                 data: data
 			});
-		}
-
-		var msg;
-		if (data.error) {
-			msg = new Msg({
-				type: Msg.Type.ERROR,
-				text: "No such nick: " + data.nick
-			});
 		} else {
-			// Absolute datetime in milliseconds since nick is idle
-			data.idleTime = Date.now() - data.idle * 1000;
-
-			msg = new Msg({
-				type: Msg.Type.WHOIS,
-				whois: data
+			client.emit("discuteawhois", {
+				shouldOpen: true,
+				network: network.id,
+				chan: chan,
+                data: data
 			});
-		}
-
-		chan.pushMessage(client, msg);
+        }
 	});
 };

@@ -60,11 +60,15 @@ module.exports = function(irc, network) {
 						type: Chan.Type.QUERY,
 						name: target
 					});
+                    
 					network.channels.push(chan);
+                    
 					client.emit("join", {
 						network: network.id,
 						chan: chan
 					});
+                  
+                    irc.whois(data.nick);
 				}
 			}
 

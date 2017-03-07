@@ -20,7 +20,7 @@ Msg.Type = {
 	CTCP: "ctcp",
 	TOPIC: "topic",
 	TOPIC_SET_BY: "topic_set_by",
-	WHOIS: "whois"
+	WHOIS: "whois",
 };
 
 module.exports = Msg;

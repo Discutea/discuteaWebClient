@@ -1,14 +1,11 @@
-{{ log messages }}
-
-<div class="row">
-  <div class="col-xs-12 centered">
+<div class="query row">
+  <div class="col-xs-12">
     <div class="thumbnail">
-      <img src="{{ avatar }}" alt="{{ name }}">
+      <img src="{{ avatar }}" alt="{{ name }}" height="140" width="140">
       <div class="caption">
-        <h3>{{ name }}</h3>
-        <p class="whois">...</p>
-        <p></p>
+        <h4 id="dname">{{ name }}</h4>
       </div>
     </div>
+    <div class="whois"></div>
   </div>
 </div>

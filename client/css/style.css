@@ -1706,3 +1706,28 @@ button {
 ::-webkit-scrollbar-thumb:vertical:active {
 	background: rgba(0, 0, 0, .6);
 }
+
+.sidebar .query {
+    text-align:center!important;
+}
+    
+.sidebar .query .helper {
+    font-weight: bold;
+    color: green;
+}
+
+.sidebar .query .vip {
+    color: green;
+}
+.sidebar .query .admin {
+    font-weight: bold;
+    color: red;
+}
+
+.sidebar .query .female {
+    color: Fuchsia;
+}
+
+.sidebar .query .male {
+    color: Blue;
+}

@@ -13,7 +13,6 @@ module.exports = {
 		quit: require("./actions/quit.tpl"),
 		topic: require("./actions/topic.tpl"),
 		topic_set_by: require("./actions/topic_set_by.tpl"),
-		whois: require("./actions/whois.tpl"),
 	},
 
 	chan: require("./chan.tpl"),
@@ -29,4 +28,5 @@ module.exports = {
 	user: require("./user.tpl"),
     query: require("./query.tpl"),
     query_infos: require("./query_infos.tpl"),
+    msg_minor: require("./msg_minor.tpl"),
 };

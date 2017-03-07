@@ -40,9 +40,15 @@ exports.input = function(network, chan, cmd, args) {
 		type: Chan.Type.QUERY,
 		name: target
 	});
+    
 	network.channels.push(newChan);
 	this.emit("join", {
 		network: network.id,
 		chan: newChan
 	});
+
+    if (typeof target === 'string') {
+        network.irc.whois(target);
+    }
+
 };

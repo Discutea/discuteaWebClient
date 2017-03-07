@@ -158,6 +158,11 @@ $(function() {
 			.removeClass("highlight")
 			.empty();
 	});
+    
+    socket.on("discuteawhois", function(data) {
+        renderSidebarInfos(data);
+        renderMinors(data.chan.id, data.data.age);
+    });
 
 	socket.on("join", function(data) {
 		var id = data.network;
@@ -187,6 +192,7 @@ $(function() {
 			.click();
             
         renderSidebarInfos(data);
+        renderMinors(data.chan.id, data.data.age);
 	});
 
 	function buildChatMessage(data) {
@@ -210,7 +216,6 @@ $(function() {
 			"topic",
 			"topic_set_by",
 			"action",
-//			"whois",
 			"ctcp",
 			"channel_list",
 		].indexOf(type) !== -1) {
@@ -276,7 +281,6 @@ $(function() {
 		} else {
 			channel.append(templates.unread_marker());
 		}
-
 	}
 
     function renderChannelQuery(data) {
@@ -286,36 +290,55 @@ $(function() {
         
         Object.assign(data, nick);
         var users = chat.find("#chan-" + data.id).find(".sidebar");
+        Object.assign(data, locale);
         users.html(templates.query(data));
-        users.show();
-        
-		
+        users.show();		
+    }
+    
+    
+    function renderMinors(chanId, age) {
+        if (!chanId) {
+            return;
+        }
+
+        if (!age || age < 18) {
+            var container = chat.find("#chan-" + chanId).find(".messages");
+            container.append(templates.msg_minor({age: age}));
+        }
     }
     
     function renderSidebarInfos(data) {
         var infos = chat
                    .find("#chan-" + data.chan.id)
-                   .find(".sidebar")
-                   .find(".whois")
-                   ;
-                   
-        infos.html(templates.query_infos(data.data)); 
-        console.log(data);
+                   .find(".sidebar");
+           
+        if (data.data.sex) {
+            infos.find("#dname").addClass(data.data.sex);
+        }
+
+        Object.assign(data.data, locale);
         
-        //renderSidebarAvatar(data);
+        infos.find(".whois")
+             .html(templates.query_infos(data.data)); 
+
+        renderSidebarAvatar(infos, data.data);
     };
     
-    function renderSidebarAvatar(data) {
-        
-        var img = chat.find("#chan-" + data.id).find(".sidebar img");
-        $.getJSON( "https://discutea.fr/api/anope/avatars/"+data.name+"/by/irc/account", function( data ) {
-            $.each( data, function( key, val ) {
-              if (key == 'avatar')
-              {
-                img.attr('src', 'https://cdn.discutea.com' + val);
-              }
+    function renderSidebarAvatar(infos, data) {        
+        if (typeof data.account === 'string') {
+            $.getJSON( "https://discutea.fr/api/anope/avatars/"+data.account+"/by/irc/account", function( data ) {
+                $.each( data, function( key, val ) {
+                    if (key == 'avatar')
+                    {
+                        infos.find("img")
+                             .attr('src', 'https://cdn.discutea.com' + val);
+                    }
+                });
             });
-        });
+        } else if (data.sex === 'female') {
+            infos.find("img")
+                 .attr('src', 'https://cdn.discutea.com/avatars/default-f.jpg');
+        }
     };
     
 	function renderChannelUsers(data) {
