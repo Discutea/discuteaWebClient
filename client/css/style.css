@@ -1353,6 +1353,34 @@ button {
     display: inline-block;
 }
 
+.textcomplete-menu {
+    position: absolute;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    min-width: 160px;
+    background-color: #fff;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, .15);
+    border: 1px solid rgba(0, 0, 0, .15);
+    border-radius: 2px;
+}
+
+.textcomplete-item {
+    cursor: pointer;
+    border-bottom-color: rgba(0, 0, 0, .1);
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    display: block;
+    padding: 4px 8px;
+    color: #333;
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+.textcomplete-item a {
+    color: #333;
+}
+
 /**
   * Tooltips
   * See http://primercss.io/tooltips/
