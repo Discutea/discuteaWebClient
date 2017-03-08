@@ -42,6 +42,10 @@ let config = {
                 }
             },
             {
+                test: /\.json$/,
+                loader: "json-loader"
+            },
+            {
                 test: /\.tpl$/,
                 include: [
                     path.resolve(__dirname, "client/views"),

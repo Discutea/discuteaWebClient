@@ -6,6 +6,8 @@ import Mousetrap from "mousetrap";
 import URI from "urijs";
 
 // our libraries
+import "jquery-textcomplete";
+import emojiMap from "emoji-name-map";
 import "./libs/jquery/inputhistory";
 import "./libs/jquery/stickyscroll";
 import "./libs/jquery/tabcomplete";
@@ -79,7 +81,84 @@ $(function() {
         pop.play();
     });
 
-    var favicon = $("#favicon");
+
+	var favicon = $("#favicon");
+
+	var emojies = Object.keys(emojiMap.emoji);
+
+	// Autocompletion Strategies
+
+	var emojiStrategy = {
+		id: "emoji",
+		match: /\B:([-+\w]*)$/,
+		search: function(term, callback) {
+			callback($.map(emojies, function(e) {
+				return e.indexOf(term) === 0 ? e : null;
+			}));
+		},
+		template: function(value) {
+			return emojiMap.get(value) + " :" + value + ":";
+		},
+		replace: function(value) {
+			return emojiMap.get(value);
+		},
+		index: 1
+	};
+
+	var nicksStrategy = {
+		id: "nicks",
+		match: /\B(@([a-zA-Z_[\]\\^{}|`@][a-zA-Z0-9_[\]\\^{}|`-]*)?)$/,
+		search: function(term, callback) {
+			term = term.slice(1);
+			if (term[0] === "@") {
+				callback(completeNicks(term.slice(1)).map(function(val) {
+					return "@" + val;
+				}));
+			} else {
+				callback(completeNicks(term));
+			}
+		},
+		template: function(value) {
+			if (value[0] === "@") {
+				return value;
+			}
+			return "@" + value;
+		},
+		replace: function(value) {
+			return value;
+		},
+		index: 1
+	};
+
+	var chanStrategy = {
+		id: "chans",
+		match: /\B((#|\+|&|![A-Z0-9]{5})([^\x00\x0A\x0D\x20\x2C\x3A]+(:[^\x00\x0A\x0D\x20\x2C\x3A]*)?)?)$/,
+		search: function(term, callback, match) {
+			callback(completeChans(match[0]));
+		},
+		template: function(value) {
+			return value;
+		},
+		replace: function(value) {
+			return value;
+		},
+		index: 1
+	};
+
+	var commandStrategy = {
+		id: "commands",
+		match: /^\/(\w*)$/,
+		search: function(term, callback) {
+			callback(completeCommands("/" + term));
+		},
+		template: function(value) {
+			return value;
+		},
+		replace: function(value) {
+			return value;
+		},
+		index: 1
+	};
 
     function setLocalStorageItem(key, value) {
         try {
@@ -747,9 +826,20 @@ $(function() {
                 + Math.round(parseFloat(style.borderBottomWidth) || 0)
             ) + "px";
 
-            $("#chat .chan.active .chat").trigger("msg.sticky"); // fix growing
-        })
-        .tab(complete, {hint: false});
+			$("#chat .chan.active .chat").trigger("msg.sticky"); // fix growing
+		})
+		.tab(completeNicks, {hint: false})
+		.textcomplete([emojiStrategy, nicksStrategy, chanStrategy, commandStrategy], {
+			dropdownClassName: "textcomplete-menu",
+			placement: "top"
+		}).on({
+			"textComplete:show": function() {
+				$(this).data("autocompleting", true);
+			},
+			"textComplete:hide": function() {
+				$(this).data("autocompleting", false);
+			}
+		});
 
     var focus = $.noop;
     if (!("ontouchstart" in window || navigator.maxTouchPoints > 0)) {
@@ -1202,22 +1292,39 @@ $(function() {
         contextMenuContainer.hide();
     });
 
-    function complete(word) {
-        var words = commands.slice();
-        var users = chat.find(".active").find(".users");
-        var nicks = users.data("nicks");
+	function completeNicks(word) {
+		var users = chat.find(".active").find(".users");
+		var words = users.data("nicks");
 
-        for (var i in nicks) {
-            words.push(nicks[i]);
-        }
+		return $.grep(
+			words,
+			function(w) {
+				return !w.toLowerCase().indexOf(word.toLowerCase());
+			}
+		);
+	}
 
-        sidebar.find(".chan")
-            .each(function() {
-                var self = $(this);
-                if (!self.hasClass("lobby")) {
-                    words.push(self.data("title"));
-                }
-            });
+	function completeCommands(word) {
+		var words = commands.slice();
+
+		return $.grep(
+			words,
+			function(w) {
+				return !w.toLowerCase().indexOf(word.toLowerCase());
+			}
+		);
+	}
+
+	function completeChans(word) {
+		var words = [];
+
+		sidebar.find(".chan")
+			.each(function() {
+				var self = $(this);
+				if (!self.hasClass("lobby")) {
+					words.push(self.data("title"));
+				}
+			});
 
         return $.grep(
             words,
