@@ -41,7 +41,7 @@ var trans = {
         connectTo:    'Connexion à',
         title:        'Client IRC auto-hébergé pour le web branche de Lounge',
         notconnected: 'Vous n\'êtes pas encore connecté.',
-        loading:      'Le client IRC de Discutea se charge...',
+        loading:      'Le client IRC de Discutea charge...',
         loadingapp:   'Chargement de l\'application...',
         jsenabled:    'Assurez-vous que JavaScript est activé.',
         connectlost:  'Connexion perdue &mdash; Cliquez ici pour vous reconnecter',
@@ -58,12 +58,12 @@ var trans = {
             showjoins:    'Voir les entrées',
             showmotd:     'Voir le <abbr title="Message du jour">MOTD</abbr>',
             showparts:    'Voir les départs',
-			shownick:     'Voir les pseudos',
-			showmode:     'Voir les modes',
-			showquits:    'Voir les déconnexions' ,
-            antiprivate:  'Anti messages privés',
+	    shownick:     'Voir les pseudos',
+	    showmode:     'Voir les modes',
+	    showquits:    'Voir les déconnexions' ,
+            antiprivate:  'Anti-messages privés',
             registeredmp: 'Ne plus recevoir de messages privés.',
-            nomp:         'Recevoir des messages que de la part des membres inscrits',
+            nomp:         'Ne recevoir les messages privés que de la part des membres inscrits',
             visualaids:   'Aides visuelles',
             colornick:    'Activer la coloration des pseudos',
             linkandurl:   'Liens et URLs',
@@ -71,10 +71,10 @@ var trans = {
             links:        'Extension automatique des liens',
             notifs:       'Notifications',
             notifdesktop: 'Notifications de bureau',
-            notsupported: 'Les notifications de bureau sont bloquées ou non supprimées par votre navigateur.',
+            notsupported: 'Les notifications de bureau sont bloquées ou non supportées par votre navigateur.',
             notisound:    'Jouer un son pour m\'informer',
-            playsound:    'Ecouter le son',
-            notifisall:   'Activer les notifications pour tout les messages'
+            playsound:    'Écouter le son',
+            notifisall:   'Activer les notifications pour tous les messages'
         }
     }
 };
