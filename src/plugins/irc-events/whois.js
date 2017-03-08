@@ -4,8 +4,8 @@ var Chan = require("../../models/chan");
 var Msg = require("../../models/msg");
 
 module.exports = function(irc, network, msg) {
-	var client = this;
-	irc.on("whois", function(data) {
+    var client = this;
+    irc.on("whois", function(data) {
         var obj = {
             sex: undefined,
             age: undefined,
@@ -33,26 +33,26 @@ module.exports = function(irc, network, msg) {
             
         Object.assign(data, obj);
           
-		var chan = network.getChannel(data.nick);
-		if (typeof chan === "undefined") {
-			chan = new Chan({
-				type: Chan.Type.QUERY,
-				name: data.nick
-			});
-			network.channels.push(chan);
-			client.emit("join", {
-				shouldOpen: true,
-				network: network.id,
-				chan: chan,
+        var chan = network.getChannel(data.nick);
+        if (typeof chan === "undefined") {
+            chan = new Chan({
+                type: Chan.Type.QUERY,
+                name: data.nick
+            });
+            network.channels.push(chan);
+            client.emit("join", {
+                shouldOpen: true,
+                network: network.id,
+                chan: chan,
                 data: data
-			});
-		} else {
-			client.emit("discuteawhois", {
-				shouldOpen: true,
-				network: network.id,
-				chan: chan,
+            });
+        } else {
+            client.emit("discuteawhois", {
+                shouldOpen: true,
+                network: network.id,
+                chan: chan,
                 data: data
-			});
+            });
         }
-	});
+    });
 };

@@ -15,12 +15,12 @@ import slideoutMenu from "./libs/slideout";
 import templates from "../views";
 
 $(function() {
-	var path = window.location.pathname + "socket.io/";
-	var socket = io({
-		path: path,
-		autoConnect: false,
-		reconnection: false
-	});
+    var path = window.location.pathname + "socket.io/";
+    var socket = io({
+        path: path,
+        autoConnect: false,
+        reconnection: false
+    });
 
     if ( (navigator !== undefined) && (navigator.language !== undefined) ) {
         var locale = {locale: navigator.language};
@@ -28,262 +28,262 @@ $(function() {
         var locale = {locale: "en"}; 
     }
 
-	var commands = [
-		"/away",
-		"/back",
-		"/close",
-		"/connect",
-		"/deop",
-		"/devoice",
-		"/disconnect",
-		"/invite",
-		"/join",
-		"/kick",
-		"/leave",
-		"/me",
+    var commands = [
+        "/away",
+        "/back",
+        "/close",
+        "/connect",
+        "/deop",
+        "/devoice",
+        "/disconnect",
+        "/invite",
+        "/join",
+        "/kick",
+        "/leave",
+        "/me",
         "/list",
-		"/mode",
-		"/msg",
-		"/nick",
-		"/notice",
-		"/op",
-		"/part",
-		"/query",
-		"/quit",
-		"/raw",
-		"/say",
-		"/send",
-		"/server",
-		"/slap",
-		"/topic",
-		"/voice",
-		"/whois"
-	];
+        "/mode",
+        "/msg",
+        "/nick",
+        "/notice",
+        "/op",
+        "/part",
+        "/query",
+        "/quit",
+        "/raw",
+        "/say",
+        "/send",
+        "/server",
+        "/slap",
+        "/topic",
+        "/voice",
+        "/whois"
+    ];
 
-	var sidebar = $("#sidebar, #footer");
-	var chat = $("#chat");
+    var sidebar = $("#sidebar, #footer");
+    var chat = $("#chat");
 
-	var ignoreSortSync = false;
+    var ignoreSortSync = false;
 
-	var pop;
-	try {
-		pop = new Audio();
-		pop.src = "audio/pop.ogg";
-	} catch (e) {
-		pop = {
-			play: $.noop
-		};
-	}
+    var pop;
+    try {
+        pop = new Audio();
+        pop.src = "audio/pop.ogg";
+    } catch (e) {
+        pop = {
+            play: $.noop
+        };
+    }
     
-	$("#play").on("click", function() {
-		pop.play();
-	});
+    $("#play").on("click", function() {
+        pop.play();
+    });
 
-	var favicon = $("#favicon");
+    var favicon = $("#favicon");
 
-	function setLocalStorageItem(key, value) {
-		try {
-			window.localStorage.setItem(key, value);
-		} catch (e) {
-			// Do nothing. If we end up here, web storage quota exceeded, or user is
-			// in Safari's private browsing where localStorage's setItem is not
-			// available. See http://stackoverflow.com/q/14555347/1935861.
-		}
-	}
+    function setLocalStorageItem(key, value) {
+        try {
+            window.localStorage.setItem(key, value);
+        } catch (e) {
+            // Do nothing. If we end up here, web storage quota exceeded, or user is
+            // in Safari's private browsing where localStorage's setItem is not
+            // available. See http://stackoverflow.com/q/14555347/1935861.
+        }
+    }
 
-	[
-		"connect_error",
-		"connect_failed",
-		"disconnect",
-		"error",
-	].forEach(function(e) {
-		socket.on(e, function(data) {
-			$("#loading-page-message").text("Connection failed: " + data);
-			$("#connection-error").addClass("shown").one("click", function() {
-				window.onbeforeunload = null;
-				window.location.reload();
-			});
+    [
+        "connect_error",
+        "connect_failed",
+        "disconnect",
+        "error",
+    ].forEach(function(e) {
+        socket.on(e, function(data) {
+            $("#loading-page-message").text("Connection failed: " + data);
+            $("#connection-error").addClass("shown").one("click", function() {
+                window.onbeforeunload = null;
+                window.location.reload();
+            });
 
-			// Disables sending a message by pressing Enter. `off` is necessary to
-			// cancel `inputhistory`, which overrides hitting Enter. `on` is then
-			// necessary to avoid creating new lines when hitting Enter without Shift.
-			// This is fairly hacky but this solution is not permanent.
-			$("#input").off("keydown").on("keydown", function(event) {
-				if (event.which === 13 && !event.shiftKey) {
-					event.preventDefault();
-				}
-			});
-			// Hides the "Send Message" button
-			$("#submit").remove();
+            // Disables sending a message by pressing Enter. `off` is necessary to
+            // cancel `inputhistory`, which overrides hitting Enter. `on` is then
+            // necessary to avoid creating new lines when hitting Enter without Shift.
+            // This is fairly hacky but this solution is not permanent.
+            $("#input").off("keydown").on("keydown", function(event) {
+                if (event.which === 13 && !event.shiftKey) {
+                    event.preventDefault();
+                }
+            });
+            // Hides the "Send Message" button
+            $("#submit").remove();
 
-			console.error(data);
-		});
-	});
+            console.error(data);
+        });
+    });
 
-	socket.on("connecting", function() {
-		$("#loading-page-message").text("Connecting…");
-	});
+    socket.on("connecting", function() {
+        $("#loading-page-message").text("Connecting…");
+    });
 
-	socket.on("connect", function() {
-		$("#loading-page-message").text("Finalizing connection…");
-	});
+    socket.on("connect", function() {
+        $("#loading-page-message").text("Finalizing connection…");
+    });
 
-	socket.on("init", function(data) {
-		$("#loading-page-message").text("Rendering…");
+    socket.on("init", function(data) {
+        $("#loading-page-message").text("Rendering…");
 
-		if (data.networks.length === 0) {
-			$("#footer").find(".connect").trigger("click");
-		} else {
-			renderNetworks(data);
-		}
+        if (data.networks.length === 0) {
+            $("#footer").find(".connect").trigger("click");
+        } else {
+            renderNetworks(data);
+        }
 
-		$("body").removeClass("signed-out");
-		$("#loading").remove();
+        $("body").removeClass("signed-out");
+        $("#loading").remove();
 
-		var id = data.active;
-		var target = sidebar.find("[data-id='" + id + "']").trigger("click");
-		if (target.length === 0) {
-			var first = sidebar.find(".chan")
-				.eq(0)
-				.trigger("click");
-			if (first.length === 0) {
-				$("#footer").find(".connect").trigger("click");
-			}
-		}
-	});
+        var id = data.active;
+        var target = sidebar.find("[data-id='" + id + "']").trigger("click");
+        if (target.length === 0) {
+            var first = sidebar.find(".chan")
+                .eq(0)
+                .trigger("click");
+            if (first.length === 0) {
+                $("#footer").find(".connect").trigger("click");
+            }
+        }
+    });
 
-	socket.on("open", function(id) {
-		// Another client opened the channel, clear the unread counter
-		sidebar.find(".chan[data-id='" + id + "'] .badge")
-			.removeClass("highlight")
-			.empty();
-	});
+    socket.on("open", function(id) {
+        // Another client opened the channel, clear the unread counter
+        sidebar.find(".chan[data-id='" + id + "'] .badge")
+            .removeClass("highlight")
+            .empty();
+    });
     
     socket.on("discuteawhois", function(data) {
         renderSidebarInfos(data);
         renderMinors(data.chan.id, data.data.age);
     });
 
-	socket.on("join", function(data) {
-		var id = data.network;
-		var network = sidebar.find("#network-" + id);
-		network.append(
-			templates.chan({
+    socket.on("join", function(data) {
+        var id = data.network;
+        var network = sidebar.find("#network-" + id);
+        network.append(
+            templates.chan({
                 channels: [data.chan]
             })
-		);
-		chat.append(
-			templates.chat({
+        );
+        chat.append(
+            templates.chat({
                 channels: [data.chan]
             })
-		);
-		renderChannel(data.chan);
+        );
+        renderChannel(data.chan);
 
-		// Queries do not automatically focus, unless the user did a whois
-		if (data.chan.type === "query" && !data.shouldOpen) {
-			return;
-		}
+        // Queries do not automatically focus, unless the user did a whois
+        if (data.chan.type === "query" && !data.shouldOpen) {
+            return;
+        }
 
-		sidebar.find(".chan")
-			.sort(function(a, b) {
-				return $(a).data("id") - $(b).data("id");
-			})
-			.last()
-			.click();
+        sidebar.find(".chan")
+            .sort(function(a, b) {
+                return $(a).data("id") - $(b).data("id");
+            })
+            .last()
+            .click();
         
         if (data.chan.type === "query") {
             renderSidebarInfos(data);
             renderMinors(data.chan.id, data.data.age);
         }
-	});
+    });
 
-	function buildChatMessage(data) {
-		var type = data.msg.type;
-		var target = "#chan-" + data.chan;
-		if (type === "error") {
-			target = "#chan-" + chat.find(".active").data("id");
-		}
+    function buildChatMessage(data) {
+        var type = data.msg.type;
+        var target = "#chan-" + data.chan;
+        if (type === "error") {
+            target = "#chan-" + chat.find(".active").data("id");
+        }
 
-		var chan = chat.find(target);
-		var template = "msg";
+        var chan = chat.find(target);
+        var template = "msg";
 
-		if ([
-			"invite",
-			"join",
-			"mode",
-			"kick",
-			"nick",
-			"part",
-			"quit",
-			"topic",
-			"topic_set_by",
-			"action",
-			"ctcp",
-			"channel_list",
-		].indexOf(type) !== -1) {
-			template = "msg_action";
-		} else if (type === "unhandled") {
-			template = "msg_unhandled";
-		}
+        if ([
+            "invite",
+            "join",
+            "mode",
+            "kick",
+            "nick",
+            "part",
+            "quit",
+            "topic",
+            "topic_set_by",
+            "action",
+            "ctcp",
+            "channel_list",
+        ].indexOf(type) !== -1) {
+            template = "msg_action";
+        } else if (type === "unhandled") {
+            template = "msg_unhandled";
+        }
 
-		var msg = $(templates[template](data.msg));
-		var text = msg.find(".text");
+        var msg = $(templates[template](data.msg));
+        var text = msg.find(".text");
 
-		if (template === "msg_action") {
+        if (template === "msg_action") {
             Object.assign(data.msg, locale);
-			text.html(templates.actions[type](data.msg));
-		}
+            text.html(templates.actions[type](data.msg));
+        }
 
-		if ((type === "message" || type === "action") && chan.hasClass("channel")) {
-			var nicks = chan.find(".users").data("nicks");
-			if (nicks) {
-				var find = nicks.indexOf(data.msg.from);
-				if (find !== -1 && typeof move === "function") {
-					move(nicks, find, 0);
-				}
-			}
-		}
+        if ((type === "message" || type === "action") && chan.hasClass("channel")) {
+            var nicks = chan.find(".users").data("nicks");
+            if (nicks) {
+                var find = nicks.indexOf(data.msg.from);
+                if (find !== -1 && typeof move === "function") {
+                    move(nicks, find, 0);
+                }
+            }
+        }
 
-		return msg;
-	}
+        return msg;
+    }
 
-	function buildChannelMessages(channel, messages) {
-		return messages.reduce(function(docFragment, message) {
-			docFragment.append(buildChatMessage({
-				chan: channel,
-				msg: message
-			}));
-			return docFragment;
-		}, $(document.createDocumentFragment()));
-	}
+    function buildChannelMessages(channel, messages) {
+        return messages.reduce(function(docFragment, message) {
+            docFragment.append(buildChatMessage({
+                chan: channel,
+                msg: message
+            }));
+            return docFragment;
+        }, $(document.createDocumentFragment()));
+    }
 
-	function renderChannel(data) {
-		renderChannelMessages(data);
+    function renderChannel(data) {
+        renderChannelMessages(data);
         if ( ((data.type) && (data.type === 'channel')) ) {
             renderChannelUsers(data);
         }
         if ( ((data.type) && (data.type === 'query')) ) {
             renderChannelQuery(data);
         }
-	}
+    }
 
-	function renderChannelMessages(data) {
-		var documentFragment = buildChannelMessages(data.id, data.messages);
-		var channel = chat.find("#chan-" + data.id + " .messages").append(documentFragment);
+    function renderChannelMessages(data) {
+        var documentFragment = buildChannelMessages(data.id, data.messages);
+        var channel = chat.find("#chan-" + data.id + " .messages").append(documentFragment);
 
-		if (data.firstUnread > 0) {
-			var first = channel.find("#msg-" + data.firstUnread);
+        if (data.firstUnread > 0) {
+            var first = channel.find("#msg-" + data.firstUnread);
 
-			// TODO: If the message is far off in the history, we still need to append the marker into DOM
-			if (!first.length) {
-				channel.prepend(templates.unread_marker());
-			} else {
-				first.before(templates.unread_marker());
-			}
-		} else {
-			channel.append(templates.unread_marker());
-		}
-	}
+            // TODO: If the message is far off in the history, we still need to append the marker into DOM
+            if (!first.length) {
+                channel.prepend(templates.unread_marker());
+            } else {
+                first.before(templates.unread_marker());
+            }
+        } else {
+            channel.append(templates.unread_marker());
+        }
+    }
 
     function renderChannelQuery(data) {
         var nick = {
@@ -294,7 +294,7 @@ $(function() {
         var users = chat.find("#chan-" + data.id).find(".sidebar");
         Object.assign(data, locale);
         users.html(templates.query(data));
-        users.show();		
+        users.show();        
     }
     
     
@@ -343,87 +343,87 @@ $(function() {
         }
     };
     
-	function renderChannelUsers(data) {
-		var users = chat.find("#chan-" + data.id).find(".users");
+    function renderChannelUsers(data) {
+        var users = chat.find("#chan-" + data.id).find(".users");
 
-		var nicks = users.data("nicks") || [];
-		var i, oldSortOrder = {};
+        var nicks = users.data("nicks") || [];
+        var i, oldSortOrder = {};
 
-		for (i in nicks) {
-			oldSortOrder[nicks[i]] = i;
-		}
+        for (i in nicks) {
+            oldSortOrder[nicks[i]] = i;
+        }
 
-		nicks = [];
+        nicks = [];
 
-		for (i in data.users) {
-			nicks.push(data.users[i].name);
-		}
+        for (i in data.users) {
+            nicks.push(data.users[i].name);
+        }
 
-		nicks = nicks.sort(function(a, b) {
-			return (oldSortOrder[a] || Number.MAX_VALUE) - (oldSortOrder[b] || Number.MAX_VALUE);
-		});
+        nicks = nicks.sort(function(a, b) {
+            return (oldSortOrder[a] || Number.MAX_VALUE) - (oldSortOrder[b] || Number.MAX_VALUE);
+        });
 
-		users.html(templates.user(data)).data("nicks", nicks);
-	}
+        users.html(templates.user(data)).data("nicks", nicks);
+    }
 
-	function renderNetworks(data) {
-		sidebar.find(".empty").hide();
-		sidebar.find(".networks").append(
-			templates.network({
+    function renderNetworks(data) {
+        sidebar.find(".empty").hide();
+        sidebar.find(".networks").append(
+            templates.network({
                 networks: data.networks
             })
-		);
+        );
 
-		var channels = $.map(data.networks, function(n) {
-			return n.channels;
-		});
-		chat.append(
-			templates.chat({
+        var channels = $.map(data.networks, function(n) {
+            return n.channels;
+        });
+        chat.append(
+            templates.chat({
                 channels: channels
             })
-		);
-		channels.forEach(renderChannel);
-		sortable();
+        );
+        channels.forEach(renderChannel);
+        sortable();
 
-		if (sidebar.find(".highlight").length) {
-			toggleNotificationMarkers(true);
-		}
-	}
+        if (sidebar.find(".highlight").length) {
+            toggleNotificationMarkers(true);
+        }
+    }
 
-	socket.on("msg", function(data) {
-		var msg = buildChatMessage(data);
-		var target = "#chan-" + data.chan;
-		var container = chat.find(target + " .messages");
+    socket.on("msg", function(data) {
+        var msg = buildChatMessage(data);
+        var target = "#chan-" + data.chan;
+        var container = chat.find(target + " .messages");
         
         // Add message to the container
-		container
-			.append(msg)
-			.trigger("msg", [
-				target,
-				data
-			]);
+        container
+            .append(msg)
+            .trigger("msg", [
+                target,
+                data
+            ]);
 
-		if (data.msg.self) {
-			container
-				.find(".unread-marker")
-				.appendTo(container);
-		}
-	});
+        if (data.msg.self) {
+            container
+                .find(".unread-marker")
+                .appendTo(container);
+        }
+    });
 
-	socket.on("network", function(data) {
-		renderNetworks(data);
+    socket.on("network", function(data) {
+        renderNetworks(data);
 
-		sidebar.find(".chan")
-			.last()
-			.trigger("click");
+        sidebar.find(".chan")
+            .last()
+            .trigger("click");
 
-		$("#connect")
-			.find(".btn")
-			.prop("disabled", false)
-			.end();
-	});
+        $("#connect")
+            .find(".btn")
+            .prop("disabled", false)
+            .end();
+    });
 
-	socket.on("network_changed", function(data) {
+    socket.on("network_changed", function(data) {
         sidebar.find("#network-" + data.network).data("options", data.serverOptions);
         
         // get input noprivate after connection and emit for changed modes on irc.
@@ -431,706 +431,706 @@ $(function() {
             var name = $(this).attr("name");
             var checked = $(this).is(':checked');
             if (name === "noprivateregistered") {
-				socket.emit("noprivate", {
+                socket.emit("noprivate", {
                     ckecked: checked,
-			        type: "registered"
-		        });
-			} else if (name === "noprivate") {
-				socket.emit("noprivate", {
+                    type: "registered"
+                });
+            } else if (name === "noprivate") {
+                socket.emit("noprivate", {
                     ckecked: checked,
-			        type: "all"
-		        });
-			}
+                    type: "all"
+                });
+            }
         });
-	});
+    });
 
-	socket.on("nick", function(data) {
-		var id = data.network;
-		var nick = data.nick;
-		var network = sidebar.find("#network-" + id).data("nick", nick);
-		if (network.find(".active").length) {
-			setNick(nick);
-		}
-	});
+    socket.on("nick", function(data) {
+        var id = data.network;
+        var nick = data.nick;
+        var network = sidebar.find("#network-" + id).data("nick", nick);
+        if (network.find(".active").length) {
+            setNick(nick);
+        }
+    });
 
-	socket.on("part", function(data) {
-		var chanMenuItem = sidebar.find(".chan[data-id='" + data.chan + "']");
+    socket.on("part", function(data) {
+        var chanMenuItem = sidebar.find(".chan[data-id='" + data.chan + "']");
 
-		// When parting from the active channel/query, jump to the network's lobby
-		if (chanMenuItem.hasClass("active")) {
-			chanMenuItem.parent(".network").find(".lobby").click();
-		}
+        // When parting from the active channel/query, jump to the network's lobby
+        if (chanMenuItem.hasClass("active")) {
+            chanMenuItem.parent(".network").find(".lobby").click();
+        }
 
-		chanMenuItem.remove();
-		$("#chan-" + data.chan).remove();
-	});
+        chanMenuItem.remove();
+        $("#chan-" + data.chan).remove();
+    });
 
-	socket.on("quit", function(data) {
-		var id = data.network;
-		sidebar.find("#network-" + id)
-			.remove()
-			.end();
-		var chan = sidebar.find(".chan")
-			.eq(0)
-			.trigger("click");
-		if (chan.length === 0) {
-			sidebar.find(".empty").show();
-		}
-	});
+    socket.on("quit", function(data) {
+        var id = data.network;
+        sidebar.find("#network-" + id)
+            .remove()
+            .end();
+        var chan = sidebar.find(".chan")
+            .eq(0)
+            .trigger("click");
+        if (chan.length === 0) {
+            sidebar.find(".empty").show();
+        }
+    });
 
-	socket.on("toggle", function(data) {
-		var toggle = $("#toggle-" + data.id);
-		toggle.parent().after(templates.toggle({toggle: data}));
-		switch (data.type) {
-		case "link":
-			if (options.links) {
-				toggle.click();
-			}
-			break;
+    socket.on("toggle", function(data) {
+        var toggle = $("#toggle-" + data.id);
+        toggle.parent().after(templates.toggle({toggle: data}));
+        switch (data.type) {
+        case "link":
+            if (options.links) {
+                toggle.click();
+            }
+            break;
 
-		case "image":
-			if (options.thumbnails) {
-				toggle.click();
-			}
-			break;
-		}
-	});
+        case "image":
+            if (options.thumbnails) {
+                toggle.click();
+            }
+            break;
+        }
+    });
 
-	socket.on("topic", function(data) {
-		var topic = $("#chan-" + data.chan).find(".header .topic");
-		topic.html(helpers_parse(data.topic));
-		// .attr() is safe escape-wise but consider the capabilities of the attribute
-		topic.attr("title", data.topic);
-	});
+    socket.on("topic", function(data) {
+        var topic = $("#chan-" + data.chan).find(".header .topic");
+        topic.html(helpers_parse(data.topic));
+        // .attr() is safe escape-wise but consider the capabilities of the attribute
+        topic.attr("title", data.topic);
+    });
 
-	socket.on("users", function(data) {
-		var chan = chat.find("#chan-" + data.chan);
+    socket.on("users", function(data) {
+        var chan = chat.find("#chan-" + data.chan);
 
-		if (chan.hasClass("active")) {
-			socket.emit("names", {
+        if (chan.hasClass("active")) {
+            socket.emit("names", {
                 target: data.chan
-			});
-		} else {
-			chan.data("needsNamesRefresh", true);
-		}
+            });
+        } else {
+            chan.data("needsNamesRefresh", true);
+        }
         
-	});
+    });
 
-	socket.on("names", renderChannelUsers);
+    socket.on("names", renderChannelUsers);
 
-	var options = $.extend({
-		coloredNicks: true,
-		desktopNotifications: true,
-		join: false,
-		links: true,
-		mode: true,
-		motd: true,
-		nick: true,
-		notification: true,
-		notifyAllMessages: false,
-		part: false,
-		quit: false,
-		thumbnails: true,
-	}, JSON.parse(window.localStorage.getItem("settings")));
+    var options = $.extend({
+        coloredNicks: true,
+        desktopNotifications: true,
+        join: false,
+        links: true,
+        mode: true,
+        motd: true,
+        nick: true,
+        notification: true,
+        notifyAllMessages: false,
+        part: false,
+        quit: false,
+        thumbnails: true,
+    }, JSON.parse(window.localStorage.getItem("settings")));
 
-	var windows = $("#windows");
+    var windows = $("#windows");
 
-	(function SettingsScope() {
-		var settings = $("#settings");
+    (function SettingsScope() {
+        var settings = $("#settings");
 
-		for (var i in options) {
-			if (options[i]) {
-				settings.find("input[name=" + i + "]").prop("checked", true);
-			}
-		}
+        for (var i in options) {
+            if (options[i]) {
+                settings.find("input[name=" + i + "]").prop("checked", true);
+            }
+        }
 
-		settings.on("change", "input, select, textarea", function() {
-			var self = $(this);
-			var name = self.attr("name");
+        settings.on("change", "input, select, textarea", function() {
+            var self = $(this);
+            var name = self.attr("name");
 
-			if (self.attr("type") === "checkbox") {
-				options[name] = self.prop("checked");
-			} else {
-				options[name] = self.val();
-			}
+            if (self.attr("type") === "checkbox") {
+                options[name] = self.prop("checked");
+            } else {
+                options[name] = self.val();
+            }
 
-			setLocalStorageItem("settings", JSON.stringify(options));
+            setLocalStorageItem("settings", JSON.stringify(options));
 
-			if ([
-				"join",
-				"mode",
-				"motd",
-				"nick",
-				"part",
-				"quit",
-				"notifyAllMessages",
-			].indexOf(name) !== -1) {
-				chat.toggleClass("hide-" + name, !self.prop("checked"));
-			} else if (name === "coloredNicks") {
-				chat.toggleClass("colored-nicks", self.prop("checked"));
-			} else if (name === "noprivateregistered") {
-				socket.emit("noprivate", {
+            if ([
+                "join",
+                "mode",
+                "motd",
+                "nick",
+                "part",
+                "quit",
+                "notifyAllMessages",
+            ].indexOf(name) !== -1) {
+                chat.toggleClass("hide-" + name, !self.prop("checked"));
+            } else if (name === "coloredNicks") {
+                chat.toggleClass("colored-nicks", self.prop("checked"));
+            } else if (name === "noprivateregistered") {
+                socket.emit("noprivate", {
                     ckecked: this.checked,
-			        type: "registered"
-		        });
-			} else if (name === "noprivate") {
-				socket.emit("noprivate", {
+                    type: "registered"
+                });
+            } else if (name === "noprivate") {
+                socket.emit("noprivate", {
                     ckecked: this.checked,
-			        type: "all"
-		        });
-			}
-		}).find("input")
-			.trigger("change");
+                    type: "all"
+                });
+            }
+        }).find("input")
+            .trigger("change");
 
-		$("#desktopNotifications").on("change", function() {
-			if ($(this).prop("checked") && Notification.permission !== "granted") {
-				Notification.requestPermission(updateDesktopNotificationStatus);
-			}
-		});
+        $("#desktopNotifications").on("change", function() {
+            if ($(this).prop("checked") && Notification.permission !== "granted") {
+                Notification.requestPermission(updateDesktopNotificationStatus);
+            }
+        });
 
-		// Updates the checkbox and warning in settings when the Settings page is
-		// opened or when the checkbox state is changed.
-		// When notifications are not supported, this is never called (because
-		// checkbox state can not be changed).
-		var updateDesktopNotificationStatus = function() {
-			if (Notification.permission === "denied") {
-				desktopNotificationsCheckbox.attr("disabled", true);
-				desktopNotificationsCheckbox.attr("checked", false);
-				warningBlocked.show();
-			} else {
-				if (Notification.permission === "default" && desktopNotificationsCheckbox.prop("checked")) {
-					desktopNotificationsCheckbox.attr("checked", false);
-				}
-				desktopNotificationsCheckbox.attr("disabled", false);
-				warningBlocked.hide();
-			}
-		};
+        // Updates the checkbox and warning in settings when the Settings page is
+        // opened or when the checkbox state is changed.
+        // When notifications are not supported, this is never called (because
+        // checkbox state can not be changed).
+        var updateDesktopNotificationStatus = function() {
+            if (Notification.permission === "denied") {
+                desktopNotificationsCheckbox.attr("disabled", true);
+                desktopNotificationsCheckbox.attr("checked", false);
+                warningBlocked.show();
+            } else {
+                if (Notification.permission === "default" && desktopNotificationsCheckbox.prop("checked")) {
+                    desktopNotificationsCheckbox.attr("checked", false);
+                }
+                desktopNotificationsCheckbox.attr("disabled", false);
+                warningBlocked.hide();
+            }
+        };
 
-		// If browser does not support notifications, override existing settings and
-		// display proper message in settings.
-		var desktopNotificationsCheckbox = $("#desktopNotifications");
-		var warningUnsupported = $("#warnUnsupportedDesktopNotifications");
-		var warningBlocked = $("#warnBlockedDesktopNotifications");
-		warningBlocked.hide();
-		if (("Notification" in window)) {
-			warningUnsupported.hide();
-			windows.on("show", "#settings", updateDesktopNotificationStatus);
-		} else {
-			options.desktopNotifications = false;
-			desktopNotificationsCheckbox.attr("disabled", true);
-			desktopNotificationsCheckbox.attr("checked", false);
-		}
-	}());
+        // If browser does not support notifications, override existing settings and
+        // display proper message in settings.
+        var desktopNotificationsCheckbox = $("#desktopNotifications");
+        var warningUnsupported = $("#warnUnsupportedDesktopNotifications");
+        var warningBlocked = $("#warnBlockedDesktopNotifications");
+        warningBlocked.hide();
+        if (("Notification" in window)) {
+            warningUnsupported.hide();
+            windows.on("show", "#settings", updateDesktopNotificationStatus);
+        } else {
+            options.desktopNotifications = false;
+            desktopNotificationsCheckbox.attr("disabled", true);
+            desktopNotificationsCheckbox.attr("checked", false);
+        }
+    }());
 
-	var viewport = $("#viewport");
-	var sidebarSlide = slideoutMenu(viewport[0], sidebar[0]);
-	var contextMenuContainer = $("#context-menu-container");
-	var contextMenu = $("#context-menu");
+    var viewport = $("#viewport");
+    var sidebarSlide = slideoutMenu(viewport[0], sidebar[0]);
+    var contextMenuContainer = $("#context-menu-container");
+    var contextMenu = $("#context-menu");
 
-	$("#main").on("click", function(e) {
-		if ($(e.target).is(".lt")) {
-			sidebarSlide.toggle(!sidebarSlide.isOpen());
-		} else if (sidebarSlide.isOpen()) {
-			sidebarSlide.toggle(false);
-		}
-	});
+    $("#main").on("click", function(e) {
+        if ($(e.target).is(".lt")) {
+            sidebarSlide.toggle(!sidebarSlide.isOpen());
+        } else if (sidebarSlide.isOpen()) {
+            sidebarSlide.toggle(false);
+        }
+    });
 
-	viewport.on("click", ".rt", function(e) {
-		var self = $(this);
-		viewport.toggleClass(self.attr("class"));
-		e.stopPropagation();
-	});
+    viewport.on("click", ".rt", function(e) {
+        var self = $(this);
+        viewport.toggleClass(self.attr("class"));
+        e.stopPropagation();
+    });
     
-	viewport.on("click", ".ri", function(e) {
-		var self = $(this);
-		viewport.toggleClass(self.attr("class"));
-		e.stopPropagation();
-	});
+    viewport.on("click", ".ri", function(e) {
+        var self = $(this);
+        viewport.toggleClass(self.attr("class"));
+        e.stopPropagation();
+    });
     
-	function positionContextMenu(that, e) {
-		var offset;
-		var menuWidth = contextMenu.outerWidth();
-		var menuHeight = contextMenu.outerHeight();
+    function positionContextMenu(that, e) {
+        var offset;
+        var menuWidth = contextMenu.outerWidth();
+        var menuHeight = contextMenu.outerHeight();
 
-		if (that.hasClass("menu")) {
-			offset = that.offset();
-			offset.left -= menuWidth - that.outerWidth();
-			offset.top += that.outerHeight();
-			return offset;
-		}
+        if (that.hasClass("menu")) {
+            offset = that.offset();
+            offset.left -= menuWidth - that.outerWidth();
+            offset.top += that.outerHeight();
+            return offset;
+        }
 
-		offset = {left: e.pageX, top: e.pageY};
+        offset = {left: e.pageX, top: e.pageY};
 
-		if ((window.innerWidth - offset.left) < menuWidth) {
-			offset.left = window.innerWidth - menuWidth;
-		}
+        if ((window.innerWidth - offset.left) < menuWidth) {
+            offset.left = window.innerWidth - menuWidth;
+        }
 
-		if ((window.innerHeight - offset.top) < menuHeight) {
-			offset.top = window.innerHeight - menuHeight;
-		}
+        if ((window.innerHeight - offset.top) < menuHeight) {
+            offset.top = window.innerHeight - menuHeight;
+        }
 
-		return offset;
-	}
+        return offset;
+    }
 
-	function showContextMenu(that, e) {
-		var target = $(e.currentTarget);
-		var output = "";
+    function showContextMenu(that, e) {
+        var target = $(e.currentTarget);
+        var output = "";
 
-		if (target.hasClass("user")) {
-			output = templates.contextmenu_item(
+        if (target.hasClass("user")) {
+            output = templates.contextmenu_item(
                 {
-				class: "user",
-				text: target.text(),
-				data: target.data("name")
-			    }
+                class: "user",
+                text: target.text(),
+                data: target.data("name")
+                }
             );
-		} else if (target.hasClass("chan")) {
-			output = templates.contextmenu_item({
-				class: "chan",
-				text: target.data("title"),
-				data: target.data("target")
-			});
-			output += templates.contextmenu_divider();
-			output += templates.contextmenu_item({
-				class: "close",
-				text: target.hasClass("lobby") ? "Disconnect" : target.hasClass("channel") ? "Leave" : "Close",
-				data: target.data("target")
-			});
-		}
-
-			output += templates.contextmenu_divider();
-			output += templates.contextmenu_item({
-				class: "list",
-				text: "Channels List",
+        } else if (target.hasClass("chan")) {
+            output = templates.contextmenu_item({
+                class: "chan",
+                text: target.data("title"),
                 data: target.data("target")
-			});
+            });
+            output += templates.contextmenu_divider();
+            output += templates.contextmenu_item({
+                class: "close",
+                text: target.hasClass("lobby") ? "Disconnect" : target.hasClass("channel") ? "Leave" : "Close",
+                data: target.data("target")
+            });
+        }
+
+            output += templates.contextmenu_divider();
+            output += templates.contextmenu_item({
+                class: "list",
+                text: "Channels List",
+                data: target.data("target")
+            });
            
-		contextMenuContainer.show();
-		contextMenu
-			.html(output)
-			.css(positionContextMenu($(that), e));
+        contextMenuContainer.show();
+        contextMenu
+            .html(output)
+            .css(positionContextMenu($(that), e));
 
-		return false;
-	}
+        return false;
+    }
 
-	viewport.on("contextmenu", ".user, .network .chan", function(e) {
-		return showContextMenu(this, e);
-	});
+    viewport.on("contextmenu", ".user, .network .chan", function(e) {
+        return showContextMenu(this, e);
+    });
 
-	viewport.on("click", "#chat .menu", function(e) {
-		e.currentTarget = $(e.currentTarget).closest(".chan")[0];
-		return showContextMenu(this, e);
-	});
+    viewport.on("click", "#chat .menu", function(e) {
+        e.currentTarget = $(e.currentTarget).closest(".chan")[0];
+        return showContextMenu(this, e);
+    });
 
-	contextMenuContainer.on("click contextmenu", function() {
-		contextMenuContainer.hide();
-		return false;
-	});
+    contextMenuContainer.on("click contextmenu", function() {
+        contextMenuContainer.hide();
+        return false;
+    });
 
-	function resetInputHeight(input) {
-		input.style.height = input.style.minHeight;
-	}
+    function resetInputHeight(input) {
+        input.style.height = input.style.minHeight;
+    }
 
-	var input = $("#input")
-		.history()
-		.on("input keyup", function() {
-			var style = window.getComputedStyle(this);
+    var input = $("#input")
+        .history()
+        .on("input keyup", function() {
+            var style = window.getComputedStyle(this);
 
-			// Start by resetting height before computing as scrollHeight does not
-			// decrease when deleting characters
-			resetInputHeight(this);
+            // Start by resetting height before computing as scrollHeight does not
+            // decrease when deleting characters
+            resetInputHeight(this);
 
-			this.style.height = Math.min(
-				Math.round(window.innerHeight - 100), // prevent overflow
-				this.scrollHeight
-				+ Math.round(parseFloat(style.borderTopWidth) || 0)
-				+ Math.round(parseFloat(style.borderBottomWidth) || 0)
-			) + "px";
+            this.style.height = Math.min(
+                Math.round(window.innerHeight - 100), // prevent overflow
+                this.scrollHeight
+                + Math.round(parseFloat(style.borderTopWidth) || 0)
+                + Math.round(parseFloat(style.borderBottomWidth) || 0)
+            ) + "px";
 
-			$("#chat .chan.active .chat").trigger("msg.sticky"); // fix growing
-		})
-		.tab(complete, {hint: false});
+            $("#chat .chan.active .chat").trigger("msg.sticky"); // fix growing
+        })
+        .tab(complete, {hint: false});
 
-	var focus = $.noop;
-	if (!("ontouchstart" in window || navigator.maxTouchPoints > 0)) {
-		focus = function() {
-			if (chat.find(".active").hasClass("chan")) {
-				input.focus();
-			}
-		};
+    var focus = $.noop;
+    if (!("ontouchstart" in window || navigator.maxTouchPoints > 0)) {
+        focus = function() {
+            if (chat.find(".active").hasClass("chan")) {
+                input.focus();
+            }
+        };
 
-		$(window).on("focus", focus);
+        $(window).on("focus", focus);
 
-		chat.on("click", ".chat", function() {
-			setTimeout(function() {
-				var text = "";
-				if (window.getSelection) {
-					text = window.getSelection().toString();
-				} else if (document.selection && document.selection.type !== "Control") {
-					text = document.selection.createRange().text;
-				}
-				if (!text) {
-					focus();
-				}
-			}, 2);
-		});
-	}
+        chat.on("click", ".chat", function() {
+            setTimeout(function() {
+                var text = "";
+                if (window.getSelection) {
+                    text = window.getSelection().toString();
+                } else if (document.selection && document.selection.type !== "Control") {
+                    text = document.selection.createRange().text;
+                }
+                if (!text) {
+                    focus();
+                }
+            }, 2);
+        });
+    }
 
-	// Triggering click event opens the virtual keyboard on mobile
-	// This can only be called from another interactive event (e.g. button click)
-	var forceFocus = function() {
-		input.trigger("click").focus();
-	};
+    // Triggering click event opens the virtual keyboard on mobile
+    // This can only be called from another interactive event (e.g. button click)
+    var forceFocus = function() {
+        input.trigger("click").focus();
+    };
 
-	// Cycle through nicks for the current word, just like hitting "Tab"
-	$("#cycle-nicks").on("click", function() {
-		input.triggerHandler($.Event("keydown.tabcomplete", {which: 9}));
-		forceFocus();
-	});
+    // Cycle through nicks for the current word, just like hitting "Tab"
+    $("#cycle-nicks").on("click", function() {
+        input.triggerHandler($.Event("keydown.tabcomplete", {which: 9}));
+        forceFocus();
+    });
 
-	$("#form").on("submit", function(e) {
-		e.preventDefault();
-		forceFocus();
-		var text = input.val();
+    $("#form").on("submit", function(e) {
+        e.preventDefault();
+        forceFocus();
+        var text = input.val();
 
-		if (text.length === 0) {
-			return;
-		}
+        if (text.length === 0) {
+            return;
+        }
 
-		input.val("");
-		resetInputHeight(input.get(0));
+        input.val("");
+        resetInputHeight(input.get(0));
 
-		socket.emit("input", {
-			target: chat.data("id"),
-			text: text
-		});
-	});
+        socket.emit("input", {
+            target: chat.data("id"),
+            text: text
+        });
+    });
 
-	function findCurrentNetworkChan(name) {
-		name = name.toLowerCase();
+    function findCurrentNetworkChan(name) {
+        name = name.toLowerCase();
 
-		return $(".network .chan.active")
-			.parent(".network")
-			.find(".chan")
-			.filter(function() {
-				return $(this).data("title").toLowerCase() === name;
-			})
-			.first();
-	}
+        return $(".network .chan.active")
+            .parent(".network")
+            .find(".chan")
+            .filter(function() {
+                return $(this).data("title").toLowerCase() === name;
+            })
+            .first();
+    }
 
-	$("button#set-nick").on("click", function() {
-		toggleNickEditor(true);
+    $("button#set-nick").on("click", function() {
+        toggleNickEditor(true);
 
-		// Selects existing nick in the editable text field
-		var element = document.querySelector("#nick-value");
-		element.focus();
-		var range = document.createRange();
-		range.selectNodeContents(element);
-		var selection = window.getSelection();
-		selection.removeAllRanges();
-		selection.addRange(range);
-	});
+        // Selects existing nick in the editable text field
+        var element = document.querySelector("#nick-value");
+        element.focus();
+        var range = document.createRange();
+        range.selectNodeContents(element);
+        var selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+    });
 
-	$("button#cancel-nick").on("click", cancelNick);
-	$("button#submit-nick").on("click", submitNick);
+    $("button#cancel-nick").on("click", cancelNick);
+    $("button#submit-nick").on("click", submitNick);
 
-	function toggleNickEditor(toggle) {
-		$("#nick").toggleClass("editable", toggle);
-		$("#nick-value").attr("contenteditable", toggle);
-	}
+    function toggleNickEditor(toggle) {
+        $("#nick").toggleClass("editable", toggle);
+        $("#nick-value").attr("contenteditable", toggle);
+    }
 
-	function submitNick() {
-		var newNick = $("#nick-value").text().trim();
+    function submitNick() {
+        var newNick = $("#nick-value").text().trim();
 
-		if (newNick.length === 0) {
-			cancelNick();
-			return;
-		}
+        if (newNick.length === 0) {
+            cancelNick();
+            return;
+        }
 
-		toggleNickEditor(false);
+        toggleNickEditor(false);
 
-		socket.emit("input", {
-			target: chat.data("id"),
-			text: "/nick " + newNick
-		});
-	}
+        socket.emit("input", {
+            target: chat.data("id"),
+            text: "/nick " + newNick
+        });
+    }
 
-	function cancelNick() {
-		setNick(sidebar.find(".chan.active").closest(".network").data("nick"));
-	}
+    function cancelNick() {
+        setNick(sidebar.find(".chan.active").closest(".network").data("nick"));
+    }
 
-	$("#nick-value").keypress(function(e) {
-		switch (e.keyCode ? e.keyCode : e.which) {
-		case 13: // Enter
-			// Ensures a new line is not added when pressing Enter
-			e.preventDefault();
-			break;
-		}
-	}).keyup(function(e) {
-		switch (e.keyCode ? e.keyCode : e.which) {
-		case 13: // Enter
-			submitNick();
-			break;
-		case 27: // Escape
-			cancelNick();
-			break;
-		}
-	});
+    $("#nick-value").keypress(function(e) {
+        switch (e.keyCode ? e.keyCode : e.which) {
+        case 13: // Enter
+            // Ensures a new line is not added when pressing Enter
+            e.preventDefault();
+            break;
+        }
+    }).keyup(function(e) {
+        switch (e.keyCode ? e.keyCode : e.which) {
+        case 13: // Enter
+            submitNick();
+            break;
+        case 27: // Escape
+            cancelNick();
+            break;
+        }
+    });
 
-	chat.on("click", ".inline-channel", function() {
-		var name = $(this).data("chan");
-		var chan = findCurrentNetworkChan(name);
+    chat.on("click", ".inline-channel", function() {
+        var name = $(this).data("chan");
+        var chan = findCurrentNetworkChan(name);
 
-		if (chan.length) {
-			chan.click();
-		} else {
-			socket.emit("input", {
-				target: chat.data("id"),
-				text: "/join " + name
-			});
-		}
-	});
+        if (chan.length) {
+            chan.click();
+        } else {
+            socket.emit("input", {
+                target: chat.data("id"),
+                text: "/join " + name
+            });
+        }
+    });
 
-	chat.on("click", ".user", function() {
-		var name = $(this).data("name");
-		var chan = findCurrentNetworkChan(name);
+    chat.on("click", ".user", function() {
+        var name = $(this).data("name");
+        var chan = findCurrentNetworkChan(name);
 
-		if (chan.length) {
-			chan.click();
-		}
+        if (chan.length) {
+            chan.click();
+        }
 
-		socket.emit("input", {
-			target: chat.data("id"),
-			text: "/whois " + name
-		});
-	});
+        socket.emit("input", {
+            target: chat.data("id"),
+            text: "/whois " + name
+        });
+    });
     
-	sidebar.on("click", ".chan, button", function() {
-		var self = $(this);
-		var target = self.data("target");
-		if (!target) {
-			return;
-		}
-		chat.data(
-			"id",
-			self.data("id")
-		);
-		socket.emit(
-			"open",
-			self.data("id")
-		);
+    sidebar.on("click", ".chan, button", function() {
+        var self = $(this);
+        var target = self.data("target");
+        if (!target) {
+            return;
+        }
+        chat.data(
+            "id",
+            self.data("id")
+        );
+        socket.emit(
+            "open",
+            self.data("id")
+        );
 
-		sidebar.find(".active").removeClass("active");
-		self.addClass("active")
-			.find(".badge")
-			.removeClass("highlight")
-			.empty();
+        sidebar.find(".active").removeClass("active");
+        self.addClass("active")
+            .find(".badge")
+            .removeClass("highlight")
+            .empty();
 
-		if (sidebar.find(".highlight").length === 0) {
-			toggleNotificationMarkers(false);
-		}
+        if (sidebar.find(".highlight").length === 0) {
+            toggleNotificationMarkers(false);
+        }
 
-		sidebarSlide.toggle(false);
+        sidebarSlide.toggle(false);
 
-		var lastActive = $("#windows > .active");
+        var lastActive = $("#windows > .active");
 
-		lastActive
-			.removeClass("active")
-			.find(".chat")
-			.unsticky();
+        lastActive
+            .removeClass("active")
+            .find(".chat")
+            .unsticky();
 
-		var lastActiveChan = lastActive
-			.find(".chan.active")
-			.removeClass("active");
+        var lastActiveChan = lastActive
+            .find(".chan.active")
+            .removeClass("active");
 
-		lastActiveChan
-			.find(".unread-marker")
-			.appendTo(lastActiveChan.find(".messages"));
+        lastActiveChan
+            .find(".unread-marker")
+            .appendTo(lastActiveChan.find(".messages"));
 
-		var chan = $(target)
-			.addClass("active")
-			.trigger("show");
+        var chan = $(target)
+            .addClass("active")
+            .trigger("show");
 
-		var title = "The Lounge";
-		if (chan.data("title")) {
-			title = chan.data("title") + " — " + title;
-		}
-		document.title = title;
+        var title = "The Lounge";
+        if (chan.data("title")) {
+            title = chan.data("title") + " — " + title;
+        }
+        document.title = title;
 
-		var placeholder = "";
-		if (chan.data("type") === "channel" || chan.data("type") === "query") {
-			placeholder = `Write to ${chan.data("title")}`;
-		}
-		input.attr("placeholder", placeholder);
+        var placeholder = "";
+        if (chan.data("type") === "channel" || chan.data("type") === "query") {
+            placeholder = `Write to ${chan.data("title")}`;
+        }
+        input.attr("placeholder", placeholder);
 
-		if (self.hasClass("chan")) {
-			$("#chat-container").addClass("active");
-			setNick(self.closest(".network").data("nick"));
-		}
+        if (self.hasClass("chan")) {
+            $("#chat-container").addClass("active");
+            setNick(self.closest(".network").data("nick"));
+        }
 
-		var chanChat = chan.find(".chat");
-		if (chanChat.length > 0) {
-			chanChat.sticky();
-		}
+        var chanChat = chan.find(".chat");
+        if (chanChat.length > 0) {
+            chanChat.sticky();
+        }
 
-		if (chan.data("needsNamesRefresh") === true) {
-			chan.data("needsNamesRefresh", false);
-			socket.emit("names", {target: self.data("id")});
-		}
+        if (chan.data("needsNamesRefresh") === true) {
+            chan.data("needsNamesRefresh", false);
+            socket.emit("names", {target: self.data("id")});
+        }
 
-		focus();
-	});
+        focus();
+    });
 
-	sidebar.on("click", "#sign-out", function() {
-		window.localStorage.removeItem("token");
-		location.reload();
-	});
+    sidebar.on("click", "#sign-out", function() {
+        window.localStorage.removeItem("token");
+        location.reload();
+    });
 
-	sidebar.on("click", ".close", function() {
-		var cmd = "/close";
-		var chan = $(this).closest(".chan");
-		if (chan.hasClass("lobby")) {
-			cmd = "/quit";
-			var server = chan.find(".name").html();
-			if (!confirm("Disconnect from " + server + "?")) {
-				return false;
-			}
-		}
-		socket.emit("input", {
-			target: chan.data("id"),
-			text: cmd
-		});
-		chan.css({
-			transition: "none",
-			opacity: 0.4
-		});
-		return false;
-	});
+    sidebar.on("click", ".close", function() {
+        var cmd = "/close";
+        var chan = $(this).closest(".chan");
+        if (chan.hasClass("lobby")) {
+            cmd = "/quit";
+            var server = chan.find(".name").html();
+            if (!confirm("Disconnect from " + server + "?")) {
+                return false;
+            }
+        }
+        socket.emit("input", {
+            target: chan.data("id"),
+            text: cmd
+        });
+        chan.css({
+            transition: "none",
+            opacity: 0.4
+        });
+        return false;
+    });
     
-	contextMenu.on("click", ".context-menu-item", function() {
-		switch ($(this).data("action")) {
-		case "close":
-			$(".networks .chan[data-target='" + $(this).data("data") + "'] .close").click();
-			break;
-		case "chan":
-			$(".networks .chan[data-target='" + $(this).data("data") + "']").click();
-			break;
-		case "user":
-			$(".channel.active .users .user[data-name='" + $(this).data("data") + "']").click();
-			break;
-		case "list":
-		    socket.emit("input", {
-			    target: chat.data("id"),
-			    text: '/list'
-		    });
-			break;
-		}
-	});
+    contextMenu.on("click", ".context-menu-item", function() {
+        switch ($(this).data("action")) {
+        case "close":
+            $(".networks .chan[data-target='" + $(this).data("data") + "'] .close").click();
+            break;
+        case "chan":
+            $(".networks .chan[data-target='" + $(this).data("data") + "']").click();
+            break;
+        case "user":
+            $(".channel.active .users .user[data-name='" + $(this).data("data") + "']").click();
+            break;
+        case "list":
+            socket.emit("input", {
+                target: chat.data("id"),
+                text: '/list'
+            });
+            break;
+        }
+    });
 
-	chat.on("input", ".search", function() {
-		var value = $(this).val().toLowerCase();
-		var names = $(this).closest(".users").find(".names");
-		names.find(".user").each(function() {
-			var btn = $(this);
-			var name = btn.text().toLowerCase().replace(/[+%@~]/, "");
-			if (name.indexOf(value) > -1) {
-				btn.show();
-			} else {
-				btn.hide();
-			}
-		});
-	});
+    chat.on("input", ".search", function() {
+        var value = $(this).val().toLowerCase();
+        var names = $(this).closest(".users").find(".names");
+        names.find(".user").each(function() {
+            var btn = $(this);
+            var name = btn.text().toLowerCase().replace(/[+%@~]/, "");
+            if (name.indexOf(value) > -1) {
+                btn.show();
+            } else {
+                btn.hide();
+            }
+        });
+    });
 
-	chat.on("msg", ".messages", function(e, target, msg) {
-		var unread = msg.unread;
-		msg = msg.msg;
+    chat.on("msg", ".messages", function(e, target, msg) {
+        var unread = msg.unread;
+        msg = msg.msg;
 
-		if (msg.self) {
-			return;
-		}
+        if (msg.self) {
+            return;
+        }
 
-		var button = sidebar.find(".chan[data-target='" + target + "']");
-		if (msg.highlight || (options.notifyAllMessages && msg.type === "message")) {
-			if (!document.hasFocus() || !$(target).hasClass("active")) {
-				if (options.notification) {
-					try {
-						pop.play();
-					} catch (exception) {
-						// On mobile, sounds can not be played without user interaction.
-					}
-				}
-				toggleNotificationMarkers(true);
+        var button = sidebar.find(".chan[data-target='" + target + "']");
+        if (msg.highlight || (options.notifyAllMessages && msg.type === "message")) {
+            if (!document.hasFocus() || !$(target).hasClass("active")) {
+                if (options.notification) {
+                    try {
+                        pop.play();
+                    } catch (exception) {
+                        // On mobile, sounds can not be played without user interaction.
+                    }
+                }
+                toggleNotificationMarkers(true);
 
-				if (options.desktopNotifications && Notification.permission === "granted") {
-					var title;
-					var body;
+                if (options.desktopNotifications && Notification.permission === "granted") {
+                    var title;
+                    var body;
 
-					if (msg.type === "invite") {
-						title = "New channel invite:";
-						body = msg.from + " invited you to " + msg.channel;
-					} else {
-						title = msg.from;
-						if (!button.hasClass("query")) {
-							title += " (" + button.data("title").trim() + ")";
-						}
-						if (msg.type === "message") {
-							title += " says:";
-						}
-						body = msg.text.replace(/\x03(?:[0-9]{1,2}(?:,[0-9]{1,2})?)?|[\x00-\x1F]|\x7F/g, "").trim();
-					}
+                    if (msg.type === "invite") {
+                        title = "New channel invite:";
+                        body = msg.from + " invited you to " + msg.channel;
+                    } else {
+                        title = msg.from;
+                        if (!button.hasClass("query")) {
+                            title += " (" + button.data("title").trim() + ")";
+                        }
+                        if (msg.type === "message") {
+                            title += " says:";
+                        }
+                        body = msg.text.replace(/\x03(?:[0-9]{1,2}(?:,[0-9]{1,2})?)?|[\x00-\x1F]|\x7F/g, "").trim();
+                    }
 
-					try {
-						var notify = new Notification(title, {
-							body: body,
-							icon: "img/logo-64.png",
-							tag: target
-						});
-						notify.addEventListener("click", function() {
-							window.focus();
-							button.click();
-							this.close();
-						});
-					} catch (exception) {
-						// `new Notification(...)` is not supported and should be silenced.
-					}
+                    try {
+                        var notify = new Notification(title, {
+                            body: body,
+                            icon: "img/logo-64.png",
+                            tag: target
+                        });
+                        notify.addEventListener("click", function() {
+                            window.focus();
+                            button.click();
+                            this.close();
+                        });
+                    } catch (exception) {
+                        // `new Notification(...)` is not supported and should be silenced.
+                    }
 
-				}
-			}
-		}
+                }
+            }
+        }
 
-		if (button.hasClass("active")) {
-			return;
-		}
+        if (button.hasClass("active")) {
+            return;
+        }
 
-		if (!unread) {
-			return;
-		}
+        if (!unread) {
+            return;
+        }
 
-		var badge = button.find(".badge").html(helpers_roundBadgeNumber(unread));
+        var badge = button.find(".badge").html(helpers_roundBadgeNumber(unread));
 
-		if (msg.highlight) {
-			badge.addClass("highlight");
-		}
-	});
+        if (msg.highlight) {
+            badge.addClass("highlight");
+        }
+    });
 
-	chat.on("click", ".toggle-button", function() {
-		var self = $(this);
-		var localChat = self.closest(".chat");
-		var bottom = localChat.isScrollBottom();
-		var content = self.parent().next(".toggle-content");
-		if (bottom && !content.hasClass("show")) {
-			var img = content.find("img");
-			if (img.length !== 0 && !img.width()) {
-				img.on("load", function() {
-					localChat.scrollBottom();
-				});
-			}
-		}
-		content.toggleClass("show");
-		if (bottom) {
-			localChat.scrollBottom();
-		}
-	});
+    chat.on("click", ".toggle-button", function() {
+        var self = $(this);
+        var localChat = self.closest(".chat");
+        var bottom = localChat.isScrollBottom();
+        var content = self.parent().next(".toggle-content");
+        if (bottom && !content.hasClass("show")) {
+            var img = content.find("img");
+            if (img.length !== 0 && !img.width()) {
+                img.on("load", function() {
+                    localChat.scrollBottom();
+                });
+            }
+        }
+        content.toggleClass("show");
+        if (bottom) {
+            localChat.scrollBottom();
+        }
+    });
 
     /* discutea username */
     function getusn() {
@@ -1165,212 +1165,212 @@ $(function() {
     /* End of discutea username */
 
 
-	var forms = $("#connect");
+    var forms = $("#connect");
     
-	forms.on("submit", "form", function(e) {
-		e.preventDefault();
-		var event = "auth";
-		var form = $(this);
-		form.find(".btn")
-			.attr("disabled", true)
-			.end();
-		if (form.closest(".window").attr("id") === "connect") {
-			event = "conn";
-		} 
+    forms.on("submit", "form", function(e) {
+        e.preventDefault();
+        var event = "auth";
+        var form = $(this);
+        form.find(".btn")
+            .attr("disabled", true)
+            .end();
+        if (form.closest(".window").attr("id") === "connect") {
+            event = "conn";
+        } 
         
-		var values = {};
-		$.each(form.serializeArray(), function(i, obj) {
-			if (obj.value !== "") {
-				values[obj.name] = obj.value;
-			}
-		});
-		if (values.user) {
-			setLocalStorageItem("user", values.user);
-		}
-		socket.emit(
-			event, values
-		);
-	});
+        var values = {};
+        $.each(form.serializeArray(), function(i, obj) {
+            if (obj.value !== "") {
+                values[obj.name] = obj.value;
+            }
+        });
+        if (values.user) {
+            setLocalStorageItem("user", values.user);
+        }
+        socket.emit(
+            event, values
+        );
+    });
 
-	forms.on("input", ".nick", function() {
-		var nick = $(this).val();
-	});
+    forms.on("input", ".nick", function() {
+        var nick = $(this).val();
+    });
 
-	Mousetrap.bind([
-		"escape"
-	], function() {
-		contextMenuContainer.hide();
-	});
+    Mousetrap.bind([
+        "escape"
+    ], function() {
+        contextMenuContainer.hide();
+    });
 
-	function complete(word) {
-		var words = commands.slice();
-		var users = chat.find(".active").find(".users");
-		var nicks = users.data("nicks");
+    function complete(word) {
+        var words = commands.slice();
+        var users = chat.find(".active").find(".users");
+        var nicks = users.data("nicks");
 
-		for (var i in nicks) {
-			words.push(nicks[i]);
-		}
+        for (var i in nicks) {
+            words.push(nicks[i]);
+        }
 
-		sidebar.find(".chan")
-			.each(function() {
-				var self = $(this);
-				if (!self.hasClass("lobby")) {
-					words.push(self.data("title"));
-				}
-			});
+        sidebar.find(".chan")
+            .each(function() {
+                var self = $(this);
+                if (!self.hasClass("lobby")) {
+                    words.push(self.data("title"));
+                }
+            });
 
-		return $.grep(
-			words,
-			function(w) {
-				return !w.toLowerCase().indexOf(word.toLowerCase());
-			}
-		);
-	}
+        return $.grep(
+            words,
+            function(w) {
+                return !w.toLowerCase().indexOf(word.toLowerCase());
+            }
+        );
+    }
 
-	function sortable() {
-		sidebar.find(".networks").sortable({
-			axis: "y",
-			containment: "parent",
-			cursor: "move",
-			distance: 12,
-			items: ".network",
-			handle: ".lobby",
-			placeholder: "network-placeholder",
-			forcePlaceholderSize: true,
-			tolerance: "pointer", // Use the pointer to figure out where the network is in the list
+    function sortable() {
+        sidebar.find(".networks").sortable({
+            axis: "y",
+            containment: "parent",
+            cursor: "move",
+            distance: 12,
+            items: ".network",
+            handle: ".lobby",
+            placeholder: "network-placeholder",
+            forcePlaceholderSize: true,
+            tolerance: "pointer", // Use the pointer to figure out where the network is in the list
 
-			update: function() {
-				var order = [];
-				sidebar.find(".network").each(function() {
-					var id = $(this).data("id");
-					order.push(id);
-				});
-				socket.emit(
-					"sort", {
-						type: "networks",
-						order: order
-					}
-				);
+            update: function() {
+                var order = [];
+                sidebar.find(".network").each(function() {
+                    var id = $(this).data("id");
+                    order.push(id);
+                });
+                socket.emit(
+                    "sort", {
+                        type: "networks",
+                        order: order
+                    }
+                );
 
-				ignoreSortSync = true;
-			}
-		});
-		sidebar.find(".network").sortable({
-			axis: "y",
-			containment: "parent",
-			cursor: "move",
-			distance: 12,
-			items: ".chan:not(.lobby)",
-			placeholder: "chan-placeholder",
-			forcePlaceholderSize: true,
-			tolerance: "pointer", // Use the pointer to figure out where the channel is in the list
+                ignoreSortSync = true;
+            }
+        });
+        sidebar.find(".network").sortable({
+            axis: "y",
+            containment: "parent",
+            cursor: "move",
+            distance: 12,
+            items: ".chan:not(.lobby)",
+            placeholder: "chan-placeholder",
+            forcePlaceholderSize: true,
+            tolerance: "pointer", // Use the pointer to figure out where the channel is in the list
 
-			update: function(e, ui) {
-				var order = [];
-				var network = ui.item.parent();
-				network.find(".chan").each(function() {
-					var id = $(this).data("id");
-					order.push(id);
-				});
-				socket.emit(
-					"sort", {
-						type: "channels",
-						target: network.data("id"),
-						order: order
-					}
-				);
+            update: function(e, ui) {
+                var order = [];
+                var network = ui.item.parent();
+                network.find(".chan").each(function() {
+                    var id = $(this).data("id");
+                    order.push(id);
+                });
+                socket.emit(
+                    "sort", {
+                        type: "channels",
+                        target: network.data("id"),
+                        order: order
+                    }
+                );
 
-				ignoreSortSync = true;
-			}
-		});
-	}
+                ignoreSortSync = true;
+            }
+        });
+    }
 
-	socket.on("sync_sort", function(data) {
-		// Syncs the order of channels or networks when they are reordered
-		if (ignoreSortSync) {
-			ignoreSortSync = false;
-			return; // Ignore syncing because we 'caused' it
-		}
+    socket.on("sync_sort", function(data) {
+        // Syncs the order of channels or networks when they are reordered
+        if (ignoreSortSync) {
+            ignoreSortSync = false;
+            return; // Ignore syncing because we 'caused' it
+        }
 
-		var type = data.type;
-		var order = data.order;
+        var type = data.type;
+        var order = data.order;
 
-		if (type === "networks") {
-			var container = $(".networks");
+        if (type === "networks") {
+            var container = $(".networks");
 
-			$.each(order, function(index, value) {
-				var position = $(container.children()[index]);
+            $.each(order, function(index, value) {
+                var position = $(container.children()[index]);
 
-				if (position.data("id") === value) { // Network in correct place
-					return true; // No point in continuing
-				}
+                if (position.data("id") === value) { // Network in correct place
+                    return true; // No point in continuing
+                }
 
-				var network = container.find("#network-" + value);
+                var network = container.find("#network-" + value);
 
-				$(network).insertBefore(position);
-			});
-		} else if (type === "channels") {
-			var network = $("#network-" + data.target);
+                $(network).insertBefore(position);
+            });
+        } else if (type === "channels") {
+            var network = $("#network-" + data.target);
 
-			$.each(order, function(index, value) {
-				if (index === 0) { // Shouldn't attempt to move lobby
-					return true; // same as `continue` -> skip to next item
-				}
+            $.each(order, function(index, value) {
+                if (index === 0) { // Shouldn't attempt to move lobby
+                    return true; // same as `continue` -> skip to next item
+                }
 
-				var position = $(network.children()[index]); // Target channel at position
+                var position = $(network.children()[index]); // Target channel at position
 
-				if (position.data("id") === value) { // Channel in correct place
-					return true; // No point in continuing
-				}
+                if (position.data("id") === value) { // Channel in correct place
+                    return true; // No point in continuing
+                }
 
-				var channel = network.find(".chan[data-id=" + value + "]"); // Channel at position
+                var channel = network.find(".chan[data-id=" + value + "]"); // Channel at position
 
-				$(channel).insertBefore(position);
-			});
-		}
-	});
+                $(channel).insertBefore(position);
+            });
+        }
+    });
 
-	function setNick(nick) {
-		// Closes the nick editor when canceling, changing channel, or when a nick
-		// is set in a different tab / browser / device.
-		toggleNickEditor(false);
+    function setNick(nick) {
+        // Closes the nick editor when canceling, changing channel, or when a nick
+        // is set in a different tab / browser / device.
+        toggleNickEditor(false);
 
-		$("#nick-value").text(nick);
-	}
+        $("#nick-value").text(nick);
+    }
 
-	function move(array, old_index, new_index) {
-		if (new_index >= array.length) {
-			var k = new_index - array.length;
-			while ((k--) + 1) {
-				this.push(undefined);
-			}
-		}
-		array.splice(new_index, 0, array.splice(old_index, 1)[0]);
-		return array;
-	}
+    function move(array, old_index, new_index) {
+        if (new_index >= array.length) {
+            var k = new_index - array.length;
+            while ((k--) + 1) {
+                this.push(undefined);
+            }
+        }
+        array.splice(new_index, 0, array.splice(old_index, 1)[0]);
+        return array;
+    }
 
-	function toggleNotificationMarkers(newState) {
-		// Toggles the favicon to red when there are unread notifications
-		if (favicon.data("toggled") !== newState) {
-			var old = favicon.attr("href");
-			favicon.attr("href", favicon.data("other"));
-			favicon.data("other", old);
-			favicon.data("toggled", newState);
-		}
+    function toggleNotificationMarkers(newState) {
+        // Toggles the favicon to red when there are unread notifications
+        if (favicon.data("toggled") !== newState) {
+            var old = favicon.attr("href");
+            favicon.attr("href", favicon.data("other"));
+            favicon.data("other", old);
+            favicon.data("toggled", newState);
+        }
 
-		// Toggles a dot on the menu icon when there are unread notifications
-		$("#viewport .lt").toggleClass("notified", newState);
-	}
+        // Toggles a dot on the menu icon when there are unread notifications
+        $("#viewport .lt").toggleClass("notified", newState);
+    }
 
-	document.addEventListener(
-		"visibilitychange",
-		function() {
-			if (sidebar.find(".highlight").length === 0) {
-				toggleNotificationMarkers(false);
-			}
-		}
-	);
+    document.addEventListener(
+        "visibilitychange",
+        function() {
+            if (sidebar.find(".highlight").length === 0) {
+                toggleNotificationMarkers(false);
+            }
+        }
+    );
 
-	// Only start opening socket.io connection after all events have been registered
-	socket.open();
+    // Only start opening socket.io connection after all events have been registered
+    socket.open();
 });

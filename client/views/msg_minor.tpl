@@ -1,7 +1,7 @@
 <div class="msg kick warn">
-	<span class="time"></span>
-	<span class="from"> {{ trans 'warning' locale.locale }}</span>
-	<span class="text">
+    <span class="time"></span>
+    <span class="from"> {{ trans 'warning' locale.locale }}</span>
+    <span class="text">
       {{#if age}}
         <span class="text">
           {{{ trans 'minor_msg' locale.locale }}}

@@ -6,36 +6,36 @@ exports.commands = ["connect", "server"];
 exports.allowDisconnected = true;
 
 exports.input = function(network, chan, cmd, args) {
-	if (args.length === 0) {
-		if (!network.irc || !network.irc.connection) {
-			return;
-		}
+    if (args.length === 0) {
+        if (!network.irc || !network.irc.connection) {
+            return;
+        }
 
-		if (network.irc.connection.connected) {
-			chan.pushMessage(this, new Msg({
-				type: Msg.Type.ERROR,
-				text: "You are already connected."
-			}));
-			return;
-		}
+        if (network.irc.connection.connected) {
+            chan.pushMessage(this, new Msg({
+                type: Msg.Type.ERROR,
+                text: "You are already connected."
+            }));
+            return;
+        }
 
-		network.irc.connection.connect();
+        network.irc.connection.connect();
 
-		return;
-	}
+        return;
+    }
 
-	var port = args[1] || "";
-	var tls = port[0] === "+";
+    var port = args[1] || "";
+    var tls = port[0] === "+";
 
-	if (tls) {
-		port = port.substring(1);
-	}
+    if (tls) {
+        port = port.substring(1);
+    }
 
-	this.connect({
-		host: args[0],
-		port: port,
-		tls: tls,
-	});
+    this.connect({
+        host: args[0],
+        port: port,
+        tls: tls,
+    });
 
-	return true;
+    return true;
 };

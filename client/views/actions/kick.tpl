@@ -2,5 +2,5 @@
 {{ trans 'action_kick' locale }}
 <span role="button" class="user" data-name="{{target}}">{{target}}</span>
 {{#if text}}
-	<i class="part-reason">({{{parse text}}})</i>
+    <i class="part-reason">({{{parse text}}})</i>
 {{/if}}

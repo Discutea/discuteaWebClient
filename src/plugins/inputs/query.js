@@ -7,45 +7,45 @@ var Msg = require("../../models/msg");
 exports.commands = ["query"];
 
 exports.input = function(network, chan, cmd, args) {
-	if (args.length === 0) {
-		return;
-	}
+    if (args.length === 0) {
+        return;
+    }
 
-	var target = args[0];
-	var query = _.find(network.channels, {name: target});
-	if (typeof query !== "undefined") {
-		return;
-	}
+    var target = args[0];
+    var query = _.find(network.channels, {name: target});
+    if (typeof query !== "undefined") {
+        return;
+    }
 
-	var char = target[0];
-	if (network.irc.network.options.CHANTYPES && network.irc.network.options.CHANTYPES.indexOf(char) !== -1) {
-		chan.pushMessage(this, new Msg({
-			type: Msg.Type.ERROR,
-			text: "You can not open query windows for channels, use /join instead."
-		}));
-		return;
-	}
+    var char = target[0];
+    if (network.irc.network.options.CHANTYPES && network.irc.network.options.CHANTYPES.indexOf(char) !== -1) {
+        chan.pushMessage(this, new Msg({
+            type: Msg.Type.ERROR,
+            text: "You can not open query windows for channels, use /join instead."
+        }));
+        return;
+    }
 
-	for (var i = 0; i < network.irc.network.options.PREFIX.length; i++) {
-		if (network.irc.network.options.PREFIX[i].symbol === char) {
-			chan.pushMessage(this, new Msg({
-				type: Msg.Type.ERROR,
-				text: "You can not open query windows for names starting with a user prefix."
-			}));
-			return;
-		}
-	}
+    for (var i = 0; i < network.irc.network.options.PREFIX.length; i++) {
+        if (network.irc.network.options.PREFIX[i].symbol === char) {
+            chan.pushMessage(this, new Msg({
+                type: Msg.Type.ERROR,
+                text: "You can not open query windows for names starting with a user prefix."
+            }));
+            return;
+        }
+    }
 
-	var newChan = new Chan({
-		type: Chan.Type.QUERY,
-		name: target
-	});
+    var newChan = new Chan({
+        type: Chan.Type.QUERY,
+        name: target
+    });
     
-	network.channels.push(newChan);
-	this.emit("join", {
-		network: network.id,
-		chan: newChan
-	});
+    network.channels.push(newChan);
+    this.emit("join", {
+        network: network.id,
+        chan: newChan
+    });
 
     if (typeof target === 'string') {
         network.irc.whois(target);

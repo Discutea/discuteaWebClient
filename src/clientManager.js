@@ -3,5 +3,5 @@
 module.exports = ClientManager;
 
 function ClientManager() {
-	this.clients = [];
+    this.clients = [];
 }

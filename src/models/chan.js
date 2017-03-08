@@ -6,81 +6,81 @@ var Helper = require("../helper");
 module.exports = Chan;
 
 Chan.Type = {
-	CHANNEL: "channel",
-	LOBBY: "lobby",
-	QUERY: "query",
-	SPECIAL: "special",
+    CHANNEL: "channel",
+    LOBBY: "lobby",
+    QUERY: "query",
+    SPECIAL: "special",
 };
 
 var id = 0;
 
 function Chan(attr) {
-	_.defaults(this, attr, {
-		id: id++,
-		messages: [],
-		name: "",
-		topic: "",
-		type: Chan.Type.CHANNEL,
-		firstUnread: 0,
-		unread: 0,
-		highlight: false,
-		users: []
-	});
+    _.defaults(this, attr, {
+        id: id++,
+        messages: [],
+        name: "",
+        topic: "",
+        type: Chan.Type.CHANNEL,
+        firstUnread: 0,
+        unread: 0,
+        highlight: false,
+        users: []
+    });
 }
 
 Chan.prototype.pushMessage = function(client, msg, increasesUnread) {
-	var obj = {
-		chan: this.id,
-		msg: msg
-	};
+    var obj = {
+        chan: this.id,
+        msg: msg
+    };
 
-	// If this channel is open in any of the clients, do not increase unread counter
-	var isOpen = _.includes(client.attachedClients, this.id);
+    // If this channel is open in any of the clients, do not increase unread counter
+    var isOpen = _.includes(client.attachedClients, this.id);
 
-	if ((increasesUnread || msg.highlight) && !isOpen) {
-		obj.unread = ++this.unread;
-	}
+    if ((increasesUnread || msg.highlight) && !isOpen) {
+        obj.unread = ++this.unread;
+    }
 
-	client.emit("msg", obj);
+    client.emit("msg", obj);
 };
 
 Chan.prototype.sortUsers = function(irc) {
-	var userModeSortPriority = {};
-	irc.network.options.PREFIX.forEach((prefix, index) => {
-		userModeSortPriority[prefix.symbol] = index;
-	});
+    var userModeSortPriority = {};
+    irc.network.options.PREFIX.forEach((prefix, index) => {
+        userModeSortPriority[prefix.symbol] = index;
+    });
 
-	userModeSortPriority[""] = 99; // No mode is lowest
+    userModeSortPriority[""] = 99; // No mode is lowest
 
-	this.users = this.users.sort(function(a, b) {
-		if (a.mode === b.mode) {
-			return a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1;
-		}
+    this.users = this.users.sort(function(a, b) {
+        if (a.mode === b.mode) {
+            return a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1;
+        }
 
-		return userModeSortPriority[a.mode] - userModeSortPriority[b.mode];
-	});
+        return userModeSortPriority[a.mode] - userModeSortPriority[b.mode];
+    });
 };
 
 Chan.prototype.getMode = function(name) {
-	var user = _.find(this.users, {name: name});
-	if (user) {
-		return user.mode;
-	}
+    var user = _.find(this.users, {name: name});
+    if (user) {
+        return user.mode;
+    }
 
-	return "";
+    return "";
 };
 
 Chan.prototype.getGecos = function(name) {
-	var user = _.find(this.users, {name: name});
-	if (user) {
-		return user.gecos;
-	}
+    var user = _.find(this.users, {name: name});
+    if (user) {
+        return user.gecos;
+    }
 
-	return "";
+    return "";
 };
 
 Chan.prototype.toJSON = function() {
-	var clone = _.clone(this);
-	clone.messages = clone.messages.slice(-100);
-	return clone;
+    var clone = _.clone(this);
+    clone.messages = clone.messages.slice(-100);
+    return clone;
 };

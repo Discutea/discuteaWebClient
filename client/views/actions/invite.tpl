@@ -3,7 +3,7 @@
 {{#if invitedYou}}
     {{ trans 'you' locale }}
 {{else}}
-	<span role="button" class="user" data-name="{{invited}}">{{invited}}</span>
+    <span role="button" class="user" data-name="{{invited}}">{{invited}}</span>
 {{/if}}
 {{ trans 'to' locale }}
 {{{parse channel}}}

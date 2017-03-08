@@ -1,3 +1,3 @@
 <div class="unread-marker">
-	<span class="unread-marker-text"></span>
+    <span class="unread-marker-text"></span>
 </div>

@@ -3,7 +3,7 @@
 exports.commands = ["list"];
 
 exports.input = function(network, chan, cmd, args) {
-	network.chanCache = [];
-	network.irc.list(args);
-	return true;
+    network.chanCache = [];
+    network.irc.list(args);
+    return true;
 };

@@ -1,254 +1,254 @@
 <!doctype html>
 <html>
-	<head>
+    <head>
 
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="apple-mobile-web-app-capable" content="yes">
-	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-	<meta name="mobile-web-app-capable" content="yes">
-	<meta name="referrer" content="no-referrer">
-	<meta name="theme-color" content="#455164">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="referrer" content="no-referrer">
+    <meta name="theme-color" content="#455164">
 
-	<title>Discutea — <%= trans.title %></title>
+    <title>Discutea — <%= trans.title %></title>
 
-	<link rel="stylesheet" href="css/bootstrap.css">
-	<link rel="stylesheet" href="css/style.css">
-	<style id="user-specified-css"></style>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style id="user-specified-css"></style>
 
-	<link rel="shortcut icon" href="img/favicon.png" data-other="img/favicon-notification.png" data-toggled="false" id="favicon">
-	<link rel="apple-touch-icon" sizes="120x120" href="img/apple-touch-icon-120x120.png">
-	<link rel="manifest" href="manifest.json">
-	</head>
-	<body class="signed-out">
+    <link rel="shortcut icon" href="img/favicon.png" data-other="img/favicon-notification.png" data-toggled="false" id="favicon">
+    <link rel="apple-touch-icon" sizes="120x120" href="img/apple-touch-icon-120x120.png">
+    <link rel="manifest" href="manifest.json">
+    </head>
+    <body class="signed-out">
 
-	<div id="wrap">
-	<div id="viewport">
-		<aside id="sidebar">
-			<div class="networks"></div>
-			<div class="empty">
+    <div id="wrap">
+    <div id="viewport">
+        <aside id="sidebar">
+            <div class="networks"></div>
+            <div class="empty">
                 <%= trans.notconnected %>
-			</div>
-		</aside>
-		<footer id="footer">
+            </div>
+        </aside>
+        <footer id="footer">
             <span class="tooltipped tooltipped-n" aria-label="Connect to network"><button class="icon connect" data-target="#connect" aria-label="Connect to network"></button></span>
-			<span class="tooltipped tooltipped-n" aria-label="Client settings"><button class="icon settings" data-target="#settings" aria-label="Client settings"></button></span>
-			<span class="tooltipped tooltipped-n" aria-label="Sign out"><button class="icon sign-out" id="sign-out" aria-label="Sign out"></button></span>
-		</footer>
-		<div id="main">
-			<div id="windows">
-				<div id="loading" class="window active">
-					<div class="container">
-						<div class="row">
-							<div class="col-xs-12">
-								<h1 class="title"><%= trans.loading %></h1>
-							</div>
-							<div class="col-xs-12">
-								<p id="loading-page-message"><%= trans.loadingapp %> <a href="http://enable-javascript.com/" target="_blank"><%= trans.jsenabled %></a></p>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div id="chat-container" class="window">
-					<div id="chat"></div>
-					<button id="connection-error" class="btn btn-reconnect"><%= trans.connectlost %></button>
-					<form id="form" method="post" action="">
-						<div class="input">
-							<span id="nick">
-								<span id="nick-value" spellcheck="false"></span><!-- Comments here remove spaces between elements
-								--><span id="set-nick-tooltip" class="tooltipped tooltipped-e" aria-label="Change nick"><button id="set-nick" type="button" aria-label="Change nick"></button></span><!--
-								--><span id="cancel-nick-tooltip" class="tooltipped tooltipped-e" aria-label="Cancel"><button id="cancel-nick" type="button" aria-label="Cancel"></button></span><!--
-								--><span id="save-nick-tooltip" class="tooltipped tooltipped-e" aria-label="Save"><button id="submit-nick" type="button" aria-label="Save"></button></span>
-							</span>
-							<textarea id="input" class="mousetrap"></textarea>
-							<span id="cycle-nicks-tooltip" class="tooltipped tooltipped-w" aria-label="Cycle through nicks">
-								<button id="cycle-nicks" type="button" aria-label="Cycle through nicks"></button>
-							</span>
-							<span id="submit-tooltip" class="tooltipped tooltipped-w" aria-label="Send message">
-								<button id="submit" type="submit" aria-label="Send message"></button>
-							</span>
-						</div>
-					</form>
-				</div>
-				<div id="connect" class="window">
-					<div class="header">
-						<button class="lt" aria-label="Toggle channel list"></button>
-					</div>
-					<form class="container" method="post" action="">
-						<div class="row">
-							<div class="col-sm-12">
-								<h1 class="title">
+            <span class="tooltipped tooltipped-n" aria-label="Client settings"><button class="icon settings" data-target="#settings" aria-label="Client settings"></button></span>
+            <span class="tooltipped tooltipped-n" aria-label="Sign out"><button class="icon sign-out" id="sign-out" aria-label="Sign out"></button></span>
+        </footer>
+        <div id="main">
+            <div id="windows">
+                <div id="loading" class="window active">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <h1 class="title"><%= trans.loading %></h1>
+                            </div>
+                            <div class="col-xs-12">
+                                <p id="loading-page-message"><%= trans.loadingapp %> <a href="http://enable-javascript.com/" target="_blank"><%= trans.jsenabled %></a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="chat-container" class="window">
+                    <div id="chat"></div>
+                    <button id="connection-error" class="btn btn-reconnect"><%= trans.connectlost %></button>
+                    <form id="form" method="post" action="">
+                        <div class="input">
+                            <span id="nick">
+                                <span id="nick-value" spellcheck="false"></span><!-- Comments here remove spaces between elements
+                                --><span id="set-nick-tooltip" class="tooltipped tooltipped-e" aria-label="Change nick"><button id="set-nick" type="button" aria-label="Change nick"></button></span><!--
+                                --><span id="cancel-nick-tooltip" class="tooltipped tooltipped-e" aria-label="Cancel"><button id="cancel-nick" type="button" aria-label="Cancel"></button></span><!--
+                                --><span id="save-nick-tooltip" class="tooltipped tooltipped-e" aria-label="Save"><button id="submit-nick" type="button" aria-label="Save"></button></span>
+                            </span>
+                            <textarea id="input" class="mousetrap"></textarea>
+                            <span id="cycle-nicks-tooltip" class="tooltipped tooltipped-w" aria-label="Cycle through nicks">
+                                <button id="cycle-nicks" type="button" aria-label="Cycle through nicks"></button>
+                            </span>
+                            <span id="submit-tooltip" class="tooltipped tooltipped-w" aria-label="Send message">
+                                <button id="submit" type="submit" aria-label="Send message"></button>
+                            </span>
+                        </div>
+                    </form>
+                </div>
+                <div id="connect" class="window">
+                    <div class="header">
+                        <button class="lt" aria-label="Toggle channel list"></button>
+                    </div>
+                    <form class="container" method="post" action="">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h1 class="title">
                                     <%= trans.connectTo %> <%= defaults.name %>
-								</h1>
-							</div>
-							<div class="col-sm-3">
-								<label for="connect:nick"><%= trans.form.nick %></label>
-							</div>	
-							<div class="col-sm-9">
-								<input class="input nick" id="connect:nick" name="nick" value="<%= typeof(nick) === "string" ? nick : defaults.nick %>">
-							</div>
+                                </h1>
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="connect:nick"><%= trans.form.nick %></label>
+                            </div>    
+                            <div class="col-sm-9">
+                                <input class="input nick" id="connect:nick" name="nick" value="<%= typeof(nick) === "string" ? nick : defaults.nick %>">
+                            </div>
                            
-							<div class="col-sm-3">
-								<label for="connect:age"><%= trans.form.age %></label>
-							</div>
-							<div class="col-sm-9">
-								<input class="input" required="required" type="number" min="10" max="99" id="connect:age" name="age" value="<%= typeof(age) === "string" ? age : "" %>">
-							</div>
+                            <div class="col-sm-3">
+                                <label for="connect:age"><%= trans.form.age %></label>
+                            </div>
+                            <div class="col-sm-9">
+                                <input class="input" required="required" type="number" min="10" max="99" id="connect:age" name="age" value="<%= typeof(age) === "string" ? age : "" %>">
+                            </div>
                             
-							<div class="col-sm-3">
-								<label for="connect:gender"><%= trans.form.gender %></label>
-							</div>
-							<div class="col-sm-9">
+                            <div class="col-sm-3">
+                                <label for="connect:gender"><%= trans.form.gender %></label>
+                            </div>
+                            <div class="col-sm-9">
                                 <input type="radio" id="connect:gender" name="gender" <%= typeof(gender) === "string" && gender === "F" ? "checked" : ""  %> required="required" value="F" />
                                 <img src="https://cdn.discutea.com/img/femme.png">
                                 <input type="radio" id="connect:gender" name="gender" <%= typeof(gender) === "string" && gender === "M" ? "checked" : ""  %> required="required" value="M" />
                                 <img src="https://cdn.discutea.com/img/homme.png">
                             </div> 
 
-							<input type="hidden" class="dusname" id="connect:username" name="username" value="<%= defaults.username %>">		
-							<input type="hidden" class="dresol" id="connect:resol" name="resol" value="">		
+                            <input type="hidden" class="dusname" id="connect:username" name="username" value="<%= defaults.username %>">        
+                            <input type="hidden" class="dresol" id="connect:resol" name="resol" value="">        
 
-							<div class="col-sm-9 col-sm-offset-3">
-								<button type="submit" class="btn"><%= trans.connect %></button>
-							</div>
-						</div>
-					</form>
-				</div>
-				<div id="settings" class="window">
-					<div class="header">
-						<button class="lt" aria-label="Toggle channel list"></button>
-					</div>
-					<div class="container">
-						<div class="row">
-							<div class="col-sm-12">
-								<h1 class="title"><%= trans.settings.settings %></h1>
-							</div>
-							<div class="col-sm-12">
-								<h2><%= trans.settings.messages %></h2>
-							</div>
-							<div class="col-sm-6">
-								<label class="opt">
-									<input type="checkbox" name="join">
+                            <div class="col-sm-9 col-sm-offset-3">
+                                <button type="submit" class="btn"><%= trans.connect %></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div id="settings" class="window">
+                    <div class="header">
+                        <button class="lt" aria-label="Toggle channel list"></button>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h1 class="title"><%= trans.settings.settings %></h1>
+                            </div>
+                            <div class="col-sm-12">
+                                <h2><%= trans.settings.messages %></h2>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="opt">
+                                    <input type="checkbox" name="join">
                                     <%= trans.settings.showjoins %>
-								</label>
-							</div>
-							<div class="col-sm-6">
-								<label class="opt">
-									<input type="checkbox" name="motd">
-									<%= trans.settings.showmotd %>
-								</label>
-							</div>
-							<div class="col-sm-6">
-								<label class="opt">
-									<input type="checkbox" name="part">
+                                </label>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="opt">
+                                    <input type="checkbox" name="motd">
+                                    <%= trans.settings.showmotd %>
+                                </label>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="opt">
+                                    <input type="checkbox" name="part">
                                     <%= trans.settings.showparts %>
-								</label>
-							</div>
-							<div class="col-sm-6">
-								<label class="opt">
-									<input type="checkbox" name="nick">
+                                </label>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="opt">
+                                    <input type="checkbox" name="nick">
                                     <%= trans.settings.shownick %>
-								</label>
-							</div>
-							<div class="col-sm-6">
-								<label class="opt">
-									<input type="checkbox" name="mode">
+                                </label>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="opt">
+                                    <input type="checkbox" name="mode">
                                     <%= trans.settings.showmode %>
-								</label>
-							</div>
-							<div class="col-sm-6">
-								<label class="opt">
-									<input type="checkbox" name="quit">
-									<%= trans.settings.showquits %>
-								</label>
-							</div>
+                                </label>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="opt">
+                                    <input type="checkbox" name="quit">
+                                    <%= trans.settings.showquits %>
+                                </label>
+                            </div>
                             
-							<div class="col-sm-12">
-								<h2><%= trans.settings.antiprivate %></h2>
-							</div>
-							<div class="col-sm-12">
-								<label class="opt">
-									<input class="noprivate" type="checkbox" name="noprivate">
+                            <div class="col-sm-12">
+                                <h2><%= trans.settings.antiprivate %></h2>
+                            </div>
+                            <div class="col-sm-12">
+                                <label class="opt">
+                                    <input class="noprivate" type="checkbox" name="noprivate">
                                     <%= trans.settings.nomp %>
-								</label>
-							</div>
-							<div class="col-sm-12">
-								<label class="opt">
-									<input class="noprivate" type="checkbox" name="noprivateregistered">
+                                </label>
+                            </div>
+                            <div class="col-sm-12">
+                                <label class="opt">
+                                    <input class="noprivate" type="checkbox" name="noprivateregistered">
                                     <%= trans.settings.registeredmp %>
-								</label>
-							</div>
-							<div class="col-sm-12">
-								<h2><%= trans.settings.visualaids %></h2>
-							</div>
-							<div class="col-sm-12">
-								<label class="opt">
-									<input type="checkbox" name="coloredNicks">
+                                </label>
+                            </div>
+                            <div class="col-sm-12">
+                                <h2><%= trans.settings.visualaids %></h2>
+                            </div>
+                            <div class="col-sm-12">
+                                <label class="opt">
+                                    <input type="checkbox" name="coloredNicks">
                                     <%= trans.settings.colornick %>
-								</label>
-							</div>
-							<% if (typeof prefetch === "undefined" || prefetch !== false) { %>
-							<div class="col-sm-12">
-								<h2><%= trans.settings.linkandurl %></h2>
-								<label class="opt">
-									<input type="checkbox" name="thumbnails">
+                                </label>
+                            </div>
+                            <% if (typeof prefetch === "undefined" || prefetch !== false) { %>
+                            <div class="col-sm-12">
+                                <h2><%= trans.settings.linkandurl %></h2>
+                                <label class="opt">
+                                    <input type="checkbox" name="thumbnails">
                                     <%= trans.settings.thumbnails %>
-								</label>
-								<label class="opt">
-									<input type="checkbox" name="links">
+                                </label>
+                                <label class="opt">
+                                    <input type="checkbox" name="links">
                                     <%= trans.settings.links %>
-								</label>
-							</div>
-							<% } %>
-							<div class="col-sm-12">
-								<h2><%= trans.settings.notifs %></h2>
-							</div>
-							<div class="col-sm-12">
-								<label class="opt">
-								<input id="desktopNotifications" type="checkbox" name="desktopNotifications">
-								<%= trans.settings.notifdesktop %><br>
-								<div class="error" id="warnUnsupportedDesktopNotifications">
-									<strong><%= trans.warning %><br></strong>:
-									<%= trans.settings.notsupported %>
-								</div>
-								<div class="error" id="warnBlockedDesktopNotifications">
-									<strong><%= trans.warning %></strong>:
+                                </label>
+                            </div>
+                            <% } %>
+                            <div class="col-sm-12">
+                                <h2><%= trans.settings.notifs %></h2>
+                            </div>
+                            <div class="col-sm-12">
+                                <label class="opt">
+                                <input id="desktopNotifications" type="checkbox" name="desktopNotifications">
+                                <%= trans.settings.notifdesktop %><br>
+                                <div class="error" id="warnUnsupportedDesktopNotifications">
+                                    <strong><%= trans.warning %><br></strong>:
                                     <%= trans.settings.notsupported %>
-								</div>
-								</label>
-							</div>
-							<div class="col-sm-12">
-								<label class="opt">
-								<input type="checkbox" name="notification">
+                                </div>
+                                <div class="error" id="warnBlockedDesktopNotifications">
+                                    <strong><%= trans.warning %></strong>:
+                                    <%= trans.settings.notsupported %>
+                                </div>
+                                </label>
+                            </div>
+                            <div class="col-sm-12">
+                                <label class="opt">
+                                <input type="checkbox" name="notification">
                                 <%= trans.settings.notisound %>
-								</label>
-							</div>
-							<div class="col-sm-12">
-								<div class="opt">
-									<button id="play"><%= trans.settings.playsound %></button>
-								</div>
-							</div>
+                                </label>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="opt">
+                                    <button id="play"><%= trans.settings.playsound %></button>
+                                </div>
+                            </div>
 
-							<div class="col-sm-12">
-								<label class="opt">
-									<input type="checkbox" name="notifyAllMessages">
+                            <div class="col-sm-12">
+                                <label class="opt">
+                                    <input type="checkbox" name="notifyAllMessages">
                                     <%= trans.settings.notifisall %>
-								</label>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	</div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
 
-	<div id="context-menu-container">
-		<ul id="context-menu"></ul>
-	</div>
+    <div id="context-menu-container">
+        <ul id="context-menu"></ul>
+    </div>
 
-	<script src="js/bundle.vendor.js"></script>
-	<script src="js/bundle.js"></script>
-	</body>
+    <script src="js/bundle.vendor.js"></script>
+    <script src="js/bundle.js"></script>
+    </body>
 </html>
