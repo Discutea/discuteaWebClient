@@ -604,6 +604,10 @@ $(function() {
         links: true,
         mode: true,
         motd: true,
+        bold: false,
+        italic: false,
+        underline: false,
+        wcolor: '',
         nick: true,
         notification: true,
         notifyAllMessages: false,
@@ -881,10 +885,29 @@ $(function() {
     $("#form").on("submit", function(e) {
         e.preventDefault();
         forceFocus();
+
         var text = input.val();
 
         if (text.length === 0) {
             return;
+        }
+        
+
+        
+        var char0 = text.charAt(0);
+        if (( char0 !== ":") && (char0 !== "!") && (char0 !== "/")) {
+            if (options.bold) {
+                text = "\x02" + text + "\x02";
+            }
+            if (options.italic) {
+                text = "\x1D" + text + "\x1D";
+            }
+            if (options.underline) {
+                text = "\x1F" + text + "\x1F";
+            }
+            if (options.wcolor) {
+                text = "\x03" + options.wcolor + text + "\x03";
+            }
         }
 
         input.val("");
