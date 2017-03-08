@@ -190,9 +190,11 @@ $(function() {
 			})
 			.last()
 			.click();
-            
-        renderSidebarInfos(data);
-        renderMinors(data.chan.id, data.data.age);
+        
+        if (data.chan.type === "query") {
+            renderSidebarInfos(data);
+            renderMinors(data.chan.id, data.data.age);
+        }
 	});
 
 	function buildChatMessage(data) {
@@ -303,7 +305,7 @@ $(function() {
 
         if (!age || age < 18) {
             var container = chat.find("#chan-" + chanId).find(".messages");
-            container.append(templates.msg_minor({age: age}));
+            container.append(templates.msg_minor({age: age, locale:locale}));
         }
     }
     
@@ -638,7 +640,13 @@ $(function() {
 		viewport.toggleClass(self.attr("class"));
 		e.stopPropagation();
 	});
-
+    
+	viewport.on("click", ".ri", function(e) {
+		var self = $(this);
+		viewport.toggleClass(self.attr("class"));
+		e.stopPropagation();
+	});
+    
 	function positionContextMenu(that, e) {
 		var offset;
 		var menuWidth = contextMenu.outerWidth();

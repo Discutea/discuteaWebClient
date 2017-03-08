@@ -8,8 +8,8 @@
 			</span>
 		{{/equal}}
 		{{#equal type "query"}}
-			<span class="rt-tooltip tooltipped tooltipped-w" aria-label="Toggle user list">
-				<button class="rt" aria-label="Toggle user list"></button>
+			<span class="rt-tooltip tooltipped tooltipped-w" aria-label="Toggle user infos">
+				<button class="ri" aria-label="Toggle user infos"></button>
 			</span>
 		{{/equal}}
 		<button class="menu" aria-label="Open the context menu"></button>

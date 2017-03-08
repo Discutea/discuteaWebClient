@@ -1,26 +1,26 @@
 <div class="first">
   {{#if operator}}
-    <p class="admin tooltipped tooltipped-n" aria-label="Administrateur sur discutea">
-      Administrateur
+    <p class="admin tooltipped tooltipped-n" aria-label="{{ trans 'tool_admin' locale }}">
+      {{ trans 'admin' locale }}
     </p>
   {{/if}}
   {{#if helpop}}
-    <p class="helper tooltipped tooltipped-n" aria-label="Apte a l'aide">
-      Helpeur
+    <p class="helper tooltipped tooltipped-n" aria-label="{{ trans 'tool_helper' locale }}">
+      {{ trans 'helper' locale }}
     </p>
   {{/if}}
   {{#if account}}
-    <p class="vip tooltipped tooltipped-n" aria-label="Inscrit sous {{account}}">
-      V.I.P
+    <p class="vip tooltipped tooltipped-n" aria-label="{{ trans 'tool_vip' locale }} {{account}}">
+      {{ trans 'vip' locale }}
     </p>
   {{/if}}
   
   <p>
     {{#if sex}}
-      <span class="{{ sex }}">{{ sex }}</span>, 
+      <span class="{{ sex }}">{{ trans sex locale }}</span>, 
     {{/if}}
     {{#if age}}
-      {{ age }} ans
+      {{ age }} {{ trans 'years_old' locale }}
     {{/if}}
   </p>
 
@@ -30,10 +30,10 @@
 </div>
 
 {{#if channels}}
-  <p>Salons:</p>
+  <p>{{ trans 'action_whois_follow_chans' locale }}</p>
   <p>{{{parse channels}}}</p>
 {{/if}}
 {{#if away}}
-  <p>Absent</p>
+  <p>{{ trans 'action_whois_away' locale }}</p>
   <p><i>({{away}})</i></p>
 {{/if}}

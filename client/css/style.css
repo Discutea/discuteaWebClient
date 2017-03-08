@@ -135,6 +135,7 @@ button {
 
 #viewport .lt:before,
 #viewport .rt:before,
+#viewport .ri:before,
 #chat button.menu:before,
 #sidebar .chan:before,
 #chat .title:before,
@@ -164,6 +165,7 @@ button {
 
 #viewport .lt:before { content: "\f0c9"; /* http://fontawesome.io/icon/bars/ */ }
 #viewport .rt:before { content: "\f0c0"; /* http://fontawesome.io/icon/users/ */ }
+#viewport .ri:before {content: "\f05a";}
 #chat button.menu:before { content: "\f142"; /* http://fontawesome.io/icon/ellipsis-v/ */ }
 
 .context-menu-user:before { content: "\f007"; /* http://fontawesome.io/icon/user/ */ }
@@ -299,6 +301,7 @@ button {
 
 #viewport .lt,
 #viewport .rt,
+#viewport .ri,
 #chat button.menu {
 	color: #ccc;
 	display: none;
@@ -337,6 +340,7 @@ button {
 	float: right;
 }
 
+#viewport .ri,
 #viewport .rt {
 	display: block;
 	margin: 6px -12px 0 0;
@@ -983,6 +987,12 @@ button {
 #chat .action .text,
 #chat .action .user {
 	color: #f39c12;
+}
+
+#chat .kick.warn .from,
+#chat .kick.warn .text,
+#chat .kick.warn .user {
+	color: red;
 }
 
 #chat .notice .time,

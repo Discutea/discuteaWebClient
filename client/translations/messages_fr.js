@@ -16,11 +16,27 @@ var trans = {
     action_topic_is:             'Le sujet est:',
     action_topic_set_by:         'Sujet definit par',
     action_whois_logged:         'est enregistré sous',
-    action_whois_follow_chans:   'salons:',
+    action_whois_follow_chans:   'Salons:',
     action_whois_connected:      'est connecté à',
     action_whois_secure:         'utilise une connexion sécurisée',
-    action_whois_away:           'est absent',
+    action_whois_away:           'Absent',
     action_whois_idle:           'est inactif depuis le',
+    male:                        'Homme',
+    female:                      'Femme',
+    years_old:                   'Ans',
+    admin:                       'Administrateur',
+    helper:                      'Helpeur',
+    vip:                         'V.I.P',
+    tool_admin:                  'Administrateur sur discutea',
+    tool_helper:                 'Apte a l\'aide',
+    tool_vip:                    'Inscrit sous', // ex: inscrit sous strategy
+    warning:                     'Attention',
+    minor_msg:                   'Vous parlez a <strong>un(e) mineur(e)</strong> cette conversation est donc placée sous surveillance.<br /> \
+                                  Si notre système de detection juge que la conversation n\'est pas adaptée a l\'age de notre utilisateur:<br /> \
+                                  1) Vous encourez le risque d\'être exclu de notre réseau.<br /> \
+                                  2) Vous encourez le risque que nous declarions votre adresse ip aux autorités françaises.<br />',
+    minor_undefined_msg:          'La personne avec qui vous parlez ne nous a pas informé son age.<br /> \
+                                   <strong>Cette personne est peut etre mineur</strong> merci de tenir des propos corrects et à caractère non sexuel.',   
     web: {
         connectTo:    'Connexion à',
         title:        'Client IRC auto-hébergé pour le web branche de Lounge',
