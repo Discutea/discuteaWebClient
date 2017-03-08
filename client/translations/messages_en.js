@@ -27,16 +27,16 @@ var trans = {
     admin:                       'Administrator',
     helper:                      'Helper',
     vip:                         'V.I.P',
-    tool_admin:                  'Administrateur sur discutea',
-    tool_helper:                 'Apte a l\'aide',
-    tool_vip:                    'Inscrit sous', // ex: inscrit sous strategy
+    tool_admin:                  'Administrator of Discutea',
+    tool_helper:                 'Available for help',
+    tool_vip:                    'Registered as', // ex: inscrit sous strategy
     warning:                     'Warning',
-    minor_msg:                   'Vous parlez a <strong>un(e) mineur(e)</strong> cette conversation est donc placée sous surveillance.<br /> \
-                                  Si notre système de detection juge que la conversation n\'est pas adaptée a l\'age de notre utilisateur:<br /> \
-                                  1) Vous encourez le risque d\'être exclu de notre réseau.<br /> \
-                                  2) Vous encourez le risque que nous declarions votre adresse ip aux autorités françaises.<br />',
-    minor_undefined_msg:          'La personne avec qui vous parlez ne nous a pas informé son age.<br /> \
-                                   <strong>Cette personne est peut etre mineur</strong> merci de tenir des propos corrects et à caractère non sexuel.',   
+    minor_msg:                   'You are about to chat with a <strong>minor</strong>. This conversation is therefore watched by our services.<br /> \
+                                  If our protection system detects any suspicious activity or inappropriate conversation:<br /> \
+                                  - You will most likely be banned from the network.<br /> \
+                                  - We will not hesitate to declare your activity to the competent authorities.<br />',
+    minor_undefined_msg:          'The user you are about to chat with did not communicate his/her age.<br /> \
+                                   <strong>This person may be a minor</strong> please be correct. Any bad behavior will result in disciplinary actions',   
     web: {
         connectTo:    'Connect to',
         title:        'Self-hosted web IRC client Forked to TheLounge',
