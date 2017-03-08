@@ -11,7 +11,11 @@
   {{/if}}
   {{#if account}}
     <p class="vip tooltipped tooltipped-n" aria-label="{{ trans 'tool_vip' locale }} {{account}}">
+    {{#if server}}
+        <a target="_blank" href="{{{ parseUrl server }}}/user/{{account}}">{{ trans 'vip' locale }}</a>
+    {{else}}
       {{ trans 'vip' locale }}
+    {{/if}}
     </p>
   {{/if}}
   
@@ -37,3 +41,14 @@
   <p>{{ trans 'action_whois_away' locale }}</p>
   <p><i>({{away}})</i></p>
 {{/if}}
+
+<div class="hdiscutea">
+  {{#if server}}
+    <p>
+       <a target="_blank" href="{{{ parseUrl server }}}">Discutea</a>
+    </p>
+    <p>
+       <a target="_blank" href="{{{ parseUrl server }}}/register/">Register</a>
+    </p>
+  {{/if}}
+</div>
