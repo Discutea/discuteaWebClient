@@ -19,17 +19,16 @@ Helper.setHome(program.home || process.env.LOUNGE_HOME);
 if (!fs.existsSync(Helper.CONFIG_PATH)) {
     fsextra.ensureDirSync(Helper.HOME);
     fs.chmodSync(Helper.HOME, "0700");
-    fsextra.copySync(path.resolve(path.join(
+    /*fsextra.copySync(path.resolve(path.join(
         __dirname,
         "..",
         "..",
         "defaults",
         "config.js"
     )), Helper.CONFIG_PATH);
+    */
     log.info(`Configuration file created at ${colors.green(Helper.CONFIG_PATH)}.`);
 }
-
-fsextra.ensureDirSync(Helper.USERS_PATH);
 
 require("./start");
 require("./config");
