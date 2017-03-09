@@ -11,7 +11,6 @@ var bcrypt = require("bcrypt-nodejs");
 var Helper = {
     config: null,
     expandHome: expandHome,
-    setHome: setHome,
 
     password: {
         hash: passwordHash,
@@ -28,22 +27,6 @@ Helper.config = require(path.resolve(path.join(
     "defaults",
     "config.js"
 )));
-
-function setHome(homePath) {
-    this.HOME = expandHome(homePath || "~/.lounge");
-    this.CONFIG_PATH = path.join(this.HOME, "config.js");
-
-    // Reload config from new home location
-    if (fs.existsSync(this.CONFIG_PATH)) {
-        this.config = _.extend(this.config);
-    }
-
-    // TODO: Remove in future release
-    if (this.config.debug === true) {
-        log.warn("debug option is now an object, see defaults file for more information.");
-        this.config.debug = {ircFramework: true};
-    }
-}
 
 function expandHome(shortenedPath) {
     var home;
