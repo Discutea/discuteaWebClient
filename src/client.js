@@ -181,23 +181,18 @@ Client.prototype.connect = function(args) {
         networks: [network]
     });
 
-    if (config.webirc && network.host in config.webirc) {
+    if (config.webirc) {
         if (!args.hostname) {
             args.hostname = args.ip;
         }
 
         if (args.ip) {
-            if (config.webirc[network.host] instanceof Function) {
-                
-                webirc = config.webirc[network.host](client, args);
-            } else {
-                webirc = {
-                    password: config.webirc[network.host],
-                    username: pkg.name,
-                    address: args.ip,
-                    hostname: args.hostname
-                };
-            }
+            webirc = {
+                password:  config.webirc,
+                username: pkg.name,
+                address: args.ip,
+                hostname: args.hostname
+            };
         } else {
             log.warn("Cannot find a valid WEBIRC configuration for " + nick
                 + "!" + network.username + "@" + network.host);
