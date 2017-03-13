@@ -368,6 +368,17 @@ Client.prototype.sort = function(data) {
     self.emit("sync_sort", {order: syncOrder, type: type, target: data.target});
 };
 
+Client.prototype.identify = function(data) {
+    
+    var network = this.networks[0];
+    if ( (network !== undefined) && (network.irc !== undefined) ) {
+        var irc = network.irc;
+        if (data && typeof data.passwd === 'string') {
+            irc.say('NickServ', "identify " + data.passwd);
+        }
+    }        
+}
+
 Client.prototype.noprivate = function(data) {
     var network = this.networks[0];
     if ( (network !== undefined) && (network.irc !== undefined) ) {

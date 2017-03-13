@@ -63,7 +63,7 @@ $(function() {
         "/whois"
     ];
 
-    var sidebar = $("#sidebar");
+    var sidebar = $("#sidebar, #footer");
     var chat = $("#chat");
 
     var ignoreSortSync = false;
@@ -1299,9 +1299,7 @@ $(function() {
     });
     /* END OF Form memorisation */
     
-    
     forms.on("submit", "form", function(e) {
-        console.log(e);
         e.preventDefault();
         var event = "auth";
         var form = $(this);
@@ -1547,4 +1545,16 @@ $(function() {
         $("input[name='gender'][value='" + $_GET('gender') + "']", forms).attr('checked', 'checked');
         forms.find(".btn").click();
     }
+    
+    socket.on("nick_is_registered", function() {
+        $('#nickservModal').modal('show'); 
+    });
+    
+    $("#nickserv").on("submit", function(e) {
+        e.preventDefault();
+        var pass = $("#passnickserv").val();
+        socket.emit("send_identify", {passwd: pass});
+        
+        console.log(pass);
+    });
 });

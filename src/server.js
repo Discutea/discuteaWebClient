@@ -192,6 +192,12 @@ function init(socket, client) {
                 client.noprivate(data);
             }
         );
+        socket.on(
+            "send_identify",
+            function(data) {
+                client.identify(data);
+            }
+        );
         socket.join(client.id);
         socket.emit("init", {
             active: client.lastActiveChannel,
