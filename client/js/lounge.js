@@ -1298,7 +1298,9 @@ $(function() {
     });
     /* END OF Form memorisation */
     
+    
     forms.on("submit", "form", function(e) {
+        console.log(e);
         e.preventDefault();
         var event = "auth";
         var form = $(this);
@@ -1510,6 +1512,21 @@ $(function() {
         $("#viewport .lt").toggleClass("notified", newState);
     }
 
+    function $_GET(param) {
+      var vars = {};
+      window.location.href.replace( location.hash, '' ).replace( 
+        /[?&]+([^=&]+)=?([^&]*)?/gi, // regexp
+        function( m, key, value ) { // callback
+          vars[key] = value !== undefined ? value : '';
+        }
+      );
+
+      if ( param ) {
+        return vars[param] ? vars[param] : null;	
+      }
+      return vars;
+    }
+
     document.addEventListener(
         "visibilitychange",
         function() {
@@ -1521,4 +1538,12 @@ $(function() {
 
     // Only start opening socket.io connection after all events have been registered
     socket.open();
+    
+    /* autoconnect */
+    if ($_GET('nick') && $_GET('age') && $_GET('gender')) {
+        $("input[name='nick']", forms).val( $_GET('nick') );
+        $("input[name='age']", forms).val( $_GET('age') );
+        $("input[name='gender'][value='" + $_GET('gender') + "']", forms).attr('checked', 'checked');
+        forms.find(".btn").click();
+    }
 });
