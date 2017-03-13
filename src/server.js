@@ -218,7 +218,7 @@ function reverseDnsLookup(socket, client) {
 function auth(data) {
     var socket = this;
     var client;
-    
+
     client = new Client(manager, socket.request);
     manager.clients.push(client);
     socket.on("disconnect", function() {

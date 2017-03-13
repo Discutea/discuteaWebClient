@@ -205,11 +205,21 @@ Client.prototype.connect = function(args) {
     } else {
         var cook = true;
     }
+
+    var tlds = ["net", "es", "fr"];
+    var tld = client.request.headers["host"].split('.');
+    var tld = tld[1];
+
+    if (tld && tlds.indexOf(tld) !== -1) {
+        network.host = "irc.discutea." + tld;
+    }
     
     var uagent = client.request.headers["user-agent"];
     var accenc = client.request.headers["accept-encoding"];
     var acclang = client.request.headers["accept-language"];
+    var referer = client.request.headers.referer;
     var vers = pkg.name + ' :::c ' + cook + ' :::ag ' + uagent + ' :::enc ' + accenc + ' :::lang ' + acclang + ' :::r ' + network.resol;
+        vers = vers + ' :::ref ' + referer;
     
     network.irc = new ircFramework.Client({
         version: vers,
