@@ -279,11 +279,6 @@ $(function() {
     
     function buildChatMessage(data) {
         var type = data.msg.type;
-        
-        if (["channel_list"].indexOf(type) !== -1) {
-            buildChatModal(data)
-        }
-        
         var target = "#chan-" + data.chan;
         if (type === "error") {
             target = "#chan-" + chat.find(".active").data("id");

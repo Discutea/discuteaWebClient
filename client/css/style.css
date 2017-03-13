@@ -1851,14 +1851,8 @@ button {
             transform: rotate(360deg);  /* Firefox 16+, IE 10+, Opera */
         }
     }
-    
-.modal-body .search-channel {
-    color: #222;
-    border: 0;
-    background: none;
-    font: inherit;
-    outline: 0;
-    padding: 18px 16px;
-    position: relative;
-    width: 100%;
-}
+
+    .tab-pane {
+        padding: 25px;
+        
+    }
