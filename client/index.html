@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/style.css">
     <style id="user-specified-css"></style>
-
+    
     <link rel="shortcut icon" href="img/favicon.png" data-other="img/favicon-notification.png" data-toggled="false" id="favicon">
     <link rel="apple-touch-icon" sizes="120x120" href="img/apple-touch-icon-120x120.png">
     <link rel="manifest" href="manifest.json">
@@ -33,8 +33,9 @@
         </aside>
         <footer id="footer">
             <span class="dconnect tooltipped tooltipped-n" aria-label="Connect to network"><button class="icon connect" data-target="#connect" aria-label="Connect to network"></button></span>
-            <span class="tooltipped tooltipped-n" aria-label="Client settings"><button class="icon settings" data-target="#settings" aria-label="Client settings"> Configurations</button></span>
+            <span class="tooltipped tooltipped-n" aria-label="Client settings"><button class="icon settings" data-toggle="modal" data-target="#myModal"> Configurations</button></span>
         </footer>
+
         <div id="main">
             <div id="windows">
                 <div id="loading" class="window active">
@@ -75,7 +76,7 @@
                         <button class="lt" aria-label="Toggle channel list"></button>
                     </div>
                     <form class="container" method="post" action="">
-                        <div class="row">
+                        <div class="row">                        
                             <div class="col-sm-12">
                                 <h1 class="title">
                                     <%= trans.connectTo %> <%= defaults.name %>
@@ -114,169 +115,6 @@
                         </div>
                     </form>
                 </div>
-                <div id="settings" class="window">
-                    <div class="header">
-                        <button class="lt" aria-label="Toggle channel list"></button>
-                    </div>
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <h1 class="title"><%= trans.settings.settings %></h1>
-                            </div>
-                            <div class="col-sm-12">
-                                <h2><%= trans.settings.messages %></h2>
-                            </div>
-                            <div class="col-sm-6">
-                                <label class="opt">
-                                    <input type="checkbox" name="join">
-                                    <%= trans.settings.showjoins %>
-                                </label>
-                            </div>
-                            <div class="col-sm-6">
-                                <label class="opt">
-                                    <input type="checkbox" name="motd">
-                                    <%= trans.settings.showmotd %>
-                                </label>
-                            </div>
-                            <div class="col-sm-6">
-                                <label class="opt">
-                                    <input type="checkbox" name="part">
-                                    <%= trans.settings.showparts %>
-                                </label>
-                            </div>
-                            <div class="col-sm-6">
-                                <label class="opt">
-                                    <input type="checkbox" name="nick">
-                                    <%= trans.settings.shownick %>
-                                </label>
-                            </div>
-                            <div class="col-sm-6">
-                                <label class="opt">
-                                    <input type="checkbox" name="mode">
-                                    <%= trans.settings.showmode %>
-                                </label>
-                            </div>
-                            <div class="col-sm-6">
-                                <label class="opt">
-                                    <input type="checkbox" name="quit">
-                                    <%= trans.settings.showquits %>
-                                </label>
-                            </div>
-                            
-                            <div class="col-sm-12">
-                                <h2>Couleur d'écriture</h2>
-                            </div>
-                            <div class="col-sm-6">
-                                <label class="opt">
-                                    <input type="checkbox" name="bold">
-                                    Gras
-                                </label>
-                            </div>
-                            <div class="col-sm-6">
-                                <label class="opt">
-                                    <input type="checkbox" name="underline">
-                                    Souligné
-                                </label>
-                            </div>
-                            <div class="col-sm-6">
-                                <label class="opt">
-                                  <select name="wcolor">
-                                    <option value="">NULL</option>
-                                    <option value="3" style="color: #008000">Green</option>
-                                    <option value="4" style="color: #FF0000">Red</option>
-                                    <option value="5" style="color: #804040">Brown</option>
-                                    <option value="6" style="color: #8000FF">Purple</option>
-                                    <option value="7" style="color: #FF8C00">Orange</option>
-                                    <option value="10" style="color: #008080">Teal</option>
-                                    <option value="12" style="color: #0000FF">Blue</option>
-                                    <option value="13" style="color: #FF00FF">Pink</option>
-                                    <option value="14" style="color: #808080">Gray</option>
-                                  </select>
-                                </label>
-                            </div>
-                            
-                            <div class="col-sm-6">
-                                <label class="opt">
-                                    <input type="checkbox" name="italic">
-                                    Italique
-                                </label>
-                            </div>
-                            
-                            <div class="col-sm-12">
-                                <h2><%= trans.settings.antiprivate %></h2>
-                            </div>
-                            <div class="col-sm-12">
-                                <label class="opt">
-                                    <input class="noprivate" type="checkbox" name="noprivate">
-                                    <%= trans.settings.nomp %>
-                                </label>
-                            </div>
-                            <div class="col-sm-12">
-                                <label class="opt">
-                                    <input class="noprivate" type="checkbox" name="noprivateregistered">
-                                    <%= trans.settings.registeredmp %>
-                                </label>
-                            </div>
-                            <div class="col-sm-12">
-                                <h2><%= trans.settings.visualaids %></h2>
-                            </div>
-                            <div class="col-sm-12">
-                                <label class="opt">
-                                    <input type="checkbox" name="coloredNicks">
-                                    <%= trans.settings.colornick %>
-                                </label>
-                            </div>
-                            <% if (typeof prefetch === "undefined" || prefetch !== false) { %>
-                            <div class="col-sm-12">
-                                <h2><%= trans.settings.linkandurl %></h2>
-                                <label class="opt">
-                                    <input type="checkbox" name="thumbnails">
-                                    <%= trans.settings.thumbnails %>
-                                </label>
-                                <label class="opt">
-                                    <input type="checkbox" name="links">
-                                    <%= trans.settings.links %>
-                                </label>
-                            </div>
-                            <% } %>
-                            <div class="col-sm-12">
-                                <h2><%= trans.settings.notifs %></h2>
-                            </div>
-                            <div class="col-sm-12">
-                                <label class="opt">
-                                <input id="desktopNotifications" type="checkbox" name="desktopNotifications">
-                                <%= trans.settings.notifdesktop %><br>
-                                <div class="error" id="warnUnsupportedDesktopNotifications">
-                                    <strong><%= trans.warning %><br></strong>:
-                                    <%= trans.settings.notsupported %>
-                                </div>
-                                <div class="error" id="warnBlockedDesktopNotifications">
-                                    <strong><%= trans.warning %></strong>:
-                                    <%= trans.settings.notsupported %>
-                                </div>
-                                </label>
-                            </div>
-                            <div class="col-sm-12">
-                                <label class="opt">
-                                <input type="checkbox" name="notification">
-                                <%= trans.settings.notisound %>
-                                </label>
-                            </div>
-                            <div class="col-sm-12">
-                                <div class="opt">
-                                    <button id="play"><%= trans.settings.playsound %></button>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-12">
-                                <label class="opt">
-                                    <input type="checkbox" name="notifyAllMessages">
-                                    <%= trans.settings.notifisall %>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -287,5 +125,191 @@
     </div>
     <script src="js/bundle.vendor.js"></script>
     <script src="js/bundle.js"></script>
-    </body>
+    
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="pull-right close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"><%= trans.settings.settings %></h4>
+      </div>
+      
+      <div id="settings" class="modal-body">
+        <div class="row"> <!-- Only required for left/right tabs -->
+          <ul class="nav nav-tabs">
+            <li class="active"><a href="#setting" data-toggle="tab">P</a></li>
+            <li><a href="#color" data-toggle="tab">C</a></li>
+            <li><a href="#private" data-toggle="tab">PV</a></li>
+            <li><a href="#visual" data-toggle="tab">V</a></li>
+            <li><a href="#notis" data-toggle="tab">N</a></li>
+          </ul>
+          <div class="tab-content">
+ 
+
+            <div class="tab-pane active" id="setting">
+              <div class="col-sm-12">
+                <h2><%= trans.settings.messages %></h2>
+              </div>
+              <div class="col-sm-6">
+                <label class="opt">
+                  <input type="checkbox" name="join">
+                  <%= trans.settings.showjoins %>
+                </label>
+              </div>
+              <div class="col-sm-6">
+                <label class="opt">
+                  <input type="checkbox" name="motd">
+                  <%= trans.settings.showmotd %>
+                </label>
+              </div>
+              <div class="col-sm-6">
+                <label class="opt">
+                  <input type="checkbox" name="part">
+                  <%= trans.settings.showparts %>
+                </label>
+              </div>
+              <div class="col-sm-6">
+                <label class="opt">
+                  <input type="checkbox" name="nick">
+                  <%= trans.settings.shownick %>
+                </label>
+              </div>
+              <div class="col-sm-6">
+                <label class="opt">
+                  <input type="checkbox" name="mode">
+                  <%= trans.settings.showmode %>
+                </label>
+              </div>
+              <div class="col-sm-6">
+                <label class="opt">
+                  <input type="checkbox" name="quit">
+                  <%= trans.settings.showquits %>
+                </label>
+              </div>
+            </div>
+            <div class="tab-pane" id="color">
+              <div class="col-sm-12">
+                <h2>Couleur d'écriture</h2>
+              </div>
+              <div class="col-sm-6">
+                <label class="opt">
+                  <input type="checkbox" name="bold">Gras
+                </label>
+              </div>
+              <div class="col-sm-6">
+                <label class="opt">
+                  <input type="checkbox" name="underline">Souligné
+                </label>
+              </div>
+              <div class="col-sm-6">
+                <label class="opt">
+                  <select name="wcolor">
+                    <option value="">NULL</option>
+                    <option value="3" style="color: #008000">Green</option>
+                    <option value="4" style="color: #FF0000">Red</option>
+                    <option value="5" style="color: #804040">Brown</option>
+                    <option value="6" style="color: #8000FF">Purple</option>
+                    <option value="7" style="color: #FF8C00">Orange</option>
+                    <option value="10" style="color: #008080">Teal</option>
+                    <option value="12" style="color: #0000FF">Blue</option>
+                    <option value="13" style="color: #FF00FF">Pink</option>
+                    <option value="14" style="color: #808080">Gray</option>
+                  </select>
+                </label>
+              </div>
+              <div class="col-sm-6">
+                <label class="opt">
+                  <input type="checkbox" name="italic">Italique
+                </label>
+              </div>
+            </div>
+            <div class="tab-pane" id="private">
+              <div class="col-sm-12">
+                <h2><%= trans.settings.antiprivate %></h2>
+              </div>
+              <div class="col-sm-12">
+                <label class="opt">
+                  <input class="noprivate" type="checkbox" name="noprivate">
+                  <%= trans.settings.nomp %>
+                </label>
+              </div>
+              <div class="col-sm-12">
+                <label class="opt">
+                  <input class="noprivate" type="checkbox" name="noprivateregistered">
+                  <%= trans.settings.registeredmp %>
+                </label>
+              </div>        
+            </div>
+            <div class="tab-pane" id="visual">
+              <div class="col-sm-12">
+                <h2><%= trans.settings.visualaids %></h2>
+              </div>
+              <div class="col-sm-12">
+                <label class="opt">
+                  <input type="checkbox" name="coloredNicks">
+                  <%= trans.settings.colornick %>
+                </label>
+              </div>
+              <% if (typeof prefetch === "undefined" || prefetch !== false) { %>
+                <div class="col-sm-12">
+                  <h2><%= trans.settings.linkandurl %></h2>
+                  <label class="opt">
+                    <input type="checkbox" name="thumbnails">
+                    <%= trans.settings.thumbnails %>
+                  </label>
+                  <label class="opt">
+                    <input type="checkbox" name="links">
+                    <%= trans.settings.links %>
+                  </label>
+                </div>
+              <% } %>
+            </div> 
+              <div class="tab-pane" id="notis">
+                <div class="col-sm-12">
+                  <h2><%= trans.settings.notifs %></h2>
+                </div>
+                <div class="col-sm-12">
+                  <label class="opt">
+                    <input id="desktopNotifications" type="checkbox" name="desktopNotifications">
+                    <%= trans.settings.notifdesktop %><br>
+                    <div class="error" id="warnUnsupportedDesktopNotifications">
+                      <strong><%= trans.warning %><br></strong>:
+                      <%= trans.settings.notsupported %>
+                    </div>
+                    <div class="error" id="warnBlockedDesktopNotifications">
+                      <strong><%= trans.warning %></strong>:
+                      <%= trans.settings.notsupported %>
+                    </div>
+                  </label>
+                </div>
+                <div class="col-sm-12">
+                  <label class="opt">
+                    <input type="checkbox" name="notification">
+                    <%= trans.settings.notisound %>
+                  </label>
+                </div>
+                <div class="col-sm-12">
+                  <div class="opt">
+                    <button id="play"><%= trans.settings.playsound %></button>
+                  </div>
+                </div>
+                <div class="col-sm-12">
+                  <label class="opt">
+                    <input type="checkbox" name="notifyAllMessages">
+                    <%= trans.settings.notifisall %>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
 </html>
