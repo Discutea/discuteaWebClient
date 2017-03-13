@@ -1094,11 +1094,6 @@ $(function() {
         focus();
     });
 
-    sidebar.on("click", "#sign-out", function() {
-        window.localStorage.removeItem("token");
-        location.reload();
-    });
-
     sidebar.on("click", ".close", function() {
         var cmd = "/close";
         var chan = $(this).closest(".chan");
@@ -1279,6 +1274,29 @@ $(function() {
 
 
     var forms = $("#connect");
+    
+    /* Form memorisation */
+    if ( window.localStorage.getItem("nickname") ) {
+        $("input[name='nick']", forms).val( window.localStorage.getItem("nickname") );
+    }
+    if ( window.localStorage.getItem("age") ) {
+        $("input[name='age']", forms).val( window.localStorage.getItem("age") );
+    }
+    if ( window.localStorage.getItem("sexe") ) {
+        var sex = window.localStorage.getItem("sexe");
+        $("input[name='gender'][value='" + sex + "']", forms).attr('checked', 'checked');
+    }
+        
+    $("input[name='nick']", forms).blur(function(){
+        setLocalStorageItem("nickname", $(this).val());
+    }); 
+    $("input[name='age']", forms).blur(function(){
+        setLocalStorageItem("age", $(this).val());
+    });
+    $("input[name='gender']", forms).change(function(){
+        setLocalStorageItem("sexe", $(this).val());
+    });
+    /* END OF Form memorisation */
     
     forms.on("submit", "form", function(e) {
         e.preventDefault();
