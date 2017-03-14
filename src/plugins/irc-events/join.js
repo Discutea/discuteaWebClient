@@ -26,8 +26,17 @@ module.exports = function(irc, network) {
         
         chan.users.push(new User(data));
         chan.sortUsers(irc);
+        /*
+            client.emit("users", {
+                chan: chan.id,
+                action: 'remove',
+                user: user
+            });
+            */
         client.emit("users", {
-            chan: chan.id
+            chan: chan.id,
+            action: 'insert',
+            user: data
         });
 
         var msg = new Msg({

@@ -583,11 +583,51 @@ $(function() {
         // .attr() is safe escape-wise but consider the capabilities of the attribute
         topic.attr("title", data.topic);
     });
-
+    
     socket.on("users", function(data) {
         var chan = chat.find("#chan-" + data.chan);
 
         if (chan.hasClass("active")) {
+
+            if (typeof data.action === 'string' && data.user) {
+              if (!data.user.mode) {
+                var ulist = chan.find(".names");
+                var sh = chan.find(".search");
+                
+                if (!sh.length) {return;}
+                
+                var c = parseInt(sh.attr("placeholder").split(' ')[0]);
+               
+                if (data.action === 'remove') {
+                  if (typeof data.user.name === 'string') {
+                    ulist.find("[data-name="+data.user.name+"]").remove();
+                  } else {
+                    ulist.find("[data-name="+data.user.nick+"]").remove();
+                  }
+                  c = c - 1;
+                } else if (data.action === 'insert') {
+                  data.user.name = data.user.nick;
+                  var html = templates.user_sample(data.user);
+
+                  var added = false;
+                  ulist.find('.normal').each(function(){
+                    if ($(this).text().toLowerCase() > data.user.nick.toLowerCase()) {
+                      $(this).before( html );
+                      added = true;
+                      return false;
+                    }
+                  });
+
+                  if(!added) { ulist.append(html); }
+                  c = c + 1;
+                }
+
+                var txtcount = '' + c + ' users';
+                sh.attr("placeholder", txtcount);
+                return;
+              }
+            }
+        
             socket.emit("names", {
                 target: data.chan
             });
@@ -640,7 +680,6 @@ $(function() {
             }
 
             setLocalStorageItem("settings", JSON.stringify(options));
-
             if ([
                 "join",
                 "mode",
@@ -650,6 +689,7 @@ $(function() {
                 "quit",
                 "notifyAllMessages",
             ].indexOf(name) !== -1) {
+                
                 chat.toggleClass("hide-" + name, !self.prop("checked"));
             } else if (name === "coloredNicks") {
                 chat.toggleClass("colored-nicks", self.prop("checked"));

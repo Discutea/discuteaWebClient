@@ -14,7 +14,9 @@ module.exports = function(irc, network) {
             }
             chan.users = _.without(chan.users, user);
             client.emit("users", {
-                chan: chan.id
+                chan: chan.id,
+                action: 'remove',
+                user: user
             });
             var msg = new Msg({
                 time: data.time,
