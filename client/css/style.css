@@ -160,6 +160,7 @@ button {
 #settings .iset-private:before,
 #settings .iset-color:before,
 #settings .iset-set:before,
+#nicktitle:before,
 .context-menu-item:before,
 #nick button:before {
     font: normal normal normal 14px/1 FontAwesome;
@@ -168,7 +169,9 @@ button {
     -moz-osx-font-smoothing: grayscale;
 }
 
-
+#nicktitle:before {
+    content: "\f1e2";
+}
 #settings .iset-visual:before {
     content: "\f06e";
     color: #2ecc40;

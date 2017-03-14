@@ -1549,9 +1549,12 @@ $(function() {
     }
     
     socket.on("nick_is_registered", function() {
-        $('#nickservModal').modal('show'); 
+        $('#nickservModal').modal('show');         
     });
-    
+    socket.on("nick_is_identified", function() {
+        $('#nickservModal').modal('hide'); 
+    });
+
     $("#nickserv").on("submit", function(e) {
         e.preventDefault();
         var pass = $("#passnickserv").val();

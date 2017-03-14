@@ -6,11 +6,16 @@ var Msg = require("../../models/msg");
 
 module.exports = function(irc, network) {
     var client = this;
+    var my = false;
     irc.on("mode", function(data) {
         var targetChan;
 
         if (data.target === irc.user.nick) {
             targetChan = network.channels[0];
+
+            if (data.nick === 'NickServ' && data.modes[0].mode === "+r") {
+                client.emit("nick_is_identified", {network: network.id});
+            }
         } else {
             targetChan = network.getChannel(data.target);
             if (typeof targetChan === "undefined") {
