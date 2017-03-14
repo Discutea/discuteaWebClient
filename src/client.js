@@ -385,7 +385,8 @@ Client.prototype.noprivate = function(data) {
         var irc = network.irc;
         if (data.type === "registered") {
             var mode = 'R';
-        } else {
+        } 
+        if (data.type === "all") {
             var mode = 'd';
         }
         

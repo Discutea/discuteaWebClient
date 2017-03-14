@@ -165,15 +165,24 @@
         <button type="button" class="pull-right close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel"><%= trans.settings.settings %></h4>
       </div>
-      
       <div id="settings" class="modal-body">
         <div class="row">
           <ul class="nav nav-tabs col-xs-12">
-            <li class="active"><a href="#setting" aria-label="<%= trans.settings.messages %>" data-toggle="tab" class="tooltipped tooltipped-n">P</a></li>
-            <li><a href="#color" aria-label="Couleur d'écriture" data-toggle="tab" class="tooltipped tooltipped-n">C</a></li>
-            <li><a href="#private" aria-label="<%= trans.settings.antiprivate %>" data-toggle="tab" class="tooltipped tooltipped-n">PV</a></li>
-            <li><a href="#visual" aria-label="<%= trans.settings.visualaids %>" data-toggle="tab" class="tooltipped tooltipped-n">V</a></li>
-            <li><a href="#notis" aria-label="<%= trans.settings.notifs %>" data-toggle="tab" class="tooltipped tooltipped-n">N</a></li>
+            <li class="active"><a href="#setting" aria-label="<%= trans.settings.settings %>" data-toggle="tab" class="tooltipped tooltipped-n setting-link">
+              <span class="iset-set"></span>
+            </a></li>
+            <li><a href="#color" aria-label="Couleur d'écriture" data-toggle="tab" class="tooltipped tooltipped-n setting-link">
+              <span class="iset-color"></span>
+            </a></li>
+            <li><a href="#private" aria-label="<%= trans.settings.antiprivate %>" data-toggle="tab" class="tooltipped tooltipped-n setting-link">
+              <span class="iset-private"></span>
+            </a></li>
+            <li><a href="#visual" aria-label="<%= trans.settings.visualaids %>" data-toggle="tab" class="tooltipped tooltipped-n setting-link">
+              <span class="iset-visual"></span>
+            </a></li>
+            <li><a href="#notis" aria-label="<%= trans.settings.notifs %>" data-toggle="tab" class="tooltipped tooltipped-n setting-link">
+              <span class="iset-noti"></span>
+            </a></li>
           </ul>
         </div>
         <div class="tab-content">

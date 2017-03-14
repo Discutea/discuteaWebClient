@@ -155,12 +155,40 @@ button {
 #chat .whois .from:before,
 #chat .nick .from:before,
 #chat .action .from:before,
+#settings .iset-noti:before,
+#settings .iset-visual:before,
+#settings .iset-private:before,
+#settings .iset-color:before,
+#settings .iset-set:before,
 .context-menu-item:before,
 #nick button:before {
     font: normal normal normal 14px/1 FontAwesome;
     font-size: inherit; /* Can't have font-size inherit on line above, so need to override */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+}
+
+
+#settings .iset-visual:before {
+    content: "\f06e";
+    color: #2ecc40;
+}
+#settings .iset-private:before {
+    content: "\f05e";
+    color: #ff4136;
+    size: 20px;
+}
+#settings .iset-color:before {
+    content: "\f040";
+    color: #2d52cc;
+}
+#settings .iset-set:before {
+    content: "\f0a1"; /* http://fontawesome.io/icon/bullhorn/ */
+    color: #cc9e2d;
+}
+#settings .iset-noti:before {
+    content: "\f0a2"; /* http://fontawesome.io/icon/bullhorn/ */
+    color: #cc2dac;
 }
 
 #viewport .lt:before { content: "\f0c9"; /* http://fontawesome.io/icon/bars/ */ }

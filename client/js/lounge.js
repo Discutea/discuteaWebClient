@@ -515,7 +515,8 @@ $(function() {
                     ckecked: checked,
                     type: "registered"
                 });
-            } else if (name === "noprivate") {
+            } 
+            if (name === "noprivate") {
                 socket.emit("noprivate", {
                     ckecked: checked,
                     type: "all"
@@ -1022,9 +1023,10 @@ $(function() {
     sidebar.on("click", ".chan, button", function() {
         var self = $(this);
         var target = self.data("target");
-        if (!target) {
+        if (!target || target === "#myModal") {
             return;
         }
+        
         chat.data(
             "id",
             self.data("id")
@@ -1554,7 +1556,11 @@ $(function() {
         e.preventDefault();
         var pass = $("#passnickserv").val();
         socket.emit("send_identify", {passwd: pass});
-        
-        console.log(pass);
     });
+    
+    $(".setting-link").on("click", function() {
+      var title = $(this).attr("aria-label");
+      $("#myModal .modal-title").text(title);
+    });
+    
 });
