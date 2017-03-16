@@ -31,6 +31,8 @@ var trans = {
     tool_helper:                 'Available for help',
     tool_vip:                    'Registered as', // ex: inscrit sous strategy
     warning:                     'Warning',
+    block:                       'Block',
+    unblock:                     'Unblock',
     minor_msg:                   'You are about to chat with a <strong>minor</strong>. This conversation is therefore watched by our services.<br /> \
                                   If our protection system detects any suspicious activity or inappropriate conversation:<br /> \
                                   - You will most likely be banned from the network.<br /> \
@@ -39,7 +41,8 @@ var trans = {
                                    <strong>This person may be a minor</strong> please be correct. Any bad behavior will result in disciplinary actions',   
     web: {
         connectTo:    'Connect to',
-        title:        'Self-hosted web IRC client Forked to TheLounge',
+        close:        'Close',
+        title:        'Chat Discutea Client Web IRC',
         notconnected: 'You\'re not connected yet.',
         loading:      'Discutea IRC client is loading…',
         loadingapp:   'Loading the app…',
@@ -47,6 +50,7 @@ var trans = {
         connectlost:  'Client connection lost &mdash; Click here to reconnect',
         connect:      'Connect',
         warning:      'Warning',
+        valid:        'Valid',
         form: {
             nick:   'Nick',
             age:    'Age',
@@ -74,7 +78,33 @@ var trans = {
             notsupported: 'Desktop notifications are blocked or not supported by your browser.',
             notisound:    'Enable notification sound',
             playsound:    'Play sound',
-            notifisall:   'Enable notification for all messages'
+            notifisall:   'Enable notification for all messages',
+            bold:         'Gras',
+            underline:    'Souligné',
+            italics:      'Italique',
+            writing:      'Options d\'écriture',
+            color: {
+                empty:  'Aucune',
+                green:  'Green',
+                red:    'Red',
+                brown:  'Brown',
+                purple: 'Purple',
+                orange: 'Orange',
+                teal:   'Teal',
+                blue:   'Blue',
+                pink:   'Pink',
+                gray:   'Gray'
+            }
+        },
+        nickservmodal: {
+            title:    'Identification NickServ',
+            password: 'Password:'
+        },
+        ignoremodal: {
+            title:    'Liste des ignorés',
+            nickname: 'Pseudo',
+            unblock:  'Débloquer',
+            empty:    'Aucun pseudos n\'est ignorés.'
         }
     }
 };

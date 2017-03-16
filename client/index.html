@@ -131,22 +131,22 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="pull-right close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="nicktitle"> Identification NickServ</h4>
+        <button type="button" class="pull-right close" data-dismiss="modal" aria-label="<%= trans.close %>"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="nicktitle"> <%= trans.nickservmodal.title %></h4>
       </div>
       <form id="nickserv" method="post" action="">
         <div class="modal-body">
           <div class="row">
             <div class="col-sm-3">
-              <label for="passnickserv">Password: </label>
+              <label for="passnickserv"><%= trans.nickservmodal.password %> </label>
             </div>    
             <div class="col-sm-9">
-              <input class="input nick" id="passnickserv" type="password" name="nick" placeholder="password">
+              <input class="input nick" id="passnickserv" type="password" name="nick" placeholder="<%= trans.nickservmodal.password %>">
             </div>
           </div>
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn"><%= trans.connect %></button>
+          <button type="submit" class="btn"><%= trans.valid %></button>
         </div>
       </form>
     </div>
@@ -158,19 +158,19 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="pull-right close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="ignoretitle"> Liste des ignorés</h4>
+        <button type="button" class="pull-right close" data-dismiss="modal" aria-label="<%= trans.close %>"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="ignoretitle"> <%= trans.ignoremodal.title %></h4>
       </div>
       <div class="modal-body">
         <table class="ignorelist">
           <thead>
             <tr>        
-              <th class="user">Pseudo</th>
-              <th class="actions">Débloquer</th>
+              <th class="user"><%= trans.ignoremodal.nickname %></th>
+              <th class="actions"><%= trans.ignoremodal.unblock %></th>
             </tr>
           </thead>
           <tbody class="ignoreds">
-            <tr class="empty"><td colspan="5">Aucun pseudos n'est ignorés.</td></tr>
+            <tr class="empty"><td colspan="5"><%= trans.ignoremodal.empty %></td></tr>
           </tbody>
         </table>
       </div>
@@ -184,7 +184,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="pull-right close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <button type="button" class="pull-right close" data-dismiss="modal" aria-label="<%= trans.close %>"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel"><%= trans.settings.settings %></h4>
       </div>
       <div id="settings" class="modal-body">
@@ -193,7 +193,7 @@
             <li class="active"><a href="#setting" aria-label="<%= trans.settings.settings %>" data-toggle="tab" class="tooltipped tooltipped-n setting-link">
               <span class="iset-set"></span>
             </a></li>
-            <li><a href="#color" aria-label="Couleur d'écriture" data-toggle="tab" class="tooltipped tooltipped-n setting-link">
+            <li><a href="#color" aria-label="<%= trans.settings.writing %>" data-toggle="tab" class="tooltipped tooltipped-n setting-link">
               <span class="iset-color"></span>
             </a></li>
             <li><a href="#private" aria-label="<%= trans.settings.antiprivate %>" data-toggle="tab" class="tooltipped tooltipped-n setting-link">
@@ -249,33 +249,33 @@
           <div class="tab-pane row" id="color">
             <div class="col-sm-6">
               <label class="opt">
-                <input type="checkbox" name="bold">Gras
+                <input type="checkbox" name="bold"><%= trans.settings.bold %>
               </label>
             </div>
             <div class="col-sm-6">
               <label class="opt">
-                <input type="checkbox" name="underline">Souligné
+                <input type="checkbox" name="underline"><%= trans.settings.underline %>
               </label>
             </div>
             <div class="col-sm-6">
               <label class="opt">
                 <select name="wcolor">
-                  <option value="">NULL</option>
-                  <option value="3" style="color: #008000">Green</option>
-                  <option value="4" style="color: #FF0000">Red</option>
-                  <option value="5" style="color: #804040">Brown</option>
-                  <option value="6" style="color: #8000FF">Purple</option>
-                  <option value="7" style="color: #FF8C00">Orange</option>
-                  <option value="10" style="color: #008080">Teal</option>
-                  <option value="12" style="color: #0000FF">Blue</option>
-                  <option value="13" style="color: #FF00FF">Pink</option>
-                  <option value="14" style="color: #808080">Gray</option>
+                  <option value=""><%= trans.settings.color.empty %></option>
+                  <option value="3" style="color: #008000"><%= trans.settings.color.green %></option>
+                  <option value="4" style="color: #FF0000"><%= trans.settings.color.red %></option>
+                  <option value="5" style="color: #804040"><%= trans.settings.color.brown %></option>
+                  <option value="6" style="color: #8000FF"><%= trans.settings.color.purple %></option>
+                  <option value="7" style="color: #FF8C00"><%= trans.settings.color.orange %></option>
+                  <option value="10" style="color: #008080"><%= trans.settings.color.teal %></option>
+                  <option value="12" style="color: #0000FF"><%= trans.settings.color.blue %></option>
+                  <option value="13" style="color: #FF00FF"><%= trans.settings.color.pink %></option>
+                  <option value="14" style="color: #808080"><%= trans.settings.color.gray %></option>
                 </select>
               </label>
             </div>
             <div class="col-sm-6">
               <label class="opt">
-                <input type="checkbox" name="italic">Italique
+                <input type="checkbox" name="italic"><%= trans.settings.italics %>
               </label>
             </div>
           </div>
@@ -347,7 +347,7 @@
           </div>
         </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><%= trans.close %></button>
       </div>
     </div>
   </div>

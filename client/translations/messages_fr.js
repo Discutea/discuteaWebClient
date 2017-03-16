@@ -31,6 +31,8 @@ var trans = {
     tool_helper:                 'Apte à l\'aide',
     tool_vip:                    'Inscrit sous', // ex: inscrit sous strategy
     warning:                     'Attention',
+    block:                       'Bloquer',
+    unblock:                     'Débloquer',
     minor_msg:                   'Vous êtes sur le point de communiquer avec <strong>un(e) mineur(e)</strong> cette conversation est donc placée sous surveillance.<br /> \
                                   Si notre système de détection juge que la conversation n\'est pas adaptée a l\'âge de notre utilisateur :<br /> \
                                   - Vous encourez le risque d\'être exclu de notre réseau.<br /> \
@@ -39,7 +41,8 @@ var trans = {
                                    <strong>Cette personne est peut-être mineure</strong> merci de rester correct. Tout comportement inapproprié donnera lieu à des sanctions lourdes.',   
     web: {
         connectTo:    'Connexion à',
-        title:        'Client IRC auto-hébergé pour le web branche de Lounge',
+        close:        'Fermer',
+        title:        'Chat Discutea Client Web IRC',
         notconnected: 'Vous n\'êtes pas encore connecté.',
         loading:      'Le client IRC de Discutea charge...',
         loadingapp:   'Chargement de l\'application...',
@@ -47,6 +50,7 @@ var trans = {
         connectlost:  'Connexion perdue &mdash; Cliquez ici pour vous reconnecter',
         connect:      'Connexion',
         warning:      'Attention',
+        valid:        'Valider',
         form: {
             nick:   'Pseudo',
             age:    'Age',
@@ -58,9 +62,9 @@ var trans = {
             showjoins:    'Voir les entrées',
             showmotd:     'Voir le <abbr title="Message du jour">MOTD</abbr>',
             showparts:    'Voir les départs',
-        shownick:     'Voir les pseudos',
-        showmode:     'Voir les modes',
-        showquits:    'Voir les déconnexions' ,
+            shownick:     'Voir les pseudos',
+            showmode:     'Voir les modes',
+            showquits:    'Voir les déconnexions' ,
             antiprivate:  'Anti-messages privés',
             registeredmp: 'Ne plus recevoir de messages privés.',
             nomp:         'Ne recevoir les messages privés que de la part des membres inscrits',
@@ -74,7 +78,33 @@ var trans = {
             notsupported: 'Les notifications de bureau sont bloquées ou non supportées par votre navigateur.',
             notisound:    'Jouer un son pour m\'informer',
             playsound:    'Écouter le son',
-            notifisall:   'Activer les notifications pour tous les messages'
+            notifisall:   'Activer les notifications pour tous les messages',
+            bold:         'Gras',
+            underline:    'Souligné',
+            italics:      'Italique',
+            writing:      'Options d\'écriture',
+            color: {
+                empty:  'Aucune',
+                green:  'Vert',
+                red:    'Rouge',
+                brown:  'Marron',
+                purple: 'Violet',
+                orange: 'Orange',
+                teal:   'Teal',
+                blue:   'Bleu',
+                pink:   'Rose',
+                gray:   'Gris'
+            }
+        },     
+        nickservmodal: {
+            title:    'Identification NickServ',
+            password: 'Password:'
+        },
+        ignoremodal: {
+            title:    'Liste des ignorés',
+            nickname: 'Pseudo',
+            unblock:  'Débloquer',
+            empty:    'Aucun pseudos n\'est ignorés.'
         }
     }
 };

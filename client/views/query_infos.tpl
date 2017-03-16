@@ -46,9 +46,9 @@
   <div class="hdiscutea">
     <a class="btn btn-default btn-xs silence{{#if locked}} locked{{/if}}" data-target="{{ host }}" data-nick="{{ nick }}" href="#">
      {{#if locked}}
-       Débloquer
+       {{ trans 'unblock' locale }}
      {{else}}
-       Bloquer
+       {{ trans 'block' locale }}
      {{/if}}
     </a>
   </div>

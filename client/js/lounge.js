@@ -1192,7 +1192,7 @@ function isIgnored(host) {
             .addClass("active")
             .trigger("show");
 
-        var title = "The Lounge";
+        var title = "Discutea IRC client";
         if (chan.data("title")) {
             title = chan.data("title") + " — " + title;
         }
