@@ -7,7 +7,7 @@ const LinkPrefetch = require("./link");
 module.exports = function(irc, network) {
     var client = this;
 
-    irc.on("notice", function(data) {
+    irc.on("notice", function(data) {        
         if (data.nick === 'NickServ' && data.hostname === 'services.discutea.com') {
             if (data.message.match(/msg NickServ IDENTIFY/gi)) {
                 client.emit("nick_is_registered", {network: network.id});

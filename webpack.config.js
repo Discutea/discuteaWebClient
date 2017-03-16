@@ -17,6 +17,7 @@ let config = {
             "mousetrap",
             "socket.io-client",
             "urijs",
+            "noty",
         ],
     },
     devtool: "source-map",

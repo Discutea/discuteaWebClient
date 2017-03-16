@@ -32,7 +32,8 @@ var events = [
     "welcome",
     "list",
     "who",
-    "whois"
+    "whois",
+    "notice"
 ];
 var inputs = [
     "ctcp",

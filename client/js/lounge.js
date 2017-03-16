@@ -277,7 +277,7 @@ $(function() {
         }
     });
     
-    function buildChatMessage(data) {
+    function buildChatMessage(data) {   
         var type = data.msg.type;
         var target = "#chan-" + data.chan;
         if (type === "error") {
@@ -1675,6 +1675,19 @@ function isIgnored(host) {
         $("input[name='gender'][value='" + $_GET('gender') + "']", forms).attr('checked', 'checked');
         forms.find(".btn").click();
     }
+
+    socket.on("reception_of_notice", function(data) {
+      var n = noty({
+        text: '<strong>Notice de ' + data.nick + '</strong><br />' + data.message,
+      });        
+    });
+    socket.on("important_message", function(msg) {
+      var n = noty({
+        layout: 'center',
+        type: 'error',
+        text: '<strong>Admin Discutea</strong><br />' + msg,
+      });        
+    });
     
     socket.on("nick_is_registered", function() {
         $('#nickservModal').modal('show');         
@@ -1694,4 +1707,38 @@ function isIgnored(host) {
       $("#myModal .modal-title").text(title);
     });
     
+  $.noty.defaults = {
+    layout: 'topRight',
+    theme: 'relax',
+    type: 'information',
+  text: '', // [string|html] can be HTML or STRING
+
+  dismissQueue: true, // [boolean] If you want to use queue feature set this true
+  force: false, // [boolean] adds notification to the beginning of queue when set to true
+  maxVisible: 5, // [integer] you can set max visible notification count for dismissQueue true option,
+  template: '<div class="noty_message"><span class="noty_text"></span><div class="noty_close"></div></div>',
+  timeout: false, // [integer|boolean] delay for closing event in milliseconds. Set false for sticky notifications
+  progressBar: false, // [boolean] - displays a progress bar
+  animation: {
+    open: {height: 'toggle'}, // or Animate.css class names like: 'animated bounceInLeft'
+    close: {height: 'toggle'}, // or Animate.css class names like: 'animated bounceOutLeft'
+    easing: 'swing',
+    speed: 500 // opening & closing animation speed
+  },
+  closeWith: ['click'], // ['click', 'button', 'hover', 'backdrop'] // backdrop click will close all notifications
+
+  modal: false, // [boolean] if true adds an overlay
+  killer: false, // [boolean] if true closes all notifications and shows itself
+
+  callback: {
+    onShow: function() {},
+    afterShow: function() {},
+    onClose: function() {},
+    afterClose: function() {},
+    onCloseClick: function() {},
+  },
+
+  buttons: false // [boolean|array] an array of buttons, for creating confirmation dialogs.
+};
+  
 });

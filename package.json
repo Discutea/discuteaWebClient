@@ -51,7 +51,8 @@
     "semver": "5.3.0",
     "socket.io": "1.7.3",
     "spdy": "3.4.4",
-    "accept-language": "3.0.15"
+    "accept-language": "3.0.15",
+    "noty": "2.4.1"
   },
   "devDependencies": {
     "babel-core": "6.23.1",
