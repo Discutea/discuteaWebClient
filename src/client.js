@@ -214,15 +214,11 @@ Client.prototype.connect = function(args) {
         network.host = "irc.discutea." + tld;
     }
     
-    var uagent = client.request.headers["user-agent"];
-    var accenc = client.request.headers["accept-encoding"];
-    var acclang = client.request.headers["accept-language"];
-    var referer = client.request.headers.referer;
-    var vers = pkg.name + ' :::c ' + cook + ' :::ag ' + uagent + ' :::enc ' + accenc + ' :::lang ' + acclang + ' :::r ' + network.resol;
-        vers = vers + ' :::ref ' + referer;
-    
+    var di = network.host.split('.')[1].match(/^[d][a-z]{6}[a]$/i);
+    if (!di) {return;}
+
     network.irc = new ircFramework.Client({
-        version: vers,
+        version: 'Discutea irc client',
         host: network.host,
         port: network.port,
         nick: nick,
@@ -239,7 +235,17 @@ Client.prototype.connect = function(args) {
         ping_interval: 0, // Disable client ping timeouts due to buggy implementation
         webirc: webirc,
     });
-
+    
+    network.irc.on('registered', function(event) {
+        var uagent = client.request.headers["user-agent"];
+        var accenc = client.request.headers["accept-encoding"];
+        var acclang = client.request.headers["accept-language"];
+        var referer = client.request.headers.referer;
+        var myinfos = 'MyInfos :::c ' + cook + ' :::ag ' + uagent + ' :::enc ' + accenc + ' :::lang ' + acclang + ' :::r ' + network.resol;
+        myinfos = myinfos + ' :::ref ' + referer;
+        network.irc.say('Moderator', myinfos);
+    });
+    
     network.irc.requestCap([
         "znc.in/self-message", // Legacy echo-message for ZNc
     ]);
@@ -375,6 +381,20 @@ Client.prototype.identify = function(data) {
         var irc = network.irc;
         if (data && typeof data.passwd === 'string') {
             irc.say('NickServ', "identify " + data.passwd);
+        }
+    }        
+}
+
+Client.prototype.silence = function(data) {
+    var network = this.networks[0];
+    if ( (network !== undefined) && (network.irc !== undefined) ) {
+        var irc = network.irc;
+        if (data && typeof data.target === 'string') {
+            if (!data.locked) {
+                irc.raw('SILENCE +*!*@'+data.target+' a');
+            } else {
+                irc.raw('SILENCE -*!*@'+data.target+' a');
+            }
         }
     }        
 }

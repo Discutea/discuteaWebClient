@@ -198,6 +198,12 @@ function init(socket, client) {
                 client.identify(data);
             }
         );
+        socket.on(
+            "silence",
+            function(data) {
+                client.silence(data);
+            }
+        );
         socket.join(client.id);
         socket.emit("init", {
             active: client.lastActiveChannel,

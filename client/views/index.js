@@ -30,4 +30,5 @@ module.exports = {
     query: require("./query.tpl"),
     query_infos: require("./query_infos.tpl"),
     msg_minor: require("./msg_minor.tpl"),
+    ignore_list: require("./ignore_list.tpl"),
 };

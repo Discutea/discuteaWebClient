@@ -42,13 +42,14 @@
   <p><i>({{away}})</i></p>
 {{/if}}
 
-<div class="hdiscutea">
-  {{#if server}}
-    <p>
-       <a target="_blank" href="{{{ parseUrl server }}}">Discutea</a>
-    </p>
-    <p>
-       <a target="_blank" href="{{{ parseUrl server }}}/register/">Register</a>
-    </p>
-  {{/if}}
-</div>
+{{#unless operator}}
+  <div class="hdiscutea">
+    <a class="btn btn-default btn-xs silence{{#if locked}} locked{{/if}}" data-target="{{ host }}" data-nick="{{ nick }}" href="#">
+     {{#if locked}}
+       Débloquer
+     {{else}}
+       Bloquer
+     {{/if}}
+    </a>
+  </div>
+{{/unless}}

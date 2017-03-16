@@ -71,44 +71,6 @@ input {
     outline: 0;
 }
 
-button {
-    border: none;
-    background: none;
-    margin: 0;
-    outline: none;
-    padding: 0;
-}
-
-.btn {
-    border: 2px solid #ff8d00;
-    border-radius: 3px;
-    color: #ff8d00;
-    display: inline-block;
-    font-size: 12px;
-    font-weight: bold;
-    letter-spacing: 1px;
-    margin-bottom: 10px;
-    padding: 9px 17px;
-    text-transform: uppercase;
-    transition: background .2s, border-color .2s, color .2s;
-    word-spacing: 3px;
-}
-
-.btn:disabled,
-.btn:hover {
-    background: #ff8d00;
-    color: #fff;
-}
-
-.btn:active {
-    box-shadow: none;
-    opacity: .8;
-}
-
-.btn:disabled {
-    opacity: .6;
-}
-
 .container {
     margin: 80px auto;
     max-width: 480px;
@@ -161,12 +123,18 @@ button {
 #settings .iset-color:before,
 #settings .iset-set:before,
 #nicktitle:before,
+#ignoretitle:before,
 .context-menu-item:before,
+.silence:before,
 #nick button:before {
     font: normal normal normal 14px/1 FontAwesome;
     font-size: inherit; /* Can't have font-size inherit on line above, so need to override */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+}
+
+#ignoretitle:before {
+    content: "\f05e";
 }
 
 #nicktitle:before {
@@ -176,7 +144,9 @@ button {
     content: "\f06e";
     color: #2ecc40;
 }
-#settings .iset-private:before {
+
+#settings .iset-private:before,
+.silence:before {   
     content: "\f05e";
     color: #ff4136;
     size: 20px;
@@ -203,6 +173,7 @@ button {
 .context-menu-chan:before { content: "\f0f6"; /* http://fontawesome.io/icon/file-text-o/ */ }
 .context-menu-close:before { content: "\f00d"; /* http://fontawesome.io/icon/times/ */ }
 .context-menu-list:before { content: "\f03a"; /* http://fontawesome.io/icon/list/ */ }
+.context-menu-ignore:before { content: "\f05e";}
 
 #sidebar .chan.lobby:before,
 #chat .lobby .title:before { content: "\f0a0"; /* http://fontawesome.io/icon/hdd-o/ */ }
@@ -384,7 +355,8 @@ button {
     margin: 6px -8px 0 12px;
 }
 
-#viewport.rt #chat .sidebar {
+#viewport.rt #chat .sidebar,
+#viewport.ri #chat .sidebar {
     -webkit-transform: translate3d(180px, 0, 0);
     transform: translate3d(180px, 0, 0);
 }
@@ -768,7 +740,8 @@ button {
     bottom: -47px;
 }
 
-#viewport.rt .chat {
+#viewport.rt .chat,
+#viewport.ri .chat {
     right: 0;
 }
 
@@ -1887,3 +1860,162 @@ button {
         padding: 25px;
         
     }
+    
+.align-left {
+    padding: 5px;
+    text-align: left;
+}
+
+button, btn {
+    border: none;
+    background: none;
+    margin: 0;
+    outline: none;
+    padding: 0;
+}
+
+.btn, a.btn {
+    border: 2px solid #ff8d00;
+    border-radius: 3px;
+    color: #ff8d00!important;
+    display: inline-block;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+    padding: 9px 17px;
+    text-transform: uppercase;
+    transition: background .2s, border-color .2s, color .2s;
+    word-spacing: 3px;
+}
+
+.btn:disabled,
+.btn:hover {
+    background: #ff8d00!important;
+    color: #fff!important;
+}
+
+.btn:active {
+    box-shadow: none!important;
+    opacity: .8!important;
+}
+
+.btn:disabled {
+    opacity: .6!important;
+}
+
+.btn-xs,
+.btn-group-xs > .btn {
+  padding: 1px 5px!important;
+  font-size: 12px!important;
+  line-height: 1.5!important;
+  border-radius: 3px!important;
+  margin-bottom: 0!important;
+}
+
+
+
+
+
+table.ignorelist {
+font-family: Arial, Helvetica, sans-serif;
+color: #666;
+font-size: 12px;
+text-shadow: 1px 1px 0px #fff;
+background: #eaebec;
+width: 92%;
+margin: 4%;
+border: #ccc 1px solid;
+ 
+-webkit-border-radius: 3px;
+border-radius: 3px;
+ 
+-webkit-box-shadow: 0 1px 2px #d1d1d1;
+box-shadow: 0 1px 2px #d1d1d1;
+}
+
+table.ignorelist > thead th {
+padding: 21px 25px 22px 25px;
+border-top: 1px solid #fafafa;
+border-bottom: 1px solid #e0e0e0;
+ 
+background: #ededed; /* Old browsers */
+background: -moz-linear-gradient(top,  #ededed 0%, #ebebeb 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ededed), color-stop(100%,#ebebeb)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  #ededed 0%,#ebebeb 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  #ededed 0%,#ebebeb 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  #ededed 0%,#ebebeb 100%); /* IE10+ */
+background: linear-gradient(to bottom,  #ededed 0%,#ebebeb 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ededed', endColorstr='#ebebeb',GradientType=0 ); /* IE6-9 */
+}
+table.ignorelist > thead th:first-child{
+text-align: left;
+padding-left: 20px;
+}
+table.ignorelist > thead > tr:first-child > th:first-child {
+-webkit-border-top-left-radius: 3px;
+border-top-left-radius: 3px;
+}
+table.ignorelist > thead > tr:first-child > th:last-child {
+-webkit-border-top-right-radius: 3px;
+border-top-right-radius: 3px;
+}
+table.ignorelist > tbody > tr {
+text-align: center;
+padding-left: 20px;
+}
+table.ignorelist > tbody > tr > td:first-child {
+text-align: left;
+padding-left: 20px;
+border-left: 0;
+}
+table.ignorelist > tbody > tr > td {
+padding:18px;
+border-top: 1px solid #ffffff;
+border-bottom: 1px solid #e0e0e0;
+border-left: 1px solid #e0e0e0;
+ 
+background: #fbfbfb; /* Old browsers */
+background: -moz-linear-gradient(top,  #fbfbfb 0%, #fafafa 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fbfbfb), color-stop(100%,#fafafa)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  #fbfbfb 0%,#fafafa 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  #fbfbfb 0%,#fafafa 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  #fbfbfb 0%,#fafafa 100%); /* IE10+ */
+background: linear-gradient(to bottom,  #fbfbfb 0%,#fafafa 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fbfbfb', endColorstr='#fafafa',GradientType=0 ); /* IE6-9 */
+}
+table.ignorelist > tbody > tr:nth-child(even) > td{
+background: #f8f8f8; /* Old browsers */
+background: -moz-linear-gradient(top,  #f8f8f8 0%, #f6f6f6 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f8f8f8), color-stop(100%,#f6f6f6)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  #f8f8f8 0%,#f6f6f6 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  #f8f8f8 0%,#f6f6f6 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  #f8f8f8 0%,#f6f6f6 100%); /* IE10+ */
+background: linear-gradient(to bottom,  #f8f8f8 0%,#f6f6f6 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f8f8f8', endColorstr='#f6f6f6',GradientType=0 ); /* IE6-9 */
+}
+table.ignorelist > tbody > tr:last-child > td{
+border-bottom: 0;
+}
+table.ignorelist > tbody > tr:last-child > td:first-child {
+-webkit-border-bottom-left-radius: 3px;
+border-bottom-left-radius: 3px;
+}
+table.ignorelist > tbody > tr:last-child > td:last-child {
+-webkit-border-bottom-right-radius: 3px;
+border-bottom-right-radius: 3px;
+}
+table.ignorelist > tbody > tr:hover > td {
+background: #f2f2f2; /* Old browsers */
+background: -moz-linear-gradient(top,  #f2f2f2 0%, #f0f0f0 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f2f2f2), color-stop(100%,#f0f0f0)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  #f2f2f2 0%,#f0f0f0 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  #f2f2f2 0%,#f0f0f0 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  #f2f2f2 0%,#f0f0f0 100%); /* IE10+ */
+background: linear-gradient(to bottom,  #f2f2f2 0%,#f0f0f0 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f2f2', endColorstr='#f0f0f0',GradientType=0 ); /* IE6-9 */
+}
+.empty td {
+  text-align:center!important;
+  font-weight:bold!important;
+}

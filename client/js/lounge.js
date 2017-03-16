@@ -257,7 +257,7 @@ $(function() {
                 channels: [data.chan]
             })
         );
-        renderChannel(data.chan);
+        renderChannel(data.chan, data.data);
 
         // Queries do not automatically focus, unless the user did a whois
         if (data.chan.type === "query" && !data.shouldOpen) {
@@ -398,6 +398,11 @@ $(function() {
             infos.find("#dname").addClass(data.data.sex);
         }
 
+        var locked = {
+              locked: isIgnored(data.data.host)
+            };
+            
+        Object.assign(data.data, locked);
         Object.assign(data.data, locale);
         
         infos.find(".whois")
@@ -826,7 +831,14 @@ $(function() {
             output += templates.contextmenu_divider();
             output += templates.contextmenu_item({
                 class: "list",
-                text: "Channels List",
+                text: "Channel List",
+                data: target.data("target")
+            });
+            
+            output += templates.contextmenu_divider();
+            output += templates.contextmenu_item({
+                class: "ignore",
+                text: "Ignore List",
                 data: target.data("target")
             });
             
@@ -1046,6 +1058,79 @@ $(function() {
         }
     });
 
+ $('#ignoreModal').on("change", '.isIgnored', function() {
+    if (this.checked) {
+        var host = $(this).data("target");
+
+        removeIgnore(host) ;
+        
+        socket.emit("silence", {
+            target: host,
+            locked: true
+        });
+    }
+});
+
+function removeIgnore(host) {
+    var ignoreds = $('#ignoreModal').find('.ignoreds');
+    
+    chat.find('.silence').each(function() {
+      if ($( this ).data('target') === host) {
+        $(this).removeClass('locked').text(' Bloquer');
+      }
+    }); 
+    
+    var i = 0;
+    ignoreds.find('tr').each(function() {
+      if ($( this ).data('targhost') === host) {
+        $( this ).remove();
+      } else {
+        i++;
+      }
+    });
+    
+    if (i <= 1) {
+        ignoreds.find('.empty').show();
+    }
+}
+
+function isIgnored(host) {
+    var ignoreds = $('#ignoreModal').find('.ignoreds').find('tr');
+    var matched = false;
+    
+    ignoreds.each(function() {
+      if ($( this ).data('targhost') === host) {
+        var silences = chat.find('.silence');
+        matched = true;
+        return true;
+      }
+    });
+    
+    return matched;
+}
+
+   chat.on("click", ".silence", function(e) {
+        e.preventDefault();
+        var host = $(this).data("target");
+        var nick = $(this).data("nick");
+        var locked = $(this).hasClass('locked');
+        
+        socket.emit("silence", {
+            target: host,
+            locked: locked
+        });
+
+        var ignoreds = $('#ignoreModal').find('.ignoreds');
+           
+        if (!locked) {
+          ignoreds.append(templates.ignore_list({host: host, nick: nick, locale:locale})); 
+          $(this).addClass('locked').text(' Débloquer');
+          ignoreds.find('.empty').hide();
+        } else {
+            removeIgnore(host);
+        }
+    });
+    
     chat.on("click", ".user", function() {
         var name = $(this).data("name");
         var chan = findCurrentNetworkChan(name);
@@ -1160,6 +1245,9 @@ $(function() {
     
     contextMenu.on("click", ".context-menu-item", function() {
         switch ($(this).data("action")) {
+        case "ignore":
+            $('#ignoreModal').modal('show'); 
+            break;
         case "close":
             $(".networks .chan[data-target='" + $(this).data("data") + "'] .close").click();
             break;
