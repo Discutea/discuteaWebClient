@@ -53,7 +53,7 @@ var trans = {
         valid:        'Valider',
         form: {
             nick:   'Pseudo',
-            age:    'Age',
+            age:    'Âge',
             gender: 'Sexe',
         },
         settings: {
@@ -90,21 +90,21 @@ var trans = {
                 brown:  'Marron',
                 purple: 'Violet',
                 orange: 'Orange',
-                teal:   'Teal',
+                teal:   'Turquoise',
                 blue:   'Bleu',
                 pink:   'Rose',
                 gray:   'Gris'
             }
         },     
         nickservmodal: {
-            title:    'Identification NickServ',
-            password: 'Password:'
+            title:    'Authentification NickServ',
+            password: 'Mot de passe :'
         },
         ignoremodal: {
             title:    'Liste des ignorés',
             nickname: 'Pseudo',
             unblock:  'Débloquer',
-            empty:    'Aucun pseudos n\'est ignorés.'
+            empty:    'Aucun pseudo n\'est actuellement ignoré.'
         }
     }
 };
