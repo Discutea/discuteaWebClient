@@ -79,12 +79,12 @@ var trans = {
             notisound:    'Enable notification sound',
             playsound:    'Play sound',
             notifisall:   'Enable notification for all messages',
-            bold:         'Gras',
-            underline:    'Souligné',
-            italics:      'Italique',
-            writing:      'Options d\'écriture',
+            bold:         'Bold',
+            underline:    'Underline',
+            italics:      'Italic',
+            writing:      'Write Settings',
             color: {
-                empty:  'Aucune',
+                empty:  'No color',
                 green:  'Green',
                 red:    'Red',
                 brown:  'Brown',
@@ -101,10 +101,10 @@ var trans = {
             password: 'Password:'
         },
         ignoremodal: {
-            title:    'Liste des ignorés',
-            nickname: 'Pseudo',
-            unblock:  'Débloquer',
-            empty:    'Aucun pseudos n\'est ignorés.'
+            title:    'Ignore list',
+            nickname: 'Nickname',
+            unblock:  'Unblock',
+            empty:    'The list is empty.'
         }
     }
 };
