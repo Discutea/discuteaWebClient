@@ -252,14 +252,16 @@ $(function() {
                 channels: [data.chan]
             })
         );
+
         chat.append(
             templates.chat({
-                channels: [data.chan]
+              channels: [data.chan]
             })
         );
+        
         renderChannel(data.chan, data.data);
-
         // Queries do not automatically focus, unless the user did a whois
+        
         if (data.chan.type === "query" && !data.shouldOpen) {
             return;
         }

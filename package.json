@@ -33,6 +33,7 @@
     "node": ">=4.2.0"
   },
   "dependencies": {
+    "daemonize2": "~0.4.2",
     "bcrypt-nodejs": "0.0.3",
     "cheerio": "0.22.0",
     "colors": "1.1.2",
