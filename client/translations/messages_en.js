@@ -1,4 +1,9 @@
 var trans = {
+    Disconnect:                  'Disconnect',
+    Leave:                       'Leave',
+    Close:                       'Close',
+    contextmenu_item_ignore:     'Channel list',
+    contextmenu_item_list:       'Ignore list',
     you:                         'you',
     to:                          'to',
     on:                          'on',

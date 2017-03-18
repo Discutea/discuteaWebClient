@@ -841,22 +841,25 @@ $(function() {
             output += templates.contextmenu_item({
                 class: "close",
                 text: target.hasClass("lobby") ? "Disconnect" : target.hasClass("channel") ? "Leave" : "Close",
-                data: target.data("target")
+                data: target.data("target"),
+                locale: locale.locale
             });
         }
 
             output += templates.contextmenu_divider();
             output += templates.contextmenu_item({
                 class: "list",
-                text: "Channel List",
-                data: target.data("target")
+                text: "contextmenu_item_list",
+                data: target.data("target"),
+                locale: locale.locale
             });
             
             output += templates.contextmenu_divider();
             output += templates.contextmenu_item({
                 class: "ignore",
-                text: "Ignore List",
-                data: target.data("target")
+                text: "contextmenu_item_ignore",
+                data: target.data("target"),
+                locale: locale.locale
             });
             
         contextMenuContainer.show();
@@ -1211,9 +1214,13 @@ function isIgnored(host) {
 
         var placeholder = "";
         if (chan.data("type") === "channel" || chan.data("type") === "query") {
-            if (locale.locale === 'fr') {
-                placeholder = `Écrire à ${chan.data("title")}`;
-            } else if (locale === 'es') {
+            if (locale && typeof locale.locale === 'string' && locale.locale === 'fr') {
+                if (chan.data("type") === "query") {
+                    placeholder = `Écrire à ${chan.data("title")}`;
+                } else {
+                    placeholder = `Écrire sur ${chan.data("title")}`;
+                }
+            } else if (locale && typeof locale.locale === 'string' && locale === 'es') {
                 placeholder = `Escribir a ${chan.data("title")}`;
             } else {
                 placeholder = `Write to ${chan.data("title")}`;

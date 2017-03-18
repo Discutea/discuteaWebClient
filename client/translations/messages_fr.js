@@ -1,4 +1,9 @@
 var trans = {
+    Disconnect:                  'Déconnection',
+    Leave:                       'Partir',
+    Close:                       'Fermer',
+    contextmenu_item_ignore:     'Liste des ignorés',
+    contextmenu_item_list:       'Liste des salons',
     you:                         'vous',
     to:                          'à',
     on:                          'sur',
