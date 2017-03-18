@@ -30,7 +30,7 @@ $(function() {
     } else {
         var locale = {locale: "en"}; 
     }
-
+    
     var commands = [
         "/away",
         "/back",
@@ -481,6 +481,12 @@ $(function() {
         var msg = buildChatMessage(data);
         var target = "#chan-" + data.chan;
         var container = chat.find(target + " .messages");
+
+        // Fix #10 https://github.com/Discutea/discuteaWebClient/issues/10
+        var msgs = container.find(".msg");
+        if (msgs.length > 500) {
+            msgs.first().remove();
+        }
         
         // Add message to the container
         container
@@ -489,12 +495,13 @@ $(function() {
                 target,
                 data
             ]);
-
+        
         if (data.msg.self) {
             container
                 .find(".unread-marker")
                 .appendTo(container);
         }
+        
     });
 
     socket.on("network", function(data) {
@@ -1669,6 +1676,10 @@ function isIgnored(host) {
 
     // Only start opening socket.io connection after all events have been registered
     socket.open();
+    
+    if ($_GET('channel')) {
+        $("input[name='channel']", forms).val( $_GET('channel') );
+    }
     
     /* autoconnect */
     if ($_GET('nick') && $_GET('age') && $_GET('gender')) {

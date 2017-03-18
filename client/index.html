@@ -118,7 +118,8 @@
                                 <img src="https://cdn.discutea.com/img/homme.png">
                             </div> 
 
-                            <input type="hidden" class="dusname" id="connect:username" name="username" value="<%= defaults.username %>">        
+                            <input type="hidden" class="channel" id="connect:channel" name="channel" value="Accueil">   
+                            <input type="hidden" class="dusname" id="connect:username" name="username" value="<%= typeof(channel) === "string" ? channel : "Accueil" %>">
                             <input type="hidden" class="dresol" id="connect:resol" name="resol" value="">        
 
                             <div class="col-sm-9 col-sm-offset-3">

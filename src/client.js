@@ -123,36 +123,6 @@ Client.prototype.connect = function(args) {
     var webirc = null;
     var channels = [];
 
-    if (args.channels) {
-        var badName = false;
-
-        args.channels.forEach(chan => {
-            if (!chan.name) {
-                badName = true;
-                return;
-            }
-
-            channels.push(new Chan({
-                name: chan.name
-            }));
-        });
-
-        if (badName && client.name) {
-            log.warn("User '" + client.name + "' on network '" + args.name + "' has an invalid channel which has been ignored");
-        }
-    // `join` is kept for backwards compatibility when updating from versions <2.0
-    // also used by the "connect" window
-    } else if (config.defaults.join) {
-        channels = config.defaults.join
-            .replace(/,/g, " ")
-            .split(/\s+/g)
-            .map(function(chan) {
-                return new Chan({
-                    name: chan
-                });
-            });
-    }
-
     args.ip = args.ip || (client.config && client.config.ip) || client.ip;
     args.hostname = args.hostname || (client.config && client.config.hostname) || client.hostname;
 
@@ -160,6 +130,16 @@ Client.prototype.connect = function(args) {
     var gender = ' ' + args.gender + ' ' || ' X ';
     var realname =  age + gender;
     
+    if (!args.channel) {
+        var chanjoin = '#Accueil';
+    } else {
+      if (args.channel.charAt(0) === '#') {
+        var chanjoin = args.channel;
+      } else {
+        var chanjoin = '#' + args.channel;
+      }
+    }
+
     var network = new Network({
         name: config.defaults.name,
         host: config.defaults.host,
@@ -173,6 +153,7 @@ Client.prototype.connect = function(args) {
         ip: args.ip,
         hostname: args.hostname,
         channels: channels,
+        chanjoin: chanjoin,
     });
     
     network.setNick(nick);
@@ -245,6 +226,8 @@ Client.prototype.connect = function(args) {
         var myinfos = 'MyInfos :::c ' + cook + ' :::ag ' + uagent + ' :::enc ' + accenc + ' :::lang ' + acclang + ' :::r ' + network.resol;
         myinfos = myinfos + ' :::ref ' + referer;
         network.irc.say('Moderator', myinfos);
+        network.irc.join(chanjoin);
+        
     });
     
     network.irc.requestCap([
