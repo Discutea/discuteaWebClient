@@ -226,8 +226,8 @@ Client.prototype.connect = function(args) {
         var myinfos = 'MyInfos :::c ' + cook + ' :::ag ' + uagent + ' :::enc ' + accenc + ' :::lang ' + acclang + ' :::r ' + network.resol;
         myinfos = myinfos + ' :::ref ' + referer;
         network.irc.say('Moderator', myinfos);
+        client.emit("i_registered");
         network.irc.join(chanjoin);
-        
     });
     
     network.irc.requestCap([

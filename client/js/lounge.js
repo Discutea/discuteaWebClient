@@ -414,7 +414,7 @@ $(function() {
     };
     
     function renderSidebarAvatar(infos, data) {        
-        if (typeof data.account === 'string') {
+        if (typeof data.account === 'string') {            
             $.getJSON( "https://discutea.fr/api/anope/avatars/"+data.account+"/by/irc/account", function( data ) {
                 $.each( data, function( key, val ) {
                     if (key == 'avatar')
@@ -703,7 +703,6 @@ $(function() {
                 "quit",
                 "notifyAllMessages",
             ].indexOf(name) !== -1) {
-                
                 chat.toggleClass("hide-" + name, !self.prop("checked"));
             } else if (name === "coloredNicks") {
                 chat.toggleClass("colored-nicks", self.prop("checked"));
@@ -1573,6 +1572,10 @@ function isIgnored(host) {
         });
     }
 
+    socket.on("i_registered", function() {
+        $("#chat-container").find('#loader-wrapper').remove();
+    });
+    
     socket.on("sync_sort", function(data) {
         // Syncs the order of channels or networks when they are reordered
         if (ignoreSortSync) {
