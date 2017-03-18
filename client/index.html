@@ -64,9 +64,6 @@
                                 --><span id="save-nick-tooltip" class="tooltipped tooltipped-e" aria-label="Save"><button id="submit-nick" type="button" aria-label="Save"></button></span>
                             </span>
                             <textarea id="input" class="mousetrap"></textarea>
-                            <span id="cycle-nicks-tooltip" class="tooltipped tooltipped-w" aria-label="Cycle through nicks">
-                                <button id="cycle-nicks" type="button" aria-label="Cycle through nicks"></button>
-                            </span>
                             <span id="submit-tooltip" class="tooltipped tooltipped-w" aria-label="Send message">
                                 <button id="submit" type="submit" aria-label="Send message"></button>
                             </span>
@@ -291,7 +288,7 @@
             </div>
             <div class="col-sm-6">
               <label class="opt">
-                <select name="wcolor">
+                <select id="wcolor" name="wcolor">
                   <option value=""><%= trans.settings.color.empty %></option>
                   <option value="3" style="color: #008000"><%= trans.settings.color.green %></option>
                   <option value="4" style="color: #FF0000"><%= trans.settings.color.red %></option>

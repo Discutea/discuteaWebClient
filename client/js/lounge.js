@@ -680,6 +680,15 @@ $(function() {
         for (var i in options) {
             if (options[i]) {
                 settings.find("input[name=" + i + "]").prop("checked", true);
+                if (i === 'wcolor') { // Color select
+                  var wcolors = settings.find("#wcolor").find("option");
+                  wcolors.each(function() {
+                    if ( $(this).val() === options[i] ) {
+                      $(this).attr('selected','selected');
+                      return;
+                    }
+                  });                
+               }
             }
         }
 
@@ -937,12 +946,6 @@ $(function() {
     var forceFocus = function() {
         input.trigger("click").focus();
     };
-
-    // Cycle through nicks for the current word, just like hitting "Tab"
-    $("#cycle-nicks").on("click", function() {
-        input.triggerHandler($.Event("keydown.tabcomplete", {which: 9}));
-        forceFocus();
-    });
 
     $("#form").on("submit", function(e) {
         e.preventDefault();
@@ -1208,7 +1211,13 @@ function isIgnored(host) {
 
         var placeholder = "";
         if (chan.data("type") === "channel" || chan.data("type") === "query") {
-            placeholder = `Write to ${chan.data("title")}`;
+            if (locale.locale === 'fr') {
+                placeholder = `Écrire à ${chan.data("title")}`;
+            } else if (locale === 'es') {
+                placeholder = `Escribir a ${chan.data("title")}`;
+            } else {
+                placeholder = `Write to ${chan.data("title")}`;
+            }
         }
         input.attr("placeholder", placeholder);
 
