@@ -110,6 +110,14 @@ var trans = {
             nickname: 'Pseudo',
             unblock:  'Débloquer',
             empty:    'Aucun pseudo n\'est actuellement ignoré.'
+        },
+        labels: {
+            connect:    'Connection à discutea',
+            settings:   'Réglage de l\'interface',
+            nickchange: 'Changer de pseudo',
+            cancel:     'Annuler',
+            save:       'Sauvegarder',
+            sendmsg:    'Envoyer le message'
         }
     }
 };

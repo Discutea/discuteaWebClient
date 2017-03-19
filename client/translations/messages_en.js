@@ -110,6 +110,14 @@ var trans = {
             nickname: 'Nickname',
             unblock:  'Unblock',
             empty:    'The list is empty.'
+        },
+        labels: {
+            connect:    'Connect to discutea',
+            settings:   'Client settings',
+            nickchange: 'Change nick',
+            cancel:     'Cancel',
+            save:       'Save',
+            sendmsg:    'Send message'
         }
     }
 };

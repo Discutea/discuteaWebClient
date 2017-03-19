@@ -29,8 +29,8 @@
             </div>
         </aside>
         <footer id="footer">
-            <span class="dconnect tooltipped tooltipped-n" aria-label="Connect to network"><button class="icon connect" data-target="#connect" aria-label="Connect to network"></button></span>
-            <span class="tooltipped tooltipped-n" aria-label="Client settings"><button class="icon settings" data-toggle="modal" data-target="#myModal"> Configurations</button></span>
+            <span class="dconnect tooltipped tooltipped-n" aria-label="<%= trans.labels.connect %>"><button class="icon connect" data-target="#connect" aria-label="<%= trans.labels.connect %>"></button></span>
+            <span class="tooltipped tooltipped-n" aria-label="<%= trans.labels.settings %>"><button class="icon settings" data-toggle="modal" data-target="#myModal"> Configurations</button></span>
         </footer>
 
         <div id="main">
@@ -59,13 +59,13 @@
                         <div class="input">
                             <span id="nick">
                                 <span id="nick-value" spellcheck="false"></span><!-- Comments here remove spaces between elements
-                                --><span id="set-nick-tooltip" class="tooltipped tooltipped-e" aria-label="Change nick"><button id="set-nick" type="button" aria-label="Change nick"></button></span><!--
-                                --><span id="cancel-nick-tooltip" class="tooltipped tooltipped-e" aria-label="Cancel"><button id="cancel-nick" type="button" aria-label="Cancel"></button></span><!--
-                                --><span id="save-nick-tooltip" class="tooltipped tooltipped-e" aria-label="Save"><button id="submit-nick" type="button" aria-label="Save"></button></span>
+                                --><span id="set-nick-tooltip" class="tooltipped tooltipped-e" aria-label="<%= trans.labels.nickchange %>"><button id="set-nick" type="button" aria-label="<%= trans.labels.nickchange %>"></button></span><!--
+                                --><span id="cancel-nick-tooltip" class="tooltipped tooltipped-e" aria-label="Cancel"><button id="cancel-nick" type="button" aria-label="<%= trans.labels.cancel %>"></button></span><!--
+                                --><span id="save-nick-tooltip" class="tooltipped tooltipped-e" aria-label="<%= trans.labels.save %>"><button id="submit-nick" type="button" aria-label="<%= trans.labels.save %>"></button></span>
                             </span>
                             <textarea id="input" class="mousetrap"></textarea>
-                            <span id="submit-tooltip" class="tooltipped tooltipped-w" aria-label="Send message">
-                                <button id="submit" type="submit" aria-label="Send message"></button>
+                            <span id="submit-tooltip" class="tooltipped tooltipped-w" aria-label="<%= trans.labels.sendmsg %>">
+                                <button id="submit" type="submit" aria-label="<%= trans.labels.sendmsg %>"></button>
                             </span>
                         </div>
                     </form>
