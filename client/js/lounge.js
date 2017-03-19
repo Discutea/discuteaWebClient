@@ -553,13 +553,33 @@ $(function() {
 
         // When parting from the active channel/query, jump to the network's lobby
         if (chanMenuItem.hasClass("active")) {
-            chanMenuItem.parent(".network").find(".lobby").click();
+            var channels = chanMenuItem.parent(".network").find(".channel");
+            var chanscount = channels.length;
+            if (chanMenuItem.hasClass("channel")) {
+                chanscount--;
+            }
+            
+            var changed = false;
+            
+            if (chanscount) {
+                channels.each(function() {
+                    if ($(this).data('title') !== chanMenuItem.data('title')) {
+                        $(this).click();
+                        changed = true;
+                        return;
+                    }
+                });
+            } 
+            
+            if (!changed) {
+                chanMenuItem.parent(".network").find(".lobby").click();
+            }
         }
-
+        
         chanMenuItem.remove();
         $("#chan-" + data.chan).remove();
     });
-
+    
     socket.on("quit", function(data) {
         var id = data.network;
         sidebar.find("#network-" + id)
@@ -1254,7 +1274,8 @@ function isIgnored(host) {
             var server = chan.find(".name").html();
             if (!confirm("Disconnect from " + server + "?")) {
                 return false;
-            }
+          
+          }
         }
         socket.emit("input", {
             target: chan.data("id"),
