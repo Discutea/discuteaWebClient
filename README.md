@@ -1,8 +1,10 @@
 # discuteaWebClient
-💬 web IRC client for Discutea forked to The Lounge
+💬 web IRC client for Discutea - forked from [(The) Lounge](https://github.com/thelounge/lounge)
 
-Attention ce client IRC est utilisé sur Discutea il n'est pas du tout prévu de le rendre "open-source" en utilisant ce client vous risquez de nombreux désagrèments êtant donné qu'il est vraiment optimisé pour le réseau discutea.com.
+**Attention ce client IRC est prévu pour être utilisé sur le réseau Discutea.**
 
-Vous pouvez par contre utiliser sans problème  [thelounge/lounge](https://github.com/thelounge/lounge) qui lui est la base de notre client ou encore  [erming/shout](https://github.com/erming/shout) qui lui est la base de Lounge
+Il n'est pas du tout prévu de le rendre "*open-source*" par conséquent en utilisant ce client vous risquez de nombreux désagréments puisqu'il est strictement optimisé pour le réseau [Discutea.com](https://discutea.com).
 
-Si vous désirez créer votre salon sur notre réseau vous pouvez parfaitement utiliser ce client un formulaire simplifié pour les développeurs a été créer [Voir la doccumentation](https://github.com/Discutea/discuteachat)
+Cependant, vous pouvez utiliser sans problème  [thelounge/lounge](https://github.com/thelounge/lounge) qui est la version originale de notre client ou encore  [erming/shout](https://github.com/erming/shout) dont Lounge est dérivé.
+
+Si vous désirez créer votre salon sur notre réseau vous pouvez parfaitement utiliser ce client. Un formulaire simplifié pour les développeurs a été créé : [Voir la documentation](https://github.com/Discutea/discuteachat)
