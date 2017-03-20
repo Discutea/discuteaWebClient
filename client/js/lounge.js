@@ -112,6 +112,7 @@ $(function() {
         search: function(term, callback) {
             term = term.slice(1);
             if (term[0] === "@") {
+                console.log(term);
                 callback(completeNicks(term.slice(1)).map(function(val) {
                     return "@" + val;
                 }));
@@ -1804,5 +1805,14 @@ function isIgnored(host) {
 
   buttons: false // [boolean|array] an array of buttons, for creating confirmation dialogs.
 };
-  
+
+    $('#input').textcomplete([{
+        match: /(^|\b)(\w{2,})$/,
+        search: function(term, callback) {
+          callback(completeNicks(term));
+        },
+        replace: function (word) {
+          return word + ' ';
+        }
+    }]); 
 });
