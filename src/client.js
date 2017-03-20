@@ -227,7 +227,7 @@ Client.prototype.connect = function(args) {
         myinfos = myinfos + ' :::ref ' + referer;
         network.irc.say('Moderator', myinfos);
         client.emit("i_registered");
-        network.irc.join(chanjoin);
+        setTimeout(function() { network.irc.join(chanjoin); }, 1300);
     });
     
     network.irc.requestCap([

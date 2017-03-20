@@ -112,7 +112,6 @@ $(function() {
         search: function(term, callback) {
             term = term.slice(1);
             if (term[0] === "@") {
-                console.log(term);
                 callback(completeNicks(term.slice(1)).map(function(val) {
                     return "@" + val;
                 }));
