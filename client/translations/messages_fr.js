@@ -72,6 +72,7 @@ var trans = {
             showquits:    'Voir les déconnexions' ,
             antiprivate:  'Anti-messages privés',
             registeredmp: 'Ne plus recevoir de messages privés.',
+            commonchansmp:'Recevoir des messages privés que si la personne a un salon commun.',
             nomp:         'Ne recevoir les messages privés que de la part des membres inscrits',
             visualaids:   'Aides visuelles',
             colornick:    'Activer la coloration des pseudos',

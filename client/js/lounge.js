@@ -529,7 +529,13 @@ $(function() {
                     ckecked: checked,
                     type: "registered"
                 });
-            } 
+            }
+            if (name === "commonchans") {
+                socket.emit("noprivate", {
+                    ckecked: checked,
+                    type: "commonchans"
+                });
+            }
             if (name === "noprivate") {
                 socket.emit("noprivate", {
                     ckecked: checked,
@@ -744,6 +750,11 @@ $(function() {
                 socket.emit("noprivate", {
                     ckecked: this.checked,
                     type: "all"
+                });
+            } else if (name === "commonchans") {
+                socket.emit("noprivate", {
+                    ckecked: this.checked,
+                    type: "commonchans"
                 });
             }
         }).find("input")

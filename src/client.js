@@ -390,8 +390,11 @@ Client.prototype.noprivate = function(data) {
         if (data.type === "registered") {
             var mode = 'R';
         } 
+        if (data.type === "commonchans") {
+            var mode = 'c';
+        } 
         if (data.type === "all") {
-            var mode = 'd';
+            var mode = 'D';
         }
         
         if (data.ckecked) {

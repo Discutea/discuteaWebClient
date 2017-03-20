@@ -72,6 +72,7 @@ var trans = {
             showquits:    'Show quits',
             antiprivate:  'Anti messages privates',
             registeredmp: 'No receiving private messages.',
+            commonchansmp:'Blocks private messages and notices from users who do not share a common channel with you.',
             nomp:         'Receive messages by registered members.',
             visualaids:   'Visual Aids',
             colornick:    'Enable colored nicknames',
