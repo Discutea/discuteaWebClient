@@ -714,8 +714,24 @@ input {
 #windows .header .topic,
 .messages .msg,
 .sidebar {
-    font: 0.9em Consolas, Menlo, Monaco, "Lucida Console", "DejaVu Sans Mono", "Courier New", monospace;
+    font: medium Consolas, Menlo, Monaco, "Lucida Console", "DejaVu Sans Mono", "Courier New", monospace;
     line-height: 1.4;
+}
+
+
+.messages.xx-large .msg .from,
+.messages.xx-large .msg .text {
+    font-size: xx-large;
+}
+
+.messages.large .msg .from,
+.messages.large .msg .text {
+    font-size: large;
+}
+
+.messages.small .msg .from,
+.messages.small .msg .text {
+    font-size: small;
 }
 
 #windows #chat .header {
@@ -830,10 +846,6 @@ input {
     vertical-align: top;
 }
 
-#chat .time,
-#chat .from {
-    font-size: 0.8em!important;
-}
 #chat .time {
     color: #ddd;
     text-align: right;

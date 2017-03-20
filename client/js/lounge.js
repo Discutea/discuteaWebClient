@@ -260,7 +260,8 @@ $(function() {
         );
         
         renderChannel(data.chan, data.data);
-        // Queries do not automatically focus, unless the user did a whois
+
+        $( ".messages" ).addClass( options.fontsize );
         
         if (data.chan.type === "query" && !data.shouldOpen) {
             return;
@@ -690,6 +691,7 @@ $(function() {
         italic: false,
         underline: false,
         wcolor: '',
+        fontsize: 'medium',
         nick: true,
         notification: true,
         notifyAllMessages: false,
@@ -714,10 +716,31 @@ $(function() {
                       return;
                     }
                   });                
+               } else if (i === 'fontsize') {
+                    var fontsize = settings.find("#fontsize").find("option");
+                    fontsize.each(function() {
+                      if ( $(this).val() === options[i] ) {
+                        $(this).attr('selected','selected');
+                        return;
+                      }
+                    });                
                }
             }
         }
 
+        settings.on("change", "#fontsize", function() {
+            var self = $(this);
+            var name = self.attr("name");
+            
+            $('.messages').each(function() {
+                if ($(this).hasClass(options[name])) {
+                    $(this).removeClass(options[name]);
+                }
+                
+                $(this).addClass(self.val());
+            });
+        });
+        
         settings.on("change", "input, select, textarea", function() {
             var self = $(this);
             var name = self.attr("name");
