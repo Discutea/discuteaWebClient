@@ -33,6 +33,7 @@ module.exports = function() {
     if (!config.https.enable) {
         server = require("http");
         server = server.createServer(app).listen(config.port, config.host);
+        server.timeout = 15000;
     } else {
         server = require("spdy");
         const keyPath = Helper.expandHome(config.https.key);
@@ -49,6 +50,7 @@ module.exports = function() {
             key: fs.readFileSync(keyPath),
             cert: fs.readFileSync(certPath)
         }, app).listen(config.port, config.host);
+        server.timeout = 15000;
     }
 
     var sockets = io(server, {
