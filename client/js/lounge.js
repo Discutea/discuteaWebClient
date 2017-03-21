@@ -260,7 +260,9 @@ $(function() {
         renderChannel(data.chan, data.data);
 
         $( ".messages" ).addClass( options.fontsize );
+        $( "body" ).addClass( options.background );
         
+        background
         if (data.chan.type === "query" && !data.shouldOpen) {
             return;
         }
@@ -671,23 +673,24 @@ $(function() {
     socket.on("names", renderChannelUsers);
 
     var options = $.extend({
-        coloredNicks: true,
+        coloredNicks:         true,
         desktopNotifications: true,
-        join: false,
-        links: true,
-        mode: true,
-        motd: true,
-        bold: false,
-        italic: false,
-        underline: false,
-        wcolor: '',
-        fontsize: 'medium',
-        nick: true,
-        notification: true,
-        notifyAllMessages: false,
-        part: false,
-        quit: false,
-        thumbnails: true,
+        join:                 false,
+        links:                true,
+        mode:                 true,
+        motd:                 true,
+        bold:                 false,
+        italic:               false,
+        underline:            false,
+        wcolor:               '',
+        fontsize:             'medium',
+        background:           'white',
+        nick:                 true,
+        notification:         true,
+        notifyAllMessages:    false,
+        part:                 false,
+        quit:                 false,
+        thumbnails:           true,
     }, JSON.parse(window.localStorage.getItem("settings")));
 
     var windows = $("#windows");
@@ -714,12 +717,29 @@ $(function() {
                         return;
                       }
                     });                
+               } else if (i === 'background') {
+                    var background = settings.find("#background").find("option");
+                    background.each(function() {
+                      if ( $(this).val() === options[i] ) {
+                        $(this).attr('selected','selected');
+                        return;
+                      }
+                    });                
                }
             }
         }
 
+        settings.on("change", "#background", function() {
+            var self = $(this);               
+            var name = self.attr("name");
+            if ($('body').hasClass(options[name])) {
+                $('body').removeClass(options[name]);
+            }
+            $('body').addClass(self.val());
+        });
+        
         settings.on("change", "#fontsize", function() {
-            var self = $(this);
+            var self = $(this); 
             var name = self.attr("name");
             
             $('.messages').each(function() {

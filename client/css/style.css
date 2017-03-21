@@ -2051,3 +2051,32 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f2f2', end
   text-align:center!important;
   font-weight:bold!important;
 }
+
+body.black .chan .chat,
+body.black .chan .header,
+body.black #chat .input,
+body.black .sidebar {
+    background-color: black!important;
+    color: #fff;
+}
+
+body.dark .chan .chat,
+body.dark .chan .header,
+body.dark #chat .input,
+body.dark .sidebar {
+    background-color: #A9A9A9!important;
+    color: #fff;
+}
+body.light .chan .chat,
+body.light .chan .header,
+body.light #chat .input,
+body.light .sidebar {
+    background-color: #F8F8FF!important;
+}
+
+body.s-dark .chan .chat,
+body.s-dark .chan .header,
+body.s-dark #chat .input,
+body.s-dark .sidebar {
+    background-color: #E6E6FA!important;
+}	
