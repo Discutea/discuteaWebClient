@@ -306,8 +306,8 @@ input {
 }
 
 #viewport .lt,
-#viewport .rt,
-#viewport .ri,
+#viewport .channel .rt,
+#viewport .query .ri,
 #chat button.menu {
     color: #ccc;
     display: none;
@@ -347,8 +347,8 @@ input {
     float: right;
 }
 
-#viewport .ri,
-#viewport .rt {
+#viewport .query .ri,
+#viewport .channel .rt {
     display: block;
     margin: 6px -12px 0 0;
 }
@@ -359,8 +359,8 @@ input {
     margin: 6px -8px 0 12px;
 }
 
-#viewport.rt #chat .sidebar,
-#viewport.ri #chat .sidebar {
+#viewport.rt #chat .channel .sidebar,
+#viewport.ri #chat .query .sidebar {
     -webkit-transform: translate3d(180px, 0, 0);
     transform: translate3d(180px, 0, 0);
 }
@@ -762,8 +762,8 @@ input {
     bottom: -47px;
 }
 
-#viewport.rt .chat,
-#viewport.ri .chat {
+#viewport.rt .channel .chat,
+#viewport.ri .query .chat {
     right: 0;
 }
 
@@ -1671,6 +1671,7 @@ input {
         transform: translate3d(-180px, 0, 0);
     }
 
+
     #sidebar,
     #footer {
         left: -220px;
@@ -1689,8 +1690,8 @@ input {
     }
 
     #viewport .lt,
-    #viewport .rt,
-    #viewport .ri {
+    #viewport .channel .rt,
+    #viewport .query .ri {
         display: block;
     }
 
