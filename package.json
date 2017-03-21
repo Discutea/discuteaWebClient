@@ -40,7 +40,7 @@
     "commander": "2.9.0",
     "emoji-name-map": "^1.2.2",
     "event-stream": "3.3.4",
-    "express": "4.15.0",
+    "express": "4.15.2",
     "fs-extra": "2.0.0",
     "irc-framework": "2.6.1",
     "jquery-textcomplete": "^1.8.0",

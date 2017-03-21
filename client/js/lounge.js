@@ -313,8 +313,10 @@ $(function() {
         var text = msg.find(".text");
 
         if (template === "msg_action") {
-            data.locale = locale.locale;
-            text.html(templates.actions[type](data.msg));
+            text.html(templates.actions[type]({
+                data: data.msg,
+                locale: locale.locale
+            }));
         }
 
         if ((type === "message" || type === "action") && chan.hasClass("channel")) {
@@ -369,10 +371,13 @@ $(function() {
     }
 
     function renderChannelQuery(data) {
-        data.nick = 'https://cdn.discutea.com/avatars/default-m.jpg';
-        data.locale = locale.locale;
+
         var users = chat.find("#chan-" + data.id).find(".sidebar");
-        users.html(templates.query(data));
+        users.html(templates.query({
+            data: data,
+            avatar: 'https://cdn.discutea.com/avatars/default-m.jpg',
+            locale: locale.locale
+        }));
         users.show();
     }
     
@@ -396,12 +401,14 @@ $(function() {
         if (data.data.sex) {
             infos.find("#dname").addClass(data.data.sex);
         }
-            
-        data.locked = isIgnored(data.data.host);
-        data.locale = locale.locale;
         
+
         infos.find(".whois")
-             .html(templates.query_infos(data.data)); 
+             .html(templates.query_infos({ 
+                data: data.data,
+                locked: isIgnored(data.data.host),
+                locale: locale.locale
+               })); 
 
         renderSidebarAvatar(infos, data.data);
     };

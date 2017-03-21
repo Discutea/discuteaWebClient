@@ -1,2 +1,2 @@
-<span role="button" class="user {{modes mode}}" data-name="{{from}}">{{mode}}{{from}}</span>
-<span class="action-text">{{{parse text}}}</span>
+<span role="button" class="user {{modes data.mode}}" data-name="{{data.from}}">{{data.mode}}{{data.from}}</span>
+<span class="action-text">{{{parse data.text}}}</span>

@@ -1,6 +1,6 @@
-<span role="button" class="user {{modes mode}}" data-name="{{from}}">{{mode}}{{from}}</span>
+<span role="button" class="user {{modes data.mode}}" data-name="{{data.from}}">{{data.mode}}{{data.from}}</span>
 {{ trans 'action_kick' locale }}
-<span role="button" class="user" data-name="{{target}}">{{target}}</span>
-{{#if text}}
-    <i class="part-reason">({{{parse text}}})</i>
+<span role="button" class="user" data-name="{{data.target}}">{{data.target}}</span>
+{{#if data.text}}
+    <i class="part-reason">({{{parse data.text}}})</i>
 {{/if}}

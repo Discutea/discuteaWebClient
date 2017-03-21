@@ -1,6 +1,6 @@
-<span role="button" class="user {{modes mode}}" data-name="{{from}}">{{mode}}{{from}}</span>
-<i class="hostmask">({{hostmask}})</i>
+<span role="button" class="user {{modes data.mode}}" data-name="{{data.from}}">{{data.mode}}{{data.from}}</span>
+<i class="hostmask">({{data.hostmask}})</i>
 {{ trans 'action_quit' locale }}
-{{#if text}}
-    <i class="quit-reason">({{{parse text}}})</i>
+{{#if data.text}}
+    <i class="quit-reason">({{{parse data.text}}})</i>
 {{/if}}

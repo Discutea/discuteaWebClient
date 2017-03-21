@@ -8,11 +8,11 @@
         </tr>
     </thead>
     <tbody class="channelslist">
-        {{#each channels}}
+        {{#each data.channels}}
             <tr>
-                <td class="channel">{{{parse channel}}}</td>
-                <td class="users">{{num_users}}</td>
-                <td class="topic">{{{parse topic}}}</td>
+                <td class="channel">{{{parse data.channel}}}</td>
+                <td class="users">{{data.num_users}}</td>
+                <td class="topic">{{{parse data.topic}}}</td>
             </tr>
         {{/each}}
     </tbody>

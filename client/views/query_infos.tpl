@@ -1,18 +1,18 @@
 <div class="first">
-  {{#if operator}}
+  {{#if data.operator}}
     <p class="admin tooltipped tooltipped-n" aria-label="{{ trans 'tool_admin' locale }}">
       {{ trans 'admin' locale }}
     </p>
   {{/if}}
-  {{#if helpop}}
+  {{#if data.helpop}}
     <p class="helper tooltipped tooltipped-n" aria-label="{{ trans 'tool_helper' locale }}">
       {{ trans 'helper' locale }}
     </p>
   {{/if}}
-  {{#if account}}
-    <p class="vip tooltipped tooltipped-n" aria-label="{{ trans 'tool_vip' locale }} {{account}}">
-    {{#if server}}
-        <a target="_blank" href="{{{ parseUrl server }}}/user/{{account}}">{{ trans 'vip' locale }}</a>
+  {{#if data.account}}
+    <p class="vip tooltipped tooltipped-n" aria-label="{{ trans 'tool_vip' locale }} {{data.account}}">
+    {{#if data.server}}
+        <a target="_blank" href="{{{ parseUrl data.server }}}/user/{{data.account}}">{{ trans 'vip' locale }}</a>
     {{else}}
       {{ trans 'vip' locale }}
     {{/if}}
@@ -20,29 +20,29 @@
   {{/if}}
   
   <p>
-    {{#if sex}}
-      <span class="{{ sex }}">{{ trans sex locale }}</span>, 
+    {{#if data.sex}}
+      <span class="{{ data.sex }}">{{ trans data.sex locale }}</span>, 
     {{/if}}
-    {{#if age}}
-      {{ age }} {{ trans 'years_old' locale }}
+    {{#if data.age}}
+      {{ data.age }} {{ trans 'years_old' locale }}
     {{/if}}
   </p>
 
-  {{#if loc}}
-    <p>{{loc}}</p>
+  {{#if data.loc}}
+    <p>{{data.loc}}</p>
   {{/if}}
 </div>
 
-{{#if channels}}
+{{#if data.channels}}
   <p>{{ trans 'action_whois_follow_chans' locale }}</p>
-  <p>{{{parse channels}}}</p>
+  <p>{{{parse data.channels}}}</p>
 {{/if}}
-{{#if away}}
+{{#if data.away}}
   <p>{{ trans 'action_whois_away' locale }}</p>
-  <p><i>({{away}})</i></p>
+  <p><i>({{data.away}})</i></p>
 {{/if}}
 
-{{#unless operator}}
+{{#unless data.operator}}
   <div class="hdiscutea">
     <a class="btn btn-default btn-xs silence{{#if locked}} locked{{/if}}" data-target="{{ host }}" data-nick="{{ nick }}" href="#">
      {{#if locked}}
