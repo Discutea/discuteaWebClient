@@ -1,23 +1,37 @@
-﻿@font-face {
+﻿/*@font-face {
     font-family: "Lato";
     font-weight: 400;
     font-style: normal;
     src:
         local("Lato Regular"),
         local("Lato-regular"),
-        url("fonts/Lato-regular/Lato-regular.woff2") format("woff2"),
-        url("fonts/Lato-regular/Lato-regular.woff") format("woff");
+        url("https://cdn.discutea.com/fonts/Lato-regular/Lato-regular.woff2") format("woff2"),
+        url("https://cdn.discutea.com/fonts/Lato-regular/Lato-regular.woff") format("woff");
+}
+*/
+@font-face {
+    font-family: 'LatoRegular';
+    src: url('fonts/Lato-regular/Lato-Reg-webfont.eot');
+    src: url('fonts/Lato-regular/Lato-Reg-webfontd41d.eot?#iefix') format('embedded-opentype'),
+         url('fonts/Lato-regular/Lato-Reg-webfont.woff2') format('woff2'),
+         url('fonts/Lato-regular/Lato-Reg-webfont.woff') format('woff'),
+         url('fonts/Lato-regular/Lato-Reg-webfont.ttf') format('truetype'),
+         url('fonts/Lato-regular/Lato-Reg-webfont.svg#latoregular') format('svg');
+    font-weight: 400;
+    font-style: normal;
+
 }
 
 @font-face {
-    font-family: "Lato";
+    font-family: "Lato";    
+    src: url('fonts/Lato-regular/Lato-Reg-webfont.eot');
+    src: url('fonts/Lato-regular/Lato-Reg-webfontd41d.eot?#iefix') format('embedded-opentype'),
+         url('fonts/Lato-regular/Lato-Reg-webfont.woff2') format('woff2'),
+         url('fonts/Lato-regular/Lato-Reg-webfont.woff') format('woff'),
+         url('fonts/Lato-regular/Lato-Reg-webfont.ttf') format('truetype'),
+         url('fonts/Lato-regular/Lato-Reg-webfont.svg#latoregular') format('svg');
     font-weight: 700;
     font-style: normal;
-    src:
-        local("Lato Bold"),
-        local("Lato-700"),
-        url("fonts/Lato-700/Lato-700.woff2") format("woff2"),
-        url("fonts/Lato-700/Lato-700.woff") format("woff");
 }
 
 @font-face {
@@ -712,12 +726,14 @@ input {
 }
 
 #windows .header .topic,
-.messages .msg,
-.sidebar {
-    font: medium Consolas, Menlo, Monaco, "Lucida Console", "DejaVu Sans Mono", "Courier New", monospace;
+.messages .msg {
+    font: 1em Consolas, Menlo, Monaco, "Lucida Console", "DejaVu Sans Mono", "Courier New", monospace;
     line-height: 1.4;
 }
 
+.sidebar {
+    font-size: 0.8em;
+}
 
 .messages.xx-large .msg .from,
 .messages.xx-large .msg .text {
@@ -1415,7 +1431,7 @@ input {
     z-index: 1000000;
     display: inline-block;
     visibility: hidden;
-    opacity: 0;
+    opacity: 0; 
     padding: 5px 8px;
     font: 12px Lato;
     line-height: 1.2;
@@ -1654,7 +1670,7 @@ input {
     .tooltipped:focus:before,
     .tooltipped:focus:after {
         visibility: hidden;
-        opacity: 0;
+        opacity: 1;
     }
 
     .container {

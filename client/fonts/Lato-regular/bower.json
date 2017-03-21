@@ -1,0 +1,24 @@
+{
+  "name": "lato-regular-webfont",
+  "version": "1.0.0",
+  "homepage": "https://github.com/soham2008xyz/lato-regular-webfont",
+  "authors": [
+    "Soham Banerjee <soham@renderbit.com>"
+  ],
+  "description": "Lato Regular Webfont, optimized for Bower",
+  "main": [
+      "./font.css"
+  ],
+  "keywords": [
+    "lato",
+    "webfont",
+    "font",
+    "css",
+    "bower"
+  ],
+  "license": ["OFL-1.1", "MIT"],
+  "ignore": [
+    "**/.*",
+    "README.md"
+  ]
+}
