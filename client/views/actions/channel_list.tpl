@@ -1,4 +1,4 @@
-<div class="table-responsive">
+{{ log this }}<div class="table-responsive">
   <table id="channels" class="table channel-list">
     <thead>
         <tr>        
@@ -10,9 +10,9 @@
     <tbody class="channelslist">
         {{#each data.channels}}
             <tr>
-                <td class="channel">{{{parse data.channel}}}</td>
-                <td class="users">{{data.num_users}}</td>
-                <td class="topic">{{{parse data.topic}}}</td>
+                <td class="channel">{{{parse channel}}}</td>
+                <td class="users">{{num_users}}</td>
+                <td class="topic">{{{parse topic}}}</td>
             </tr>
         {{/each}}
     </tbody>
