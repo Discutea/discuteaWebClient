@@ -211,9 +211,7 @@ $(function() {
     socket.on("init", function(data) {
         $("#loading-page-message").text("Rendering…");
 
-        if (data.networks.length === 0) {
-            $("#footer").find(".connect").trigger("click");
-        } else {
+        if (data.networks.length !== 0) {
             renderNetworks(data);
         }
 
@@ -226,9 +224,6 @@ $(function() {
             var first = sidebar.find(".chan")
                 .eq(0)
                 .trigger("click");
-            if (first.length === 0) {
-                $("#footer").find(".connect").trigger("click");
-            }
         }
     });
 
@@ -1216,6 +1211,7 @@ function isIgnored(host) {
     sidebar.on("click", ".chan, button", function() {
         var self = $(this);
         var target = self.data("target");
+
         if (!target || target === "#myModal") {
             return;
         }
@@ -1224,6 +1220,7 @@ function isIgnored(host) {
             "id",
             self.data("id")
         );
+        
         socket.emit(
             "open",
             self.data("id")
