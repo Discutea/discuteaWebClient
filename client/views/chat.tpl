@@ -8,7 +8,7 @@
             </span>
         {{/equal}}
         {{#equal type "query"}}
-            <span class="rt-tooltip tooltipped tooltipped-w" aria-label="Toggle user infos">
+            <span class="ri-tooltip tooltipped tooltipped-w" aria-label="Toggle user infos">
                 <button class="ri" aria-label="Toggle user infos"></button>
             </span>
         {{/equal}}

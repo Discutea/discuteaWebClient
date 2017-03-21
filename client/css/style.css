@@ -1,15 +1,4 @@
-﻿/*@font-face {
-    font-family: "Lato";
-    font-weight: 400;
-    font-style: normal;
-    src:
-        local("Lato Regular"),
-        local("Lato-regular"),
-        url("https://cdn.discutea.com/fonts/Lato-regular/Lato-regular.woff2") format("woff2"),
-        url("https://cdn.discutea.com/fonts/Lato-regular/Lato-regular.woff") format("woff");
-}
-*/
-@font-face {
+﻿@font-face {
     font-family: 'LatoRegular';
     src: url('fonts/Lato-regular/Lato-Reg-webfont.eot');
     src: url('fonts/Lato-regular/Lato-Reg-webfontd41d.eot?#iefix') format('embedded-opentype'),
@@ -353,7 +342,8 @@ input {
     opacity: 1;
 }
 
-#viewport .rt-tooltip {
+#viewport .rt-tooltip,
+#viewport .ri-tooltip {
     float: right;
 }
 
@@ -792,14 +782,12 @@ input {
 }
 
 #chat .lobby .chat,
-#chat .special .chat,
-#chat .query .chat {
+#chat .special .chat {
     right: 0;
 }
 
 #chat .lobby .sidebar,
-#chat .special .sidebar,
-#chat .query .sidebar {
+#chat .special .sidebar {
     display: none;
 }
 
@@ -1677,7 +1665,8 @@ input {
         margin-top: 60px !important;
     }
 
-    #viewport.rt #chat .sidebar {
+    #viewport.rt #chat .channel .sidebar,
+    #viewport.ri #chat .query .sidebar {
         -webkit-transform: translate3d(-180px, 0, 0);
         transform: translate3d(-180px, 0, 0);
     }
@@ -1700,7 +1689,8 @@ input {
     }
 
     #viewport .lt,
-    #viewport .channel .rt {
+    #viewport .rt,
+    #viewport .ri {
         display: block;
     }
 
@@ -1711,6 +1701,7 @@ input {
     #chat .sidebar {
         right: -180px;
     }
+   
 
     #chat .title:before {
         display: none;

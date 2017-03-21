@@ -373,7 +373,7 @@ $(function() {
         data.locale = locale.locale;
         var users = chat.find("#chan-" + data.id).find(".sidebar");
         users.html(templates.query(data));
-        users.show();        
+        users.show();
     }
     
     
@@ -846,13 +846,7 @@ $(function() {
         }
     });
 
-    viewport.on("click", ".rt", function(e) {
-        var self = $(this);
-        viewport.toggleClass(self.attr("class"));
-        e.stopPropagation();
-    });
-    
-    viewport.on("click", ".ri", function(e) {
+    viewport.on("click", ".rt, .ri", function(e) {
         var self = $(this);
         viewport.toggleClass(self.attr("class"));
         e.stopPropagation();
@@ -1557,6 +1551,8 @@ function isIgnored(host) {
 
     function completeNicks(word) {
         var users = chat.find(".active").find(".users");
+        if (!users || !users.length) {return;}
+        
         var words = users.data("nicks");
 
         return $.grep(
