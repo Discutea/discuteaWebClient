@@ -74,7 +74,7 @@ $(function() {
     var pop;
     try {
         pop = new Audio();
-        pop.src = "audio/pop.ogg";
+        pop.src = "audio/highlight.mp3";
     } catch (e) {
         pop = {
             play: $.noop
