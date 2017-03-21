@@ -1766,12 +1766,21 @@ function isIgnored(host) {
     if ($_GET('channel')) {
         $("input[name='channel']", forms).val( $_GET('channel') );
     }
+
+    if ($_GET('age')) {
+        $("input[name='age']", forms).val( $_GET('age') );
+    }    
+
+    if ($_GET('gender')) {
+        $("input[name='gender'][value='" + $_GET('gender') + "']", forms).attr('checked', 'checked');
+    }    
+
+    if ($_GET('nick')) {
+        $("input[name='nick']", forms).val( $_GET('nick') );
+    }    
     
     /* autoconnect */
     if ($_GET('nick') && $_GET('age') && $_GET('gender')) {
-        $("input[name='nick']", forms).val( $_GET('nick') );
-        $("input[name='age']", forms).val( $_GET('age') );
-        $("input[name='gender'][value='" + $_GET('gender') + "']", forms).attr('checked', 'checked');
         forms.find(".btn").click();
     }
 

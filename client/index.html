@@ -108,23 +108,23 @@
                                 <label for="connect:nick"><%= trans.form.nick %></label>
                             </div>    
                             <div class="col-sm-9">
-                                <input class="input nick" id="connect:nick" name="nick" value="<%= typeof(nick) === "string" ? nick : defaults.nick %>">
+                                <input class="input nick" id="connect:nick" name="nick" required="required" value="">
                             </div>
                            
                             <div class="col-sm-3">
                                 <label for="connect:age"><%= trans.form.age %></label>
                             </div>
                             <div class="col-sm-9">
-                                <input class="input" required="required" type="number" min="10" max="99" id="connect:age" name="age" value="<%= typeof(age) === "string" ? age : "" %>">
+                                <input class="input" required="required" type="number" min="10" max="99" id="connect:age" name="age" value="">
                             </div>
                             
                             <div class="col-sm-3">
                                 <label for="connect:gender"><%= trans.form.gender %></label>
                             </div>
                             <div class="col-sm-9">
-                                <input type="radio" id="connect:gender" name="gender" <%= typeof(gender) === "string" && gender === "F" ? "checked" : ""  %> required="required" value="F" />
+                                <input type="radio" id="connect:gender" name="gender" value="F" required />
                                 <img src="https://cdn.discutea.com/img/femme.png">
-                                <input type="radio" id="connect:gender" name="gender" <%= typeof(gender) === "string" && gender === "M" ? "checked" : ""  %> required="required" value="M" />
+                                <input type="radio" id="connect:gender" name="gender" value="M" />
                                 <img src="https://cdn.discutea.com/img/homme.png">
                             </div> 
 
