@@ -683,7 +683,7 @@ $(function() {
         italic:               false,
         underline:            false,
         wcolor:               '',
-        fontsize:             'medium',
+        fontsize:             'small',
         background:           'white',
         nick:                 true,
         notification:         true,
