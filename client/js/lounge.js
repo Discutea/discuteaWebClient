@@ -308,7 +308,7 @@ $(function() {
         var text = msg.find(".text");
 
         if (template === "msg_action") {
-            Object.assign(data.msg, locale);
+            data.locale = locale.locale;
             text.html(templates.actions[type](data.msg));
         }
 
@@ -364,13 +364,9 @@ $(function() {
     }
 
     function renderChannelQuery(data) {
-        var nick = {
-            avatar: 'https://cdn.discutea.com/avatars/default-m.jpg'
-        };
-        
-        Object.assign(data, nick);
+        data.nick = 'https://cdn.discutea.com/avatars/default-m.jpg';
+        data.locale = locale.locale;
         var users = chat.find("#chan-" + data.id).find(".sidebar");
-        Object.assign(data, locale);
         users.html(templates.query(data));
         users.show();        
     }
@@ -395,13 +391,9 @@ $(function() {
         if (data.data.sex) {
             infos.find("#dname").addClass(data.data.sex);
         }
-
-        var locked = {
-              locked: isIgnored(data.data.host)
-            };
             
-        Object.assign(data.data, locked);
-        Object.assign(data.data, locale);
+        data.locked = isIgnored(data.data.host);
+        data.locale = locale.locale;
         
         infos.find(".whois")
              .html(templates.query_infos(data.data)); 
