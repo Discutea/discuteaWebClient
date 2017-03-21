@@ -45,6 +45,7 @@ var trans = {
     minor_undefined_msg:          'La personne à qui vous vous adressez ne nous a pas communiqué son âge.<br /> \
                                    <strong>Cette personne est peut-être mineure</strong> merci de rester correct. Tout comportement inapproprié donnera lieu à des sanctions lourdes.',   
     web: {
+        locale:       'fr',
         connectTo:    'Connexion à',
         close:        'Fermer',
         title:        'Chat Discutea Client Web IRC',

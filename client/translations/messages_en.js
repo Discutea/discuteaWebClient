@@ -45,6 +45,7 @@ var trans = {
     minor_undefined_msg:          'The user you are about to chat with did not communicate his/her age.<br /> \
                                    <strong>This person may be a minor</strong> please be correct. Any bad behavior will result in disciplinary actions',   
     web: {
+        locale:       'en',
         connectTo:    'Connect to',
         close:        'Close',
         title:        'Chat Discutea Client Web IRC',

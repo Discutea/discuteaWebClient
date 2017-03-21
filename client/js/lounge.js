@@ -24,13 +24,16 @@ $(function() {
         autoConnect: false,
         reconnection: false
     });
-
-    if ( (navigator !== undefined) && (navigator.language !== undefined) ) {
-        var locale = {locale: navigator.language};
-    } else {
-        var locale = {locale: "en"}; 
-    }
     
+    var locale = {locale: $('html').attr('lang')};
+    if (!locale) {
+      if ( (navigator !== undefined) && (navigator.language !== undefined) ) {
+        var locale = {locale: navigator.language};
+      } else {
+        var locale = {locale: "en"}; 
+      }
+    }
+
     var commands = [
         "/away",
         "/back",
