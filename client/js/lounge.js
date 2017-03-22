@@ -842,8 +842,6 @@ $(function() {
 
     var viewport = $("#viewport");
     var sidebarSlide = slideoutMenu(viewport[0], sidebar[0]);
-    var contextMenuContainer = $("#context-menu-container");
-    var contextMenu = $("#context-menu");
 
     $("#main").on("click", function(e) {
         if ($(e.target).is(".lt")) {
@@ -853,100 +851,28 @@ $(function() {
         }
     });
 
+    viewport.on("click", ".closeclose", function(e) {
+        $(".networks .chan[data-target='" + $(this).data("data") + "'] .close").click();
+        e.stopPropagation();
+    });
+    viewport.on("click", ".channels_list", function(e) {
+        socket.emit("input", {
+            target: chat.data("id"),
+                text: '/list'
+        });
+        e.stopPropagation();
+    });
+
+    
+    viewport.on("click", ".ignores_list", function(e) {
+        $('#ignoreModal').modal('show');
+        e.stopPropagation();
+    });
+     
     viewport.on("click", ".rt, .ri", function(e) {
         var self = $(this);
         viewport.toggleClass(self.attr("class"));
         e.stopPropagation();
-    });
-    
-    function positionContextMenu(that, e) {
-        var offset;
-        var menuWidth = contextMenu.outerWidth();
-        var menuHeight = contextMenu.outerHeight();
-
-        if (that.hasClass("menu")) {
-            offset = that.offset();
-            offset.left -= menuWidth - that.outerWidth();
-            offset.top += that.outerHeight();
-            return offset;
-        }
-
-        offset = {left: e.pageX, top: e.pageY};
-
-        if ((window.innerWidth - offset.left) < menuWidth) {
-            offset.left = window.innerWidth - menuWidth;
-        }
-
-        if ((window.innerHeight - offset.top) < menuHeight) {
-            offset.top = window.innerHeight - menuHeight;
-        }
-
-        return offset;
-    }
-
-    function showContextMenu(that, e) {
-        var target = $(e.currentTarget);
-        var output = "";
-
-        if (target.hasClass("user")) {
-            output = templates.contextmenu_item(
-                {
-                class: "user",
-                text: target.text(),
-                data: target.data("name")
-                }
-            );
-        } else if (target.hasClass("chan")) {
-            output = templates.contextmenu_item({
-                class: "chan",
-                text: target.data("title"),
-                data: target.data("target")
-            });
-            output += templates.contextmenu_divider();
-            output += templates.contextmenu_item({
-                class: "close",
-                text: target.hasClass("lobby") ? "Disconnect" : target.hasClass("channel") ? "Leave" : "Close",
-                data: target.data("target"),
-                locale: locale.locale
-            });
-        }
-
-            output += templates.contextmenu_divider();
-            output += templates.contextmenu_item({
-                class: "list",
-                text: "contextmenu_item_list",
-                data: target.data("target"),
-                locale: locale.locale
-            });
-            
-            output += templates.contextmenu_divider();
-            output += templates.contextmenu_item({
-                class: "ignore",
-                text: "contextmenu_item_ignore",
-                data: target.data("target"),
-                locale: locale.locale
-            });
-            
-        contextMenuContainer.show();
-        contextMenu
-            .html(output)
-            .css(positionContextMenu($(that), e));
-
-        return false;
-    }
-
-    viewport.on("contextmenu", ".user, .network .chan", function(e) {
-        return showContextMenu(this, e);
-    });
-
-    viewport.on("click", "#chat .menu", function(e) {
-        e.currentTarget = $(e.currentTarget).closest(".chan")[0];
-        return showContextMenu(this, e);
-    });
-
-    contextMenuContainer.on("click contextmenu", function() {
-        contextMenuContainer.hide();
-        return false;
     });
 
     function resetInputHeight(input) {
@@ -1335,29 +1261,6 @@ function isIgnored(host) {
         return false;
     });
     
-    contextMenu.on("click", ".context-menu-item", function() {
-        switch ($(this).data("action")) {
-        case "ignore":
-            $('#ignoreModal').modal('show'); 
-            break;
-        case "close":
-            $(".networks .chan[data-target='" + $(this).data("data") + "'] .close").click();
-            break;
-        case "chan":
-            $(".networks .chan[data-target='" + $(this).data("data") + "']").click();
-            break;
-        case "user":
-            $(".channel.active .users .user[data-name='" + $(this).data("data") + "']").click();
-            break;
-        case "list":
-            socket.emit("input", {
-                target: chat.data("id"),
-                text: '/list'
-            });
-            break;
-        }
-    });
-    
     chat.on("input", ".search", function() {
         var value = $(this).val().toLowerCase();
         var names = $(this).closest(".users").find(".names");
@@ -1548,12 +1451,6 @@ function isIgnored(host) {
 
     forms.on("input", ".nick", function() {
         var nick = $(this).val();
-    });
-
-    Mousetrap.bind([
-        "escape"
-    ], function() {
-        contextMenuContainer.hide();
     });
 
     function completeNicks(word) {

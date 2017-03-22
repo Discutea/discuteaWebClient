@@ -100,8 +100,10 @@ input {
 
 #viewport .lt:before,
 #viewport .rt:before,
+#viewport .ignores_list:before,
+#viewport .channels_list:before,
+#viewport .closeclose:before,
 #viewport .ri:before,
-#chat button.menu:before,
 #sidebar .chan:before,
 #chat .title:before,
 #footer .icon,
@@ -127,7 +129,6 @@ input {
 #settings .iset-set:before,
 #nicktitle:before,
 #ignoretitle:before,
-.context-menu-item:before,
 .silence:before,
 #nick button:before {
     font: normal normal normal 14px/1 FontAwesome;
@@ -169,15 +170,10 @@ input {
 
 #viewport .lt:before { content: "\f0c9"; /* http://fontawesome.io/icon/bars/ */ }
 #viewport .rt:before { content: "\f0c0"; /* http://fontawesome.io/icon/users/ */ }
+#viewport .ignores_list:before { content: "\f05e"; }
+#viewport .channels_list:before { content: "\f292"; }
 #viewport .ri:before {content: "\f05a";}
-#chat button.menu:before { content: "\f142"; /* http://fontawesome.io/icon/ellipsis-v/ */ }
-
-.context-menu-user:before { content: "\f007"; /* http://fontawesome.io/icon/user/ */ }
-.context-menu-chan:before { content: "\f0f6"; /* http://fontawesome.io/icon/file-text-o/ */ }
-.context-menu-close:before { content: "\f00d"; /* http://fontawesome.io/icon/times/ */ }
-.context-menu-list:before { content: "\f03a"; /* http://fontawesome.io/icon/list/ */ }
-.context-menu-ignore:before { content: "\f05e";}
-
+#viewport .closeclose:before { content: "\f00d"; /* http://fontawesome.io/icon/times/ */ }
 #sidebar .chan.lobby:before,
 #chat .lobby .title:before { content: "\f0a0"; /* http://fontawesome.io/icon/hdd-o/ */ }
 
@@ -292,23 +288,7 @@ input {
     perspective: 1000;
 }
 
-#viewport.menu-open {
-    -webkit-transform: translate3d(220px, 0, 0);
-    transform: translate3d(220px, 0, 0);
-}
-
-#viewport.menu-dragging {
-    transition: none !important;
-}
-
-#viewport.menu-open .messages {
-    pointer-events: none;
-}
-
-#viewport .lt,
-#viewport .channel .rt,
-#viewport .query .ri,
-#chat button.menu {
+#viewport .viewmenu {
     color: #ccc;
     display: none;
     float: left;
@@ -347,16 +327,9 @@ input {
     float: right;
 }
 
-#viewport .query .ri,
-#viewport .channel .rt {
+#viewport .viewmenu {
     display: block;
     margin: 6px -12px 0 0;
-}
-
-#chat button.menu {
-    display: block;
-    float: right;
-    margin: 6px -8px 0 12px;
 }
 
 #viewport.rt #chat .channel .sidebar,
@@ -1330,54 +1303,6 @@ input {
     opacity: .6;
 }
 
-#context-menu-container {
-    display: none;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1000;
-    background: transparent;
-}
-
-#context-menu {
-    position: absolute;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    min-width: 160px;
-    font-size: 14px;
-    background-color: #fff;
-    box-shadow: 0 3px 12px rgba(0, 0, 0, .15);
-    border: 1px solid rgba(0, 0, 0, .15);
-    border-radius: 2px;
-}
-
-.context-menu-divider {
-    height: 1px;
-    margin: 6px 0;
-    background-color: rgba(0, 0, 0, .1);
-}
-
-.context-menu-item {
-    cursor: pointer;
-    display: block;
-    padding: 4px 8px;
-    color: #333;
-    margin-top: 6px;
-    margin-bottom: 6px;
-}
-
-.context-menu-item:hover {
-    background-color: #f6f6f6;
-}
-
-.context-menu-item:before {
-    width: 20px;
-    display: inline-block;
-}
-
 .textcomplete-menu {
     position: absolute;
     list-style: none;
@@ -1689,9 +1614,7 @@ input {
         right: 0;
     }
 
-    #viewport .lt,
-    #viewport .channel .rt,
-    #viewport .query .ri {
+    #viewport .viewmenu {
         display: block;
     }
 
@@ -1713,10 +1636,6 @@ input {
     #viewport {
         -webkit-transform: none !important;
         transform: none !important;
-    }
-
-    #viewport.menu-open {
-        transition: none;
     }
 }
 
