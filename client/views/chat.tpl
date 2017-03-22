@@ -1,9 +1,10 @@
 {{#each channels}}
 <div id="chan-{{id}}" data-title="{{name}}" data-id="{{id}}" data-type="{{type}}" data-target="#chan-{{id}}" class="chan {{type}}">
     <div class="header">
-            <span class="rt-tooltip tooltipped tooltipped-w" aria-label="Fermer">
-                <button class="viewmenu closeclose" aria-label="Fermer" data-action="close" data-data="#chan-{{id}}"></button>
-            </span>   
+        <button class="lt" aria-label="Toggle channel list"></button>
+        <span class="rt-tooltip tooltipped tooltipped-w" aria-label="Fermer">
+            <button class="viewmenu closeclose" aria-label="Fermer" data-action="close" data-data="#chan-{{id}}"></button>
+        </span>   
 
         {{#equal type "channel"}}
             <span class="rt-tooltip tooltipped tooltipped-w" aria-label="Toggle user list">
