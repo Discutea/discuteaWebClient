@@ -1862,3 +1862,7 @@ function isIgnored(host) {
         }
     }]); 
 });
+
+window.onbeforeunload = function() {
+    return 'Are you sure you want to quit?';
+}

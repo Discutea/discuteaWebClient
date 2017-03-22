@@ -1,4 +1,4 @@
-{{ log this }}<div class="table-responsive">
+<div class="table-responsive">
   <table id="channels" class="table channel-list">
     <thead>
         <tr>        
