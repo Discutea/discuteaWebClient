@@ -149,11 +149,6 @@ function init(socket, client) {
     } else {
         client.ip = getClientIp(socket.request);
 
-        socket.on("disconnect", function() {
-            client.clientDetach(socket.id);
-        });
-        client.clientAttach(socket.id);
-
         socket.on(
             "input",
             function(data) {

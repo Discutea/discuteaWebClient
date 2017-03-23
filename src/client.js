@@ -68,7 +68,6 @@ function Client(manager, request, name, config) {
     }
     _.merge(this, {
         lastActiveChannel: -1,
-        attachedClients: {},
         config: config,
         id: id++,
         name: name,
@@ -298,12 +297,6 @@ Client.prototype.inputLine = function(data) {
 };
 
 Client.prototype.open = function(socketId, target) {
-    // Opening a window like settings
-    if (target === null) {
-        this.attachedClients[socketId] = -1;
-        return;
-    }
-
     target = this.find(target);
     if (!target) {
         return;
@@ -313,7 +306,6 @@ Client.prototype.open = function(socketId, target) {
     target.chan.unread = 0;
     target.chan.highlight = false;
 
-    this.attachedClients[socketId] = target.chan.id;
     this.lastActiveChannel = target.chan.id;
 
     this.emit("open", target.chan.id);
@@ -432,29 +424,4 @@ Client.prototype.quit = function() {
             network.irc.quit("Page closed");
         }
     });
-};
-
-Client.prototype.clientAttach = function(socketId) {
-    var client = this;
-
-    client.attachedClients[socketId] = client.lastActiveChannel;
-
-    // Update old networks to store ip and hostmask
-    client.networks.forEach(network => {
-        if (!network.ip) {
-            network.ip = (client.config && client.config.ip) || client.ip;
-        }
-
-        if (!network.hostname) {
-            var hostmask = (client.config && client.config.hostname) || client.hostname;
-
-            if (hostmask) {
-                network.hostmask = hostmask;
-            }
-        }
-    });
-};
-
-Client.prototype.clientDetach = function(socketId) {
-    delete this.attachedClients[socketId];
 };
