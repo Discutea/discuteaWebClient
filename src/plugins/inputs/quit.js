@@ -1,7 +1,5 @@
 "use strict";
 
-var _ = require("lodash");
-
 exports.commands = ["quit"];
 exports.allowDisconnected = true;
 
@@ -10,7 +8,6 @@ exports.input = function(network, chan, cmd, args) {
     var irc = network.irc;
     var quitMessage = args[0] ? args.join(" ") : "";
 
-    client.networks = _.without(client.networks, network);
     client.emit("quit", {
         network: network.id
     });

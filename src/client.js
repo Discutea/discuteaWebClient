@@ -71,19 +71,9 @@ function Client(manager, request, name, config) {
         config: config,
         id: id++,
         name: name,
-        networks: [],
+        networks: null,
         sockets: manager.sockets,
         manager: manager
-    });
-
-    var client = this;
-
-    var delay = 0;
-    (client.config.networks || []).forEach(n => {
-        setTimeout(function() {
-            client.connect(n);
-        }, delay);
-        delay += 1000;
     });
 }
 
@@ -94,19 +84,11 @@ Client.prototype.emit = function(event, data) {
 };
 
 Client.prototype.find = function(channelId) {
-    var network = null;
-    var chan = null;
-    for (var i in this.networks) {
-        var n = this.networks[i];
-        chan = _.find(n.channels, {id: channelId});
-        if (chan) {
-            network = n;
-            break;
-        }
-    }
-    if (network && chan) {
+    var chan = _.find(this.networks.channels, {id: channelId});
+
+    if (this.networks && chan) {
         return {
-            network: network,
+            network: this.networks,
             chan: chan
         };
     }
@@ -157,7 +139,7 @@ Client.prototype.connect = function(args) {
     
     network.setNick(nick);
 
-    client.networks.push(network);
+    client.networks = network;
     client.emit("network", {
         networks: [network]
     });
@@ -311,39 +293,10 @@ Client.prototype.open = function(socketId, target) {
     this.emit("open", target.chan.id);
 };
 
-Client.prototype.sort = function(data) {
-    var self = this;
-
-    var type = data.type;
-    var order = data.order || [];
-    var sorted = [];
-
-    switch (type) {
-    case "channels":
-        var target = data.target;
-        var network = _.find(self.networks, {id: target});
-        if (!network) {
-            return;
-        }
-        order.forEach(i => {
-            var find = _.find(network.channels, {id: i});
-            if (find) {
-                sorted.push(find);
-            }
-        });
-        network.channels = sorted;
-        break;
-    }
-
-    // Sync order to connected clients
-    const syncOrder = sorted.map(obj => obj.id);
-    self.emit("sync_sort", {order: syncOrder, type: type, target: data.target});
-};
-
 Client.prototype.identify = function(data) {
     
-    var network = this.networks[0];
-    if ( (network !== undefined) && (network.irc !== undefined) ) {
+    var network = this.networks;
+    if ( (network) && (network.irc !== undefined) ) {
         var irc = network.irc;
         if (data && typeof data.passwd === 'string') {
             irc.say('NickServ', "identify " + data.passwd);
@@ -352,8 +305,8 @@ Client.prototype.identify = function(data) {
 }
 
 Client.prototype.silence = function(data) {
-    var network = this.networks[0];
-    if ( (network !== undefined) && (network.irc !== undefined) ) {
+    var network = this.networks;
+    if ( (network) && (network.irc !== undefined) ) {
         var irc = network.irc;
         if (data && typeof data.target === 'string') {
             if (!data.locked) {
@@ -366,8 +319,8 @@ Client.prototype.silence = function(data) {
 }
 
 Client.prototype.noprivate = function(data) {
-    var network = this.networks[0];
-    if ( (network !== undefined) && (network.irc !== undefined) ) {
+    var network = this.networks;
+    if ( (network) && (network.irc !== undefined) ) {
         var irc = network.irc;
         if (data.type === "registered") {
             var mode = 'R';
@@ -409,9 +362,8 @@ Client.prototype.quit = function() {
             socket.disconnect();
         }
     }
-    this.networks.forEach(network => {
-        if (network.irc) {
-            network.irc.quit("Page closed");
-        }
-    });
+
+    if (this.networks && this.networks.irc) {
+        this.networks.irc.quit("Page closed");
+    }
 };

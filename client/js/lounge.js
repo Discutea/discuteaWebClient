@@ -213,7 +213,7 @@ $(function() {
     socket.on("init", function(data) {
         $("#loading-page-message").text("Rendering…");
 
-        if (data.networks.length !== 0) {
+        if (data.networks) {
             renderNetworks(data);
         }
 
