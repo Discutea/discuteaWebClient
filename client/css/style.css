@@ -975,12 +975,12 @@ input {
     color: #555;
 }
 
-#chat.hide-join .join,
+#chat.hide-join .channel .join,
 #chat.hide-mode .mode,
 #chat.hide-motd .motd,
-#chat.hide-nick .nick,
+#chat.hide-nick .channel .nick,
 #chat.hide-part .part,
-#chat.hide-quit .quit {
+#chat.hide-quit .channel .quit {
     display: none !important;
 }
 

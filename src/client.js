@@ -229,7 +229,7 @@ Client.prototype.connect = function(args) {
         client.emit("i_registered");
         setTimeout(function() { network.irc.join(chanjoin); }, 1300);
     });
-    
+           
     network.irc.requestCap([
         "znc.in/self-message", // Legacy echo-message for ZNc
     ]);

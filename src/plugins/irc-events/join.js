@@ -7,7 +7,6 @@ var User = require("../../models/user");
 module.exports = function(irc, network) {
     var client = this;
     irc.on("join", function(data) {
-        
         var chan = network.getChannel(data.channel);
         if (typeof chan === "undefined") {
             chan = new Chan({
@@ -39,6 +38,14 @@ module.exports = function(irc, network) {
             type: Msg.Type.JOIN,
             self: data.nick === irc.user.nick
         });
+        
         chan.pushMessage(client, msg);
+        
+        // On query
+        chan = network.getChannel(data.nick);
+        if (typeof chan !== "undefined" && !chan.online) {
+            chan.online = true;
+            chan.pushMessage(client, msg);
+        }
     });
 };

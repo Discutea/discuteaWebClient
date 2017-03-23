@@ -308,7 +308,6 @@ $(function() {
         } else if (type === "unhandled") {
             template = "msg_unhandled";
         }
-
         var msg = $(templates[template](data.msg));
         var text = msg.find(".text");
 
@@ -328,7 +327,7 @@ $(function() {
                 }
             }
         }
-        
+
         return msg;
     }
 
@@ -476,9 +475,18 @@ $(function() {
             toggleNotificationMarkers(true);
         }
     }
+    
+    socket.on("update_query", function(chan) {
+       var query = chat.find("#chan-" + chan.id);
+       query.find('.title').text(chan.name);
+       query.find('#dname').text(chan.name);
+       var side = sidebar.find("[data-id="+chan.id+"]");
+       side.find('.name').text(chan.name);
+    });
 
+    
     socket.on("msg", function(data) {
-        var msg = buildChatMessage(data);
+        var msg = buildChatMessage(data);        
         var target = "#chan-" + data.chan;
         var container = chat.find(target + " .messages");
 
@@ -489,21 +497,18 @@ $(function() {
         }
         
         // Add message to the container
-        container
-            .append(msg)
-            .trigger("msg", [
-                target,
-                data
-            ]);
-        
+        container.append(msg)
+                .trigger("msg", [
+                  target,
+                  data]);
+
         if (data.msg.self) {
             container
                 .find(".unread-marker")
                 .appendTo(container);
         }
-        
     });
-
+    
     socket.on("network", function(data) {
         renderNetworks(data);
 
@@ -1274,15 +1279,15 @@ function isIgnored(host) {
             }
         });
     });
-
+    
     chat.on("msg", ".messages", function(e, target, msg) {
         var unread = msg.unread;
         msg = msg.msg;
-
+        
         if (msg.self) {
             return;
         }
-
+        
         var button = sidebar.find(".chan[data-target='" + target + "']");
         if (msg.highlight || (options.notifyAllMessages && msg.type === "message")) {
             if (!document.hasFocus() || !$(target).hasClass("active")) {

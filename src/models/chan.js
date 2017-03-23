@@ -24,6 +24,7 @@ function Chan(attr) {
         firstUnread: 0,
         unread: 0,
         highlight: false,
+        online: true,
         users: []
     });
 }

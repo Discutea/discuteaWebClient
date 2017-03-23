@@ -23,25 +23,36 @@ module.exports = function(irc, network) {
             });
         }
 
+        var mode = "";
+        
         network.channels.forEach(chan => {
             var user = _.find(chan.users, {name: data.nick});
-            if (typeof user === "undefined") {
+            if (chan.type !== 'query' && typeof user !== "undefined") {
+                user.name = data.new_nick;
+                chan.sortUsers(irc);
+                client.emit("users", {
+                   chan: chan.id
+                });
+                mode = chan.getMode(data.new_nick);
+            } else if (chan.name.toLowerCase() !== data.nick.toLowerCase()) {
                 return;
             }
-            user.name = data.new_nick;
-            chan.sortUsers(irc);
-            client.emit("users", {
-                chan: chan.id
-            });
+
             msg = new Msg({
                 time: data.time,
                 from: data.nick,
                 type: Msg.Type.NICK,
-                mode: chan.getMode(data.new_nick),
+                mode: mode,
                 new_nick: data.new_nick,
                 self: self
             });
+            
             chan.pushMessage(client, msg);
+            
+            if (chan.type === 'query') {
+                chan.name = data.new_nick;
+                client.emit("update_query", chan);
+            }
         });
     });
 };
