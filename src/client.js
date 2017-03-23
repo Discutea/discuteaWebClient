@@ -319,16 +319,6 @@ Client.prototype.sort = function(data) {
     var sorted = [];
 
     switch (type) {
-    case "networks":
-        order.forEach(i => {
-            var find = _.find(self.networks, {id: i});
-            if (find) {
-                sorted.push(find);
-            }
-        });
-        self.networks = sorted;
-        break;
-
     case "channels":
         var target = data.target;
         var network = _.find(self.networks, {id: target});

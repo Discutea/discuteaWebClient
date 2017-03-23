@@ -13,7 +13,6 @@ let config = {
         "js/bundle.vendor.js": [
             "handlebars/runtime",
             "jquery",
-            "jquery-ui/ui/widgets/sortable",
             "mousetrap",
             "socket.io-client",
             "urijs",

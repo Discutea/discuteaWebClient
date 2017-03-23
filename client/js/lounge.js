@@ -1,5 +1,4 @@
 // vendor libraries
-import "jquery-ui/ui/widgets/sortable";
 import $ from "jquery";
 import io from "socket.io-client";
 import Mousetrap from "mousetrap";
@@ -469,7 +468,6 @@ $(function() {
             })
         );
         channels.forEach(renderChannel);
-        sortable();
 
         if (sidebar.find(".highlight").length) {
             toggleNotificationMarkers(true);
@@ -1500,64 +1498,6 @@ function isIgnored(host) {
                 return !w.toLowerCase().indexOf(word.toLowerCase());
             }
         );
-    }
-
-    function sortable() {
-        sidebar.find(".networks").sortable({
-            axis: "y",
-            containment: "parent",
-            cursor: "move",
-            distance: 12,
-            items: ".network",
-            handle: ".lobby",
-            placeholder: "network-placeholder",
-            forcePlaceholderSize: true,
-            tolerance: "pointer", // Use the pointer to figure out where the network is in the list
-
-            update: function() {
-                var order = [];
-                sidebar.find(".network").each(function() {
-                    var id = $(this).data("id");
-                    order.push(id);
-                });
-                socket.emit(
-                    "sort", {
-                        type: "networks",
-                        order: order
-                    }
-                );
-
-                ignoreSortSync = true;
-            }
-        });
-        sidebar.find(".network").sortable({
-            axis: "y",
-            containment: "parent",
-            cursor: "move",
-            distance: 12,
-            items: ".chan:not(.lobby)",
-            placeholder: "chan-placeholder",
-            forcePlaceholderSize: true,
-            tolerance: "pointer", // Use the pointer to figure out where the channel is in the list
-
-            update: function(e, ui) {
-                var order = [];
-                var network = ui.item.parent();
-                network.find(".chan").each(function() {
-                    var id = $(this).data("id");
-                    order.push(id);
-                });
-                socket.emit(
-                    "sort", {
-                        type: "channels",
-                        target: network.data("id"),
-                        order: order
-                    }
-                );
-
-                ignoreSortSync = true;
-            }
-        });
     }
 
     socket.on("i_registered", function() {

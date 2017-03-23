@@ -171,12 +171,7 @@ function init(socket, client) {
                 client.open(socket.id, data);
             }
         );
-        socket.on(
-            "sort",
-            function(data) {
-                client.sort(data);
-            }
-        );
+
         socket.on(
             "names",
             function(data) {
