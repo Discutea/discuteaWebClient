@@ -845,8 +845,8 @@ input {
     color: #b1c3ce;
     padding-right: 10px;
     text-align: right;
-    max-width: 134px;
-    min-width: 134px;
+    max-width: 150px;
+    min-width: 100px;
 }
 
 #loading a,
