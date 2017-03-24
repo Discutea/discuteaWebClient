@@ -228,6 +228,27 @@ $(function() {
         renderMinors(data.chan.id, data.data.age);
     });
     
+    function renderLeftMenu(target, html) {
+      var name = $(html).data("title");
+      target = sidebar.find(".network").find('.dchannels');
+      if(name) {
+        var toinsert = true;
+        target.find(".chan").each(function() {
+          if(name.toUpperCase() < $(this).data("title").toUpperCase()){
+            if(toinsert){
+              $(this).before(html);
+              toinsert = false;
+            }
+          }
+        });
+        if(toinsert){
+          target.append(html);
+        }
+      } else {
+        target.append(html);
+      }
+    }
+    
     socket.on("join", function(data) {
         var network = sidebar.find(".network");
         var html = templates.chan({channels: [data.chan]})
@@ -235,13 +256,13 @@ $(function() {
         
         switch (data.chan.type) {
           case "channel":
-            network.find('.dchannels').append(html);
+            renderLeftMenu('.dchannels', html);
             break;
           case "query":
-            network.find('.dqueries').append(html);
+            renderLeftMenu('.dqueries', html);
             break;
           default:
-            network.find('.dspecials').append(html);
+            renderLeftMenu('.dspecials', html);
             break;
         }
 
