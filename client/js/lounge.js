@@ -227,14 +227,23 @@ $(function() {
         renderSidebarInfos(data);
         renderMinors(data.chan.id, data.data.age);
     });
-
+    
     socket.on("join", function(data) {
         var network = sidebar.find(".network");
-        network.append(
-            templates.chan({
-                channels: [data.chan]
-            })
-        );
+        var html = templates.chan({channels: [data.chan]})
+        var channels;
+        
+        switch (data.chan.type) {
+          case "channel":
+            network.find('.dchannels').append(html);
+            break;
+          case "query":
+            network.find('.dqueries').append(html);
+            break;
+          default:
+            network.find('.dspecials').append(html);
+            break;
+        }
 
         chat.append(
             templates.chat({
@@ -293,6 +302,7 @@ $(function() {
         } else if (type === "unhandled") {
             template = "msg_unhandled";
         }
+
         var msg = $(templates[template](data.msg));
         var text = msg.find(".text");
 
@@ -302,7 +312,6 @@ $(function() {
                 locale: locale.locale
             }));
         }
-
         if ((type === "message" || type === "action") && chan.hasClass("channel")) {
             var nicks = chan.find(".users").data("nicks");
             if (nicks) {
@@ -490,7 +499,6 @@ $(function() {
     });
     
     socket.on("network", function(data) {
-        console.log(data);
         renderNetworks(data);
 
         sidebar.find(".chan")
@@ -536,36 +544,23 @@ $(function() {
         }
     });
 
-    socket.on("part", function(data) {
-        var chanMenuItem = sidebar.find(".chan[data-id='" + data.chan + "']");
+    socket.on("part", function(data) {        
+        sidebar.find(".chan[data-id='" + data.chan + "']")
+               .remove();
+        $("#chan-" + data.chan).remove();
 
-        // When parting from the active channel/query, jump to the network's lobby
-        if (chanMenuItem.hasClass("active")) {
-            var channels = chanMenuItem.parent(".network").find(".channel");
-            var chanscount = channels.length;
-            if (chanMenuItem.hasClass("channel")) {
-                chanscount--;
-            }
-            
-            var changed = false;
-            
-            if (chanscount) {
-                channels.each(function() {
-                    if ($(this).data('title') !== chanMenuItem.data('title')) {
-                        $(this).click();
-                        changed = true;
-                        return;
-                    }
-                });
-            } 
-            
-            if (!changed) {
-                chanMenuItem.parent(".network").find(".lobby").click();
-            }
+        var newchan;
+        var channels = sidebar.find(".channel");
+        
+        if (!channels.length) {channels = sidebar.find(".query");}
+        if (!channels.length) { channels = sidebar.find(".lobby");} 
+        newchan = channels.first();
+        
+        if (newchan.hasClass("active")) {
+            newchan.removeClass("active");
         }
         
-        chanMenuItem.remove();
-        $("#chan-" + data.chan).remove();
+        newchan.click();
     });
     
     socket.on("quit", function() {
@@ -1224,7 +1219,7 @@ function isIgnored(host) {
 
         focus();
     });
-
+    
     sidebar.on("click", ".close", function() {
         var cmd = "/close";
         var chan = $(this).closest(".chan");

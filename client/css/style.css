@@ -417,17 +417,13 @@ input {
     padding-bottom: 10px;
 }
 
-#sidebar .chan:first-child {
+#sidebar #chan-0,
+#sidebar .chan.active {
     color: #ff8d00;
     font-size: 15px;
     font-weight: bold;
 }
-
-#sidebar .chan:first-child:hover,
-#sidebar .chan:first-child.active {
-    color: #FFA83C;
-}
-
+ 
 #sidebar .chan:before,
 #chat .title:before {
     float: left;
