@@ -197,11 +197,7 @@ function init(socket, client) {
             }
         );
         socket.join(client.id);
-        socket.emit("init", {
-            active: client.lastActiveChannel,
-            networks: client.networks,
-            token: client.config.token || null
-        });
+        socket.emit("init");
     }
 }
 

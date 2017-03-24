@@ -31,9 +31,6 @@ exports.input = function(network, chan, cmd, args) {
     } else {
         network.setNick(newNick);
 
-        this.emit("nick", {
-            network: network.id,
-            nick: newNick
-        });
+        this.emit("nick", newNick);
     }
 };

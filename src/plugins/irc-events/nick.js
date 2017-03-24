@@ -17,10 +17,7 @@ module.exports = function(irc, network) {
             });
             lobby.pushMessage(client, msg, true);
             self = true;
-            client.emit("nick", {
-                network: network.id,
-                nick: data.new_nick
-            });
+            client.emit("nick", data.new_nick);
         }
 
         var mode = "";

@@ -42,7 +42,6 @@ module.exports = function(irc, network, msg) {
             network.channels.push(chan);
             client.emit("join", {
                 shouldOpen: true,
-                network: network.id,
                 chan: chan,
                 data: data
             });

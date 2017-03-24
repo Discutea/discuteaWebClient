@@ -14,7 +14,6 @@ module.exports = function(irc, network) {
             });
             network.channels.push(chan);
             client.emit("join", {
-                network: network.id,
                 chan: chan
             });
         }

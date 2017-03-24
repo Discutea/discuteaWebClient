@@ -31,10 +31,7 @@ module.exports = function(irc, network) {
             irc.changeNick(random);
         }
 
-        client.emit("nick", {
-            network: network.id,
-            nick: irc.user.nick
-        });
+        client.emit("nick", irc.user.nick);
     });
 
     irc.on("nick invalid", function(data) {
@@ -50,9 +47,6 @@ module.exports = function(irc, network) {
             irc.changeNick(random);
         }
 
-        client.emit("nick", {
-            network: network.id,
-            nick: irc.user.nick
-        });
+        client.emit("nick", irc.user.nick);
     });
 };

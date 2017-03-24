@@ -210,23 +210,10 @@ $(function() {
         $("#loading-page-message").text("Finalizing connection…");
     });
 
-    socket.on("init", function(data) {
+    socket.on("init", function() {
         $("#loading-page-message").text("Rendering…");
-
-        if (data.networks) {
-            renderNetworks(data);
-        }
-
         $("body").removeClass("signed-out");
         $("#loading").remove();
-
-        var id = data.active;
-        var target = sidebar.find("[data-id='" + id + "']").trigger("click");
-        if (target.length === 0) {
-            var first = sidebar.find(".chan")
-                .eq(0)
-                .trigger("click");
-        }
     });
 
     socket.on("open", function(id) {
@@ -242,8 +229,7 @@ $(function() {
     });
 
     socket.on("join", function(data) {
-        var id = data.network;
-        var network = sidebar.find("#network-" + id);
+        var network = sidebar.find(".network");
         network.append(
             templates.chan({
                 channels: [data.chan]
@@ -451,17 +437,13 @@ $(function() {
         users.html(templates.user(data)).data("nicks", nicks);
     }
 
-    function renderNetworks(data) {
+    function renderNetworks(network) {
         sidebar.find(".empty").hide();
         sidebar.find(".networks").append(
-            templates.network({
-                networks: data.networks
-            })
+            templates.network(network)
         );
 
-        var channels = $.map(data.networks, function(n) {
-            return n.channels;
-        });
+        var channels = network.channels;
         chat.append(
             templates.chat({
                 channels: channels
@@ -508,6 +490,7 @@ $(function() {
     });
     
     socket.on("network", function(data) {
+        console.log(data);
         renderNetworks(data);
 
         sidebar.find(".chan")
@@ -520,9 +503,7 @@ $(function() {
             .end();
     });
 
-    socket.on("network_changed", function(data) {
-        sidebar.find("#network-" + data.network).data("options", data.serverOptions);
-        
+    socket.on("network_changed", function() {  
         // get input noprivate after connection and emit for changed modes on irc.
         $.each( $("#settings .noprivate"), function() {
             var name = $(this).attr("name");
@@ -548,10 +529,8 @@ $(function() {
         });
     });
 
-    socket.on("nick", function(data) {
-        var id = data.network;
-        var nick = data.nick;
-        var network = sidebar.find("#network-" + id).data("nick", nick);
+    socket.on("nick", function(nick) {
+        var network = sidebar.find(".network").data("nick", nick);
         if (network.find(".active").length) {
             setNick(nick);
         }
@@ -589,9 +568,8 @@ $(function() {
         $("#chan-" + data.chan).remove();
     });
     
-    socket.on("quit", function(data) {
-        var id = data.network;
-        sidebar.find("#network-" + id)
+    socket.on("quit", function() {
+        sidebar.find(".network")
             .remove()
             .end();
         var chan = sidebar.find(".chan")
@@ -878,6 +856,11 @@ $(function() {
         e.stopPropagation();
     });
 
+    socket.on("i_registered", function() {
+        $("#chat-container").find('#loader-wrapper').remove();
+    });
+    
+    
     function resetInputHeight(input) {
         input.style.height = input.style.minHeight;
     }
@@ -1499,55 +1482,6 @@ function isIgnored(host) {
             }
         );
     }
-
-    socket.on("i_registered", function() {
-        $("#chat-container").find('#loader-wrapper').remove();
-    });
-    
-    socket.on("sync_sort", function(data) {
-        // Syncs the order of channels or networks when they are reordered
-        if (ignoreSortSync) {
-            ignoreSortSync = false;
-            return; // Ignore syncing because we 'caused' it
-        }
-
-        var type = data.type;
-        var order = data.order;
-
-        if (type === "networks") {
-            var container = $(".networks");
-
-            $.each(order, function(index, value) {
-                var position = $(container.children()[index]);
-
-                if (position.data("id") === value) { // Network in correct place
-                    return true; // No point in continuing
-                }
-
-                var network = container.find("#network-" + value);
-
-                $(network).insertBefore(position);
-            });
-        } else if (type === "channels") {
-            var network = $("#network-" + data.target);
-
-            $.each(order, function(index, value) {
-                if (index === 0) { // Shouldn't attempt to move lobby
-                    return true; // same as `continue` -> skip to next item
-                }
-
-                var position = $(network.children()[index]); // Target channel at position
-
-                if (position.data("id") === value) { // Channel in correct place
-                    return true; // No point in continuing
-                }
-
-                var channel = network.find(".chan[data-id=" + value + "]"); // Channel at position
-
-                $(channel).insertBefore(position);
-            });
-        }
-    });
 
     function setNick(nick) {
         // Closes the nick editor when canceling, changing channel, or when a nick

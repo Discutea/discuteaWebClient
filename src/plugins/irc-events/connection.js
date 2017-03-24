@@ -123,9 +123,7 @@ module.exports = function(irc, network) {
 
         network.serverOptions.PREFIX = data.options.PREFIX;
 
-        client.emit("network_changed", {
-            network: network.id,
-            serverOptions: network.serverOptions
-        });
+
+        client.emit("network_changed");
     });
 };

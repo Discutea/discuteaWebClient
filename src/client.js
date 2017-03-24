@@ -140,9 +140,7 @@ Client.prototype.connect = function(args) {
     network.setNick(nick);
 
     client.networks = network;
-    client.emit("network", {
-        networks: [network]
-    });
+    client.emit("network", network);
 
     if (config.webirc) {
         if (!args.hostname) {

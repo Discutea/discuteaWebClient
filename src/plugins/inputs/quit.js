@@ -8,9 +8,7 @@ exports.input = function(network, chan, cmd, args) {
     var irc = network.irc;
     var quitMessage = args[0] ? args.join(" ") : "";
 
-    client.emit("quit", {
-        network: network.id
-    });
+    client.emit("quit");
 
     if (irc) {
         irc.quit(quitMessage);
