@@ -10,7 +10,7 @@ const path = require("path");
 let config = {
     entry: {
         "js/bundleee.js": path.resolve(__dirname, "client/js/lounge.js"),
-        "js/bundle.vendor.js": [
+        "js/bundlee.vendor.js": [
             "handlebars/runtime",
             "jquery",
             "mousetrap",

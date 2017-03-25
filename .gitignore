@@ -6,7 +6,7 @@ npm-debug.log
 client/fonts/*.woff*
 client/js/bundle*.js
 client/js/bundle*.js.map
-client/js/bundle.vendor.js
-client/js/bundle.vendor.js.map
+client/js/bundle*.vendor.js
+client/js/bundle*.vendor.js.map
 config.js
 defaults/

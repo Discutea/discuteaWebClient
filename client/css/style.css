@@ -843,9 +843,9 @@ input {
 #chat .from {
     border-right: 1px solid #f6f6f6;
     color: #b1c3ce;
-    padding-right: 10px;
+    padding-right: 2px;
     text-align: right;
-    max-width: 150px;
+    max-width: 160px;
     min-width: 100px;
 }
 
