@@ -10,7 +10,7 @@ const path = require("path");
 let config = {
     entry: {
         "js/bundleee.js": path.resolve(__dirname, "client/js/lounge.js"),
-        "js/bundlee.vendor.js": [
+        "js/bundleee.vendor.js": [
             "handlebars/runtime",
             "jquery",
             "mousetrap",
@@ -65,7 +65,7 @@ let config = {
         ]
     },
     plugins: [
-        new webpack.optimize.CommonsChunkPlugin("js/bundle.vendor.js")
+        new webpack.optimize.CommonsChunkPlugin("js/bundleee.vendor.js")
     ]
 };
 
