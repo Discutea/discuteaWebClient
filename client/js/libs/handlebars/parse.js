@@ -1,5 +1,5 @@
 import Handlebars from "handlebars/runtime";
-import URI from "urijs";
+//import URI from "urijs";
 
 module.exports = function(text) {
     text = Handlebars.Utils.escapeExpression(text);

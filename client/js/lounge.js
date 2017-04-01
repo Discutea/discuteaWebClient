@@ -1,19 +1,11 @@
 // vendor libraries
-import $ from "jquery";
 import io from "socket.io-client";
-import Mousetrap from "mousetrap";
-import URI from "urijs";
 
 // our libraries
-import "jquery-textcomplete";
 import emojiMap from "emoji-name-map";
-import "./libs/jquery/inputhistory";
-import "./libs/jquery/stickyscroll";
-import "./libs/jquery/tabcomplete";
 import helpers_parse from "./libs/handlebars/parse";
 import helpers_roundBadgeNumber from "./libs/handlebars/roundBadgeNumber";
-import slideoutMenu from "./libs/slideout";
-import "./libs/bootstrap";
+//import slideoutMenu from "./libs/slideout";
 import templates from "../views";
 
 $(function() {

@@ -133,9 +133,11 @@ function index(req, res, next) {
             trans
         );
 
+        try {
+          res.setHeader('Accept', '*/*');
+        } catch (e) {}
+        
         var template = _.template(file);
-        res.setHeader("Content-Security-Policy", "default-src *; connect-src 'self' ws: wss:; style-src * 'unsafe-inline'; script-src 'self'; child-src 'self'; object-src 'none'; form-action 'none'; referrer no-referrer;");
-        res.setHeader("Content-Security-Policy", "script-src 'self' 'unsafe-inline' 'unsafe-eval' pagead2.googlesyndication.com cdn.datatables.net; object-src 'self' pagead2.googlesyndication.com cdn.datatables.net;");
         res.setHeader("Content-Type", "text/html");
         res.writeHead(200);
         res.end(template(data));

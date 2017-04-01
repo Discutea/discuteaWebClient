@@ -1,5 +1,3 @@
-import jQuery from "jquery";
-
 /*!
  * inputhistory
  * https://github.com/erming/inputhistory
