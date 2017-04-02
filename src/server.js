@@ -139,6 +139,7 @@ function index(req, res, next) {
         
         var template = _.template(file);
         res.setHeader("Content-Type", "text/html");
+        res.setHeader("X-Content-Type-Options", "nosniff");
         res.writeHead(200);
         res.end(template(data));
     });

@@ -5,7 +5,6 @@ import io from "socket.io-client";
 import emojiMap from "emoji-name-map";
 import helpers_parse from "./libs/handlebars/parse";
 import helpers_roundBadgeNumber from "./libs/handlebars/roundBadgeNumber";
-//import slideoutMenu from "./libs/slideout";
 import templates from "../views";
 
 $(function() {
