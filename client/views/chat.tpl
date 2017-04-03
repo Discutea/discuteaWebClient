@@ -26,8 +26,7 @@
         <span title="{{topic}}" class="topic">{{{parse topic}}}</span>
     </div>
     <div class="chat">
-     <div class="messages">
-       <div style="text-align:center;">
+       <div class="ads">
          <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
          <!-- tchat rencontre -->
          <ins class="adsbygoogle"
@@ -38,6 +37,7 @@
            (adsbygoogle = window.adsbygoogle || []).push({});
          </script>
        </div>
+     <div class="messages">
      </div>
     </div>
     <aside class="sidebar">

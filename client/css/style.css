@@ -774,12 +774,15 @@ input {
     display: none;
 }
 
-#chat .messages {
+#chat .messages,
+#chat .ads {
     display: table;
     table-layout: fixed;
     width: 100%;
     padding: 10px 0;
 }
+
+#chat .ads {text-align:center;}
 
 #chat .msg {
     word-wrap: break-word;
@@ -1658,7 +1661,8 @@ input {
         margin-bottom: 2px;
     }
 
-    #chat .messages {
+    #chat .messages,
+    #chat .ads {
         display: block;
         padding: 5px 10px;
     }
