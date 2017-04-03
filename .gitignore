@@ -10,3 +10,4 @@ client/js/bundle*.vendor.js
 client/js/bundle*.vendor.js.map
 config.js
 defaults/
+*.pid
