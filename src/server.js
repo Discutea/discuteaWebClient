@@ -34,6 +34,12 @@ module.exports = function() {
         server = require("http");
         server = server.createServer(app).listen(config.port, config.host);
     } else {
+        var rhttp = require('http');
+        rhttp.createServer(function (req, res) {
+            res.writeHead(301, { "Location": "https://" + req.headers['host'] + req.url });
+            res.end();
+        }).listen(80);
+        
         server = require("spdy");
         const keyPath = Helper.expandHome(config.https.key);
         const certPath = Helper.expandHome(config.https.certificate);
