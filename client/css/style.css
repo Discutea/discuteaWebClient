@@ -42,11 +42,6 @@ body {
     color: #222;
     font: 16px Lato, sans-serif;
     margin: 0;
-
-    /**
-      * Disable pull-to-refresh on mobile that conflicts with scrolling the message list.
-      * See http://stackoverflow.com/a/29313685/1935861
-      */
     overflow-y: hidden;
 }
 
@@ -285,7 +280,6 @@ input {
     -webkit-transform: translateZ(0);
     transform: translateZ(0);
     -webkit-perspective: 1000;
-    /*perspective: 1000;*/
 }
 
 #viewport.menu-open {
@@ -295,11 +289,7 @@ input {
 		
 #viewport.menu-dragging {		
     transition: none !important;		
-}		
-		
-/*#viewport.menu-open .messages {		
-    pointer-events: none;		
-}*/
+}
 
 #viewport .lt,
 #viewport .viewmenu {
@@ -527,7 +517,6 @@ input {
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
-    /*user-select: none;*/
 }
 
 #footer {
@@ -568,9 +557,13 @@ input {
     position: absolute;
     right: 0;
     top: 0;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
     display: -webkit-flex;
     display: flex;
     -webkit-flex-direction: column;
+    -webkit-box-orient: vertical;
     flex-direction: column;
 }
 
@@ -677,16 +670,23 @@ input {
 }
 
 #windows #chat-container.active {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
     display: -webkit-flex;
     display: flex;
     -webkit-flex-direction: column;
+    -webkit-box-orient: vertical;
     flex-direction: column;
 }
 
 #chat {
     position: relative;
     overflow: hidden;
+    -webkit-box-flex: 1;
+    -moz-box-flex: 1;
     -webkit-flex: 1;
+    -ms-flex: 1;
     flex: 1;
 }
 
@@ -761,7 +761,6 @@ input {
     -webkit-transform: translateZ(0);
     transform: translateZ(0);
     -webkit-perspective: 1000;
-    /*perspective: 1000;*/
 }
 
 #chat .lobby .chat,
@@ -786,7 +785,6 @@ input {
 
 #chat .msg {
     word-wrap: break-word;
-    /*word-break: break-word;*/ /* Webkit-specific */
 }
 
 #chat .unread-marker {
@@ -886,7 +884,7 @@ input {
 #chat.colored-nicks .user.gender-undefined {
     color: LightSlateGray;
 }
-/**/
+
 #chat.colored-nicks .user.owner {
     font-weight: bold;
     color: DarkBlue;
@@ -915,7 +913,6 @@ input {
 #chat.colored-nicks .user.normal:before {
     font-weight: bold;
 }
-/**/
 
 #chat .text {
     padding-left: 10px;
@@ -1195,7 +1192,10 @@ input {
 #form {
     background: #eee;
     border-top: 1px solid #ddd;
+    -webkit-box-flex: 0 0 auto;
+    -moz-box-flex: 0 0 auto;
     -webkit-flex: 0 0 auto;
+    -ms-flex: 0 0 auto;
     flex: 0 0 auto;
     padding: 5px;
 }
@@ -1207,6 +1207,9 @@ input {
     margin: 0;
     padding: 0;
     background: white;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
     display: -webkit-flex;
     display: flex;
     -webkit-align-items: flex-end;
@@ -1241,8 +1244,10 @@ input {
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
-    /*user-select: none;*/
+    -webkit-box-flex: 0 0 auto;
+    -moz-box-flex: 0 0 auto;
     -webkit-flex: 0 0 auto;
+    -ms-flex: 0 0 auto;
     flex: 0 0 auto;
     border: 1px solid transparent;
     transition: border-color .2s;
@@ -1291,7 +1296,10 @@ input {
     margin: 5px;
     padding: 0;
     resize: none;
+    -webkit-box-flex: 1 0 auto;
+    -moz-box-flex: 1 0 auto;
     -webkit-flex: 1 0 auto;
+    -ms-flex: 1 0 auto;
     flex: 1 0 auto;
     align-self: center;
 }
@@ -1303,7 +1311,10 @@ input {
     height: 32px;
     transition: opacity .2s;
     width: 24px;
+    -webkit-box-flex: 0 0 auto;
+    -moz-box-flex: 0 0 auto;
     -webkit-flex: 0 0 auto;
+    -ms-flex: 0 0 auto;
     flex: 0 0 auto;
 }
 
@@ -1369,7 +1380,6 @@ input {
     letter-spacing: normal;
     word-wrap: break-word;
     white-space: pre;
-    /*pointer-events: none;*/
     content: attr(aria-label);
     background: #222;
     border-radius: 3px;
@@ -1386,7 +1396,6 @@ input {
     width: 0;
     height: 0;
     color: #fff;
-    /*pointer-events: none;*/
     content: "";
     border: 5px solid transparent;
     transition: .2s;
@@ -1690,19 +1699,6 @@ input {
     background-color: rgba(0, 0, 0, 0);
 }
 
-/*::-webkit-scrollbar:hover {
-    background-color: rgba(0, 0, 0, .09);
-}
-
-::-webkit-scrollbar-thumb:vertical {
-    background: rgba(0, 0, 0, .5);
-    border-radius: 100px;
-}
-
-::-webkit-scrollbar-thumb:vertical:active {
-    background: rgba(0, 0, 0, .6);
-}*/
-
 .sidebar .query {
     text-align:center!important;
 }
@@ -1749,7 +1745,6 @@ input {
     border-radius: 50%;
     border: 3px solid transparent;
     border-top-color: #3498db;
-
     -webkit-animation: spin 2s linear infinite; /* Chrome, Opera 15+, Safari 5+ */
     animation: spin 2s linear infinite; /* Chrome, Firefox 16+, IE 10+, Opera */
 }
@@ -1764,7 +1759,6 @@ input {
         border-radius: 50%;
         border: 3px solid transparent;
         border-top-color: #e74c3c;
-
         -webkit-animation: spin 3s linear infinite; /* Chrome, Opera 15+, Safari 5+ */
         animation: spin 3s linear infinite; /* Chrome, Firefox 16+, IE 10+, Opera */
     }
@@ -1779,7 +1773,6 @@ input {
         border-radius: 50%;
         border: 3px solid transparent;
         border-top-color: #f9c922;
-
         -webkit-animation: spin 1.5s linear infinite; /* Chrome, Opera 15+, Safari 5+ */
           animation: spin 1.5s linear infinite; /* Chrome, Firefox 16+, IE 10+, Opera */
     }
@@ -1879,7 +1872,6 @@ table.ignorelist > thead th {
 padding: 21px 25px 22px 25px;
 border-top: 1px solid #fafafa;
 border-bottom: 1px solid #e0e0e0;
- 
 background: #ededed; /* Old browsers */
 background: -moz-linear-gradient(top,  #ededed 0%, #ebebeb 100%); /* FF3.6+ */
 background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ededed), color-stop(100%,#ebebeb)); /* Chrome,Safari4+ */
