@@ -5,7 +5,7 @@
     <!--[if lt IE 9]>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
     <![endif]-->
-    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -14,7 +14,7 @@
     <meta name="theme-color" content="#455164">
     <title>Discutea — <%= trans.title %></title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/style.min.css">
+    <link rel="stylesheet" href="css/style.css">
     <style id="user-specified-css"></style>
     <link rel="shortcut icon" href="https://cdn.discutea.com/img/favicon.ico" data-other="img/favicon-notification.png" data-toggled="false" id="favicon">
     <link rel="apple-touch-icon" href="https://cdn.discutea.com/img/apple-touch-icon.png"/>
@@ -63,7 +63,7 @@
                   
                     <div id="chat"></div>
                     <button id="connection-error" class="btn btn-reconnect"><%= trans.connectlost %></button>
-                    <form id="form" method="post" action="">
+                    <form id="form" method="post" action="#">
                         <div class="input">
                             <span id="nick">
                                 <span id="nick-value" spellcheck="false"></span><!-- Comments here remove spaces between elements
@@ -82,7 +82,7 @@
                     <div class="header">
                         <button class="lt" aria-label="Toggle channel list"></button>
                     </div>
-                    <form class="container" method="post" action="">
+                    <form class="container" method="post" action="#">
                         <div class="row">          
                             <div class="col-xs-12 center">
                               <br />
@@ -123,9 +123,9 @@
                             </div>
                             <div class="col-sm-9">
                                 <input type="radio" id="connect:gender" name="gender" value="F" required />
-                                <img src="https://cdn.discutea.com/img/femme.png">
+                                <img src="https://cdn.discutea.com/img/femme.png" alt="female">
                                 <input type="radio" id="connect:gender" name="gender" value="M" />
-                                <img src="https://cdn.discutea.com/img/homme.png">
+                                <img src="https://cdn.discutea.com/img/homme.png" alt="male">
                             </div> 
 
                             <input type="hidden" class="channel" id="connect:channel" name="channel" value="Accueil">   
@@ -175,7 +175,7 @@
         <button type="button" class="pull-right close" data-dismiss="modal" aria-label="<%= trans.close %>"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="nicktitle"> <%= trans.nickservmodal.title %></h4>
       </div>
-      <form id="nickserv" method="post" action="">
+      <form id="nickserv" method="post" action="#">
         <div class="modal-body">
           <div class="row">
             <div class="col-sm-3">
@@ -211,7 +211,9 @@
             </tr>
           </thead>
           <tbody class="ignoreds">
-            <tr class="empty"><td colspan="5"><%= trans.ignoremodal.empty %></td></tr>
+            <tr class="empty">
+              <td colspan="2"><%= trans.ignoremodal.empty %></td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -380,14 +382,6 @@
                 <label class="opt">
                   <input id="desktopNotifications" type="checkbox" name="desktopNotifications">
                   <%= trans.settings.notifdesktop %><br>
-                  <div class="error" id="warnUnsupportedDesktopNotifications">
-                    <strong><%= trans.warning %><br></strong>:
-                    <%= trans.settings.notsupported %>
-                  </div>
-                  <div class="error" id="warnBlockedDesktopNotifications">
-                    <strong><%= trans.warning %></strong>:
-                    <%= trans.settings.notsupported %>
-                  </div>
                 </label>
               </div>
               <div class="col-sm-12">
