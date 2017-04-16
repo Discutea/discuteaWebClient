@@ -18,7 +18,6 @@
     {{/if}}
     </p>
   {{/if}}
-  
   <p>
     {{#if data.sex}}
       <span class="{{ data.sex }}">{{ trans data.sex locale }}</span>, 
