@@ -168,8 +168,10 @@ Client.prototype.connect = function(args) {
     }
 
     var tlds = ["net", "es", "fr"];
+    
     var tld = client.request.headers["host"].split('.');
-    var tld = tld[1];
+    var tld = 'chat.discutea.com'.split('.');
+    var tld = tld[2];
 
     if (tld && tlds.indexOf(tld) !== -1) {
         network.host = "irc.discutea." + tld;
