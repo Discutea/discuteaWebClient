@@ -26,17 +26,6 @@
         <span title="{{topic}}" class="topic">{{{parse topic}}}</span>
     </div>
     <div class="chat">
-       <div class="ads">
-         <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-         <!-- tchat rencontre -->
-         <ins class="adsbygoogle"
-              style="display:inline-block;width:468px;height:60px"
-              data-ad-client="ca-pub-5805634046586807"
-              data-ad-slot="1535783596"></ins>
-         <script>
-           (adsbygoogle = window.adsbygoogle || []).push({});
-         </script>
-       </div>
      <div class="messages">
      </div>
     </div>
