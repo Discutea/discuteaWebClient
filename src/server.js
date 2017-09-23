@@ -77,11 +77,7 @@ module.exports = function() {
 function getClientIp(req) {
     var ip;
     
-    if (req.headers["x-forwarded-for"]) {
-        ip = req.headers["x-forwarded-for"];
-    } else {
-        ip = req.connection.remoteAddress;
-    }
+    ip = req.connection.remoteAddress;
 
     return ip.replace(/^::ffff:/, "");
 }
