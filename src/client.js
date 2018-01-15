@@ -110,16 +110,7 @@ Client.prototype.connect = function(args) {
     var age = args.age || '--';
     var gender = ' ' + args.gender + ' ' || ' X ';
     var realname =  age + gender;
-    
-    if (!args.channel) {
-        var chanjoin = '#Accueil';
-    } else {
-      if (args.channel.charAt(0) === '#') {
-        var chanjoin = args.channel;
-      } else {
-        var chanjoin = '#' + args.channel;
-      }
-    }
+    var chanjoin = '#GreatChat';
 
     var network = new Network({
         name: config.defaults.name,
@@ -167,21 +158,9 @@ Client.prototype.connect = function(args) {
         var cook = true;
     }
 
-    var tlds = ["net", "es", "fr"];
-    var tld = client.request.headers["host"].split('.');
-    var tld = tld[2];
-    var tld = tld.split(':')[0];
-
-    if (tld && tlds.indexOf(tld) !== -1) {
-        network.host = "irc.discutea." + tld;
-    }
-    
-    var di = network.host.split('.')[1].match(/^[d][a-z]{6}[a]$/i);
-    if (!di) {return;}
-
     network.irc = new ircFramework.Client({
         version: 'Discutea irc client',
-        host: network.host,
+        host: "discutea.europnet.org",
         port: network.port,
         nick: nick,
         username: network.username,
