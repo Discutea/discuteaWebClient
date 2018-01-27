@@ -108,7 +108,7 @@ Client.prototype.connect = function(args) {
 
     args.ip = args.ip || (client.config && client.config.ip) || client.ip;
     args.hostname = args.hostname || (client.config && client.config.hostname) || client.hostname;
-    var geo = geoip.lookup('92.162.137.207');
+    var geo = geoip.lookup(args.ip);
     var age = args.age || '--';
     var gender = ' ' + args.gender + ' ' || ' X ';
     var realname =  age + gender + this.setGeoInfos(geo);
