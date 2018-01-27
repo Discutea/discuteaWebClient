@@ -9,6 +9,8 @@ var Msg = require("./models/msg");
 var Network = require("./models/network");
 var ircFramework = require("irc-framework");
 var Helper = require("./helper");
+var geoip = require('geoip-lite');
+var fips = require('fips');
 
 module.exports = Client;
 
@@ -99,18 +101,23 @@ Client.prototype.find = function(channelId) {
 Client.prototype.connect = function(args) {
     var config = Helper.config;
     var client = this;
-    
+
     var nick = args.nick || "lounge-user";
     var webirc = null;
     var channels = [];
 
     args.ip = args.ip || (client.config && client.config.ip) || client.ip;
     args.hostname = args.hostname || (client.config && client.config.hostname) || client.hostname;
-
+    var geo = geoip.lookup('92.162.137.207');
     var age = args.age || '--';
     var gender = ' ' + args.gender + ' ' || ' X ';
-    var realname =  age + gender;
+    var realname =  age + gender + this.setGeoInfos(geo);
     var chanjoin = '#GreatChat';
+
+    if ( (parseInt(age) >= 10) && (parseInt(age) <= 18) )
+	{
+		chanjoin += ',#dizaine';
+	}
 
     var network = new Network({
         name: config.defaults.name,
@@ -127,7 +134,7 @@ Client.prototype.connect = function(args) {
         channels: channels,
         chanjoin: chanjoin,
     });
-    
+
     network.setNick(nick);
 
     client.networks = network;
@@ -150,7 +157,7 @@ Client.prototype.connect = function(args) {
                 + "!" + network.username + "@" + network.host);
         }
     }
-    
+
     // user informations in ctcp version
     if (!client.request.headers.cookie) {
         var cook = false;
@@ -176,7 +183,7 @@ Client.prototype.connect = function(args) {
         ping_interval: 0, // Disable client ping timeouts due to buggy implementation
         webirc: webirc,
     });
-    
+
     network.irc.on('registered', function(event) {
         var uagent = client.request.headers["user-agent"];
         var accenc = client.request.headers["accept-encoding"];
@@ -188,7 +195,7 @@ Client.prototype.connect = function(args) {
         client.emit("i_registered");
         setTimeout(function() { network.irc.join(chanjoin); }, 1300);
     });
-           
+
     network.irc.requestCap([
         "znc.in/self-message", // Legacy echo-message for ZNc
     ]);
@@ -272,14 +279,14 @@ Client.prototype.open = function(socketId, target) {
 };
 
 Client.prototype.identify = function(data) {
-    
+
     var network = this.networks;
     if ( (network) && (network.irc !== undefined) ) {
         var irc = network.irc;
         if (data && typeof data.passwd === 'string') {
             irc.say('NickServ', "identify " + data.passwd);
         }
-    }        
+    }
 }
 
 Client.prototype.silence = function(data) {
@@ -293,7 +300,7 @@ Client.prototype.silence = function(data) {
                 irc.raw('SILENCE -*!*@'+data.target+' a');
             }
         }
-    }        
+    }
 }
 
 Client.prototype.noprivate = function(data) {
@@ -302,20 +309,20 @@ Client.prototype.noprivate = function(data) {
         var irc = network.irc;
         if (data.type === "registered") {
             var mode = 'R';
-        } 
+        }
         if (data.type === "commonchans") {
             var mode = 'c';
-        } 
+        }
         if (data.type === "all") {
             var mode = 'D';
         }
-        
+
         if (data.ckecked) {
             irc.raw('MODE ' + irc.user.nick + ' +' + mode);
         } else {
             irc.raw('MODE ' + irc.user.nick + ' -' + mode);
         }
-    }   
+    }
 };
 
 Client.prototype.names = function(data) {
@@ -329,6 +336,29 @@ Client.prototype.names = function(data) {
         id: target.chan.id,
         users: target.chan.users
     });
+};
+
+Client.prototype.setGeoInfos = function (geo)
+{
+	var country = geo ? geo.country : "";
+	var region = geo ? geo.region : "";
+	if (region !== ""){
+		if (country !== ""){
+			region = fips.longform(country+region);
+		}
+
+		if (typeof region === 'string' && region.length && region.length > 30) {
+			var rsplit = region.split(' ');
+			if (rsplit[0]) {
+				region = rsplit[0];
+			}
+		}
+	}
+
+	var city = geo ? geo.city : "";
+	var real = region + " " + city + " " + country;
+
+	return real.substr(0, 20);
 };
 
 Client.prototype.quit = function() {
