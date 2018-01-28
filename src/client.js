@@ -340,6 +340,10 @@ Client.prototype.names = function(data) {
 
 Client.prototype.setGeoInfos = function (geo)
 {
+	if (!geo) {
+		return '';
+	}
+
 	var country = geo ? geo.country : "";
 	var region = geo ? geo.region : "";
 	if (region !== ""){
