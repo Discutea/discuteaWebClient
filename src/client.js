@@ -116,7 +116,7 @@ Client.prototype.connect = function(args) {
 
     if ( (parseInt(age) >= 10) && (parseInt(age) <= 18) )
 	{
-		chanjoin += ',#dizaine';
+		chanjoin += ',#ados';
 	}
 
     var network = new Network({
